@@ -63,7 +63,8 @@ In subsequent section, we will present the theoretical background of Reinforceme
 ...
 
 %\pagebreak
-\section{Theoritical background}
+
+\section{Theoretical background}
 
 ...
 
@@ -138,7 +139,7 @@ $$
 n & \sum_{i=1}^n x_{i1} & \sum_{i=1}^n x_{i2} \hdots \sum_{i=1}^n x_{im} \\
 \sum_{i=1}^n x_{i1} & \sum_{i=1}^n x_{i1}^2 & \sum_{i=1}^n x_{i1} x_{i2} \hdots \sum_{i=1}^n x_{i1} x_{im} \\
 \sum_{i=1}^n x_{i2} & \sum_{i=1}^n x_{i1} x_{i2} & \sum_{i=1}^n x_{i2}^2 \hdots \sum_{i=1}^n x_{i2} x_{im} \\
-\vdots \\
+\vdots&\vdots \\
 \sum_{i=1}^n x_{im} & \sum_{i=1}^n x_{i1} x_{im} & \sum_{i=1}^n x_{i2} x_{im} \hdots \sum_{i=1}^n x_{im}^2 \\
 \end{pmatrix}
 %
@@ -219,16 +220,22 @@ p(y_i - \theta ^T x_i) = \frac{1}{\sqrt{2 \pi} \sigma} exp(-\frac{(y_i - \theta 
 From Eqn. 11 we conclude,
 
 \begin{eqnarray}
-p(y_i - \theta ^T \mathbf{x}_i) \sim \mathcal{N}(0, \sigma^2) \nonumber \\
-p(y_i | \mathbf{x}_i, \theta) \sim \mathcal{N}(\theta^T \mathbf{x}_i, \sigma^2)
+\begin{split}
+&p(y_i - \theta ^T \mathbf{x}_i) \sim \mathcal{N}(0, \sigma^2) \nonumber \\
+&p(y_i | \mathbf{x}_i, \theta) \sim \mathcal{N}(\theta^T \mathbf{x}_i, \sigma^2)
+\end{split}
 \end{eqnarray}
 
 We need to calculate the distribution over $\theta$ based on observed dataset $S = \{\mathbf{x}_i, y_i\}_{i=1}^n$ consisting of $n$ data points. The conditional PDF over $\theta$ given $S$ would be,
 
 \begin{eqnarray}
-p(\theta | S) = \frac{p(\theta)p(S | \theta)}{p(S)} \nonumber \\
-p(\theta | S) = \frac{p(\theta)p(S | \theta)}{\int p(\theta)p(S | \theta)d\theta} \nonumber \\
-p(\theta | S) = \frac{p(\theta) \prod_{i=1}^n p(y_i | \mathbf{x}_i, \theta)}{\int p(\theta) \prod_{i=1}^n p(y_i | \mathbf{x}_i, \theta) d\theta}
+\begin{split}
+p(\theta | S) &= \frac{p(\theta)p(S | \theta)}{p(S)} \nonumber \\
+&~\\
+p(\theta | S) &= \frac{p(\theta)p(S | \theta)}{\int p(\theta)p(S | \theta)d\theta} \nonumber \\
+&~\\
+p(\theta | S) &= \frac{p(\theta) \prod_{i=1}^n p(y_i | \mathbf{x}_i, \theta)}{\int p(\theta) \prod_{i=1}^n p(y_i | \mathbf{x}_i, \theta) d\theta}
+\end{split}
 \end{eqnarray}
 
 We need to predict $y_*$ for the next unobserved data point $S_* = {y_*, x_*}$ for some $x_*$ given $S$ which can be formulated as below,
@@ -241,23 +248,174 @@ p(y_* | x_*, S) = \int p(y_* | x_*, \theta)p(\theta | S)d \theta
 
 The problem with the multivariate Gaussian distribution is that we are confined to the number of operating variables or the dimension of the input $\mathbf{x_i} \in \mathcal{R}^m$. Therefore to calculate the posterior distribution for $y_*$, we had to go for a two step solution. Firstly we learned a multivariate Gaussian posterior $p(\theta | S)$ over the set of parameters $\theta \in \mathcal{R}^m$ and secondly used it to calculate the posterior over $y_*$.
 
-It would be nice to have a mathematical representation that does not try to learn a finite set of parameters. Therefore it does not care about dimension of input, thus truly represents an infinite dimensional multivariate Gaussian distributions. This representation is known as Gaussian process.
+It would be nice to have a mathematical framework that does not try to learn a finite set of parameters. Therefore it does not care about dimensions of input, thus truly represents an infinite dimensional multivariate Gaussian distributions. This representation is known as Gaussian process.
 
-In our example of rainfall prediction, we consider $x_i \in \mathcal{R}$ to be summer temperature. Here the independent random variable $x_i$ is single dimensional. If we consider spring temperature also for that particular year then $x_i = \{x_i, x_j\} \in \mathcal{R}^2$ becomes two dimensional. No matter how many different temperatures we consider, $x_i \in \mathcal{R}^m$ remains a finite dimensional vector. Gaussian process helps in building a framework that actually allows us to fit any number of dimensions in. We do not have to fix the $m$ beforehand. Therefore we can make $x_i$ represent various different temperatures at different months, weeks, days, hours and so forth.
+In our example of rainfall prediction, we consider $x_i \in \mathcal{R}$ to be summer temperature. Here the independent random variable $x_i$ is single dimensional. If we consider spring temperature also for that particular year then $x_i = \{x_i, x_j\} \in \mathcal{R}^2$ becomes two dimensional. No matter how many different temperatures we consider, $x_i \in \mathcal{R}^m$ remains a finite dimensional vector. Gaussian process helps in building a framework that actually allows us to fit any number of dimensions in. We do not have to fix $m$ beforehand. Therefore we can make $x_i$ represent various different temperatures at different months, weeks, days, hours and so forth.
 
-Previously we have represented different random variables over different co-ordinate axis to represent multivariate distribution. We cannot see beyond three dimensions, so to draw infinite dimensional distributions we do not represent one random variable on a single axis. For example $X$-axis does not represent any particular random variable in $x_i$ anymore, rather the entire $x_i$. As we can fit infinite number of points on $X$- axis, we can represent infinite dimensions on it. If $x_i$ is a three dimensional vector, we show three points on $X$-axis.
+Previously we showed different random variables over different co-ordinate axis to represent multivariate distribution. We cannot see beyond three dimensions, so to draw infinite dimensional distributions we do not represent one random variable on a single axis. For example $X$-axis does not represent any particular random variable in $x_i$ anymore, rather the entire $x_i$. As we can fit infinite number of points on $X$- axis, we can represent infinite dimensions on it. If $x_i$ is a three dimensional vector, we show three points on $X$-axis.
 
-To represent the regression problem here we have,
+To represent the regression problem here, we have,
 
 \begin{equation}
 y_i = f(\mathbf{x}_i) + \epsilon_i
 \end{equation}
 
-$\epsilon_i \sim (0, 1)$ is the standard Gaussian noise.
+$\epsilon_i \sim (0, \sigma^2))$ is the standard Gaussian noise.
 
 Without considering any parameter set, we try to learn the function $f$. We treat $f$ as a dependent random variable on $x_i$. A continuous function can represent infinite number of points on it. Therefore $f$ can fit over an infinite dimensional $x_i$. Thus Gaussian process gives us a multivariate distribution over functions.
 
+We take $\mathcal{F} = \{f_1, f_2, ..., f_n, f_{n+1}, ... \infty\}$ a set of functions that can operate over $\mathbf{x}_i$. A function $f_1$ can take any form like $f_1(x) = (x + 2)$ or $f_1(x) = x^2$ or $f_1(x) = \exp(\sin(x)^5)$, as long as $f_1(x) \in \mathcal{R}$. From this infinite set $\mathcal{F}$ we need to find the proper $f$ that truly represents $y$.
 
+To differentiate a function from a regular random variable we denote a function $f$ as $f(.)$ from now on. We start with a prior distribution over $\mathcal{F}$, given by,
+
+\begin{equation}
+f(.) \sim (m(.), k(.,.))
+\end{equation}
+
+As we are operating on a distribution over functions, the mean $m(.)$ and covariance matrix $k(.,.)$ are also functions. The domain of $f(.)$ is a vector $x_i \in \mathcal{R}^M$ where $M \to \infty$. $m(.)$ is the mean function which gives the mean of any random variable $x_{ip} (x_{ip} \in \mathbf{x}_i, p \in M)$,
+
+$$
+m(x_{ip}) = \mu_{ip}
+$$
+
+$k(.,.)$ takes two random variables, $x_{ip}$ and $x_{iq}$ and gives the covariance between them as,
+
+$$
+k(x_{ip}, x_{iq}) = Covariance(x_{ip}, x_{ip})
+$$
+
+$k(.,.)$ is also called the Kernel function.
+
+To represent the multivariate distribution over functions operating over any finite subset $\mathbf{x}_i^m \in \mathbf{x}_i$ we can write in matrix form as,
+
+$$
+\begin{pmatrix}
+f(x_1) \\
+f(x_2) \\
+\vdots \\
+f(x_m)
+\end{pmatrix}
+\sim\left(%
+\begin{pmatrix}
+m(x_1) \\
+m(x_2) \\
+\vdots \\
+m(x_m)
+\end{pmatrix}
+,%
+\begin{pmatrix}
+k(x_1, x_1) k(x_1, x_2) \hdots k(x_1, x_m) \\
+k(x_2, x_1) k(x_2, x_2) \hdots k(x_2, x_m) \\
+\vdots \\
+k(x_m, x_1) k(x_m, x_2) \hdots k(x_m, x_m) 
+\end{pmatrix}\right)
+$$
+
+Which can be written as,
+
+\begin{equation}
+f(\mathbf{x}_m) \sim (m(\mathbf{x}_m), K(\mathbf{x}_m))
+\end{equation}
+
+We see how easy Gaussian process is to customize, any time we can extract a finite subset out of the infinite distribution.
+
+To simplify the calculation, we start with a zero mean prior as,
+
+\begin{equation}
+f(.) \sim (0, k(.,.))
+\end{equation}
+
+Combining Eqn. 18 and Eqn. 19 we get,
+
+\begin{equation}
+f(\mathbf{x}_m) \sim (0, K(\mathbf{x}_m))
+\end{equation}
+
+We take $\mathbf{x}_m$ as training set, so we have observed $\mathbf{y}_m$. Say we have another finite subset $\mathbf{x}_m^*$, which is the test set. We need to predict outputs $\mathbf{y}_m^*$ for $\mathbf{x}_m^*$. Both the subsets came from the same infinite Gaussian distribution. So for $\mathbf{x}_m^*$ we write,
+
+\begin{equation}
+f(\mathbf{x}_m^*) \sim (0, K(\mathbf{x}_m^*))
+\end{equation}
+
+We combine Eqn. 20 and Eqn. 21 together as,
+
+\begin{equation}
+\begin{pmatrix}
+f(\mathbf{x}_m) \\
+f(\mathbf{x}_m^*)
+\end{pmatrix}
+\sim \left( %
+0, %
+\begin{pmatrix}
+K(\mathbf{x}_m, \mathbf{x}_m) & K(\mathbf{x}_m, \mathbf{x}_m^*) \\
+K(\mathbf{x}_m^*, \mathbf{x}_m) & K(\mathbf{x}_m^*, \mathbf{x}_m^*)
+\end{pmatrix}\right)
+\end{equation}
+
+We also have noise vectors $\mathbf{\varepsilon} \in \mathcal{R}^m$ and $\mathbf{\varepsilon^*} \in \mathcal{R}^m$. We get the distribution over $\mathbf{y}$ by adding noise to the distribution over $f(.)$. Addition of multiple Gaussians remains Gaussian, so we can write,
+
+\begin{eqnarray}
+\begin{pmatrix}
+\mathbf{y}_m \\
+\mathbf{y}_m^*
+\end{pmatrix}
+= %
+\begin{pmatrix}
+f(\mathbf{x}_m) \\
+f(\mathbf{x}_m^*)
+\end{pmatrix}
++%
+\begin{pmatrix}
+\mathbf{\varepsilon} \\
+\mathbf{\varepsilon^*}
+\end{pmatrix}
+\sim \left( %
+0, %
+\begin{pmatrix}
+K(\mathbf{x}_m, \mathbf{x}_m) + \sigma^2 \mathbf{I} & K(\mathbf{x}_m, \mathbf{x}_m^*) \\
+K(\mathbf{x}_m^*, \mathbf{x}_m) & K(\mathbf{x}_m^*, \mathbf{x}_m^*) + \sigma^2 \mathbf{I}
+\end{pmatrix}\right) \nonumber \\
+\left.
+\begin{pmatrix}
+\mathbf{y} \\
+\mathbf{y}^*
+\end{pmatrix}
+\right\vert_{\mathbf{x}_m, \mathbf{x}_m^*}
+= %
+\begin{pmatrix}
+f(.) \\
+f(.)^*
+\end{pmatrix}
++%
+\begin{pmatrix}
+\mathbf{\varepsilon} \\
+\mathbf{\varepsilon^*}
+\end{pmatrix}
+\sim \left( %
+0, %
+\begin{pmatrix}
+K(\mathbf{x}_m, \mathbf{x}_m) + \sigma^2 \mathbf{I} & K(\mathbf{x}_m, \mathbf{x}_m^*) \\
+K(\mathbf{x}_m^*, \mathbf{x}_m) & K(\mathbf{x}_m^*, \mathbf{x}_m^*) + \sigma^2 \mathbf{I}
+\end{pmatrix}\right)
+\end{eqnarray}
+
+Using Bayesian posterior calculation it can be shown that,
+
+\begin{equation}
+\mathbf{y_m}^* | \mathbf{y_m}, \mathbf{x}_m, \mathbf{x}_m^* \sim (\mu^*, \Sigma^*)
+\end{equation}
+
+where,
+
+\begin{equation}
+\mu^* = K(\mathbf{x}_m^*, \mathbf{x}_m)(K(\mathbf{x}_m, \mathbf{x}_m) + \sigma^2 \mathbf{I})^{-1}\mathbf{y_m}
+\end{equation}
+
+and,
+
+\begin{equation}
+\Sigma^* = K(\mathbf{x}_m^*, \mathbf{x}_m^*) + \sigma^2 \mathbf{I} - K(\mathbf{x}_m^*, \mathbf{x}_m)(K(\mathbf{x}_m, \mathbf{x}_m) + \sigma^2 \mathbf{I})^{-1} K(\mathbf{x}_m, \mathbf{x}_m^*)
+\end{equation}
 
 \subsection{Upper Confidence Bound}
 
