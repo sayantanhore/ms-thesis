@@ -1,0 +1,38 @@
+\select@language {english}
+\contentsline {section}{\numberline {1}Introduction}{1}
+\contentsline {section}{\numberline {2}The need for content based retrieval in detail}{1}
+\contentsline {subsection}{\numberline {2.1}Shortcomings of traditional image search}{1}
+\contentsline {subsection}{\numberline {2.2}Why content based retrieval is better}{2}
+\contentsline {subsection}{\numberline {2.3}Approaches}{2}
+\contentsline {section}{\numberline {3}Theoritical background}{2}
+\contentsline {subsection}{\numberline {3.1}Reinforcement Learning}{2}
+\contentsline {subsection}{\numberline {3.2}Regression Problems}{2}
+\contentsline {subsection}{\numberline {3.3}Bayesian Probability Model}{4}
+\contentsline {subsubsection}{\numberline {3.3.1}Bayes' Rule}{5}
+\contentsline {subsection}{\numberline {3.4}Gaussian Process}{7}
+\contentsline {subsection}{\numberline {3.5}Upper Confidence Bound}{7}
+\contentsline {subsection}{\numberline {3.6}Bandit Algorithms}{7}
+\contentsline {subsubsection}{\numberline {3.6.1}Multi-Armed bandit}{7}
+\contentsline {subsubsection}{\numberline {3.6.2}Contextual Bandit}{7}
+\contentsline {subsection}{\numberline {3.7}Neural Networks}{7}
+\contentsline {subsubsection}{\numberline {3.7.1}Multi-Layered Neural Network}{7}
+\contentsline {section}{\numberline {4}Dissecting an Image}{8}
+\contentsline {subsection}{\numberline {4.1}Extract objects from an Image}{8}
+\contentsline {subsection}{\numberline {4.2}Extract color from an image}{8}
+\contentsline {subsection}{\numberline {4.3}Combining objects and color features}{8}
+\contentsline {section}{\numberline {5}CPU vs GPU}{8}
+\contentsline {subsection}{\numberline {5.1}Why CPU is not enough}{8}
+\contentsline {subsection}{\numberline {5.2}How does GPU help}{8}
+\contentsline {section}{\numberline {6}Programming architecture of GPU}{8}
+\contentsline {section}{\numberline {7}System design}{9}
+\contentsline {subsection}{\numberline {7.1}On CPU}{9}
+\contentsline {subsection}{\numberline {7.2}On GPU}{9}
+\contentsline {section}{\numberline {8}Experiments and Results}{9}
+\contentsline {subsection}{\numberline {8.1}System setup}{9}
+\contentsline {subsection}{\numberline {8.2}Experiments}{9}
+\contentsline {subsection}{\numberline {8.3}Performance evaluation on CPU}{9}
+\contentsline {subsection}{\numberline {8.4}Performance evaluation On GPU}{9}
+\contentsline {subsection}{\numberline {8.5}Performance comparison on CPU and GPU}{9}
+\contentsline {section}{\numberline {9}User Interaction and Usability}{10}
+\contentsline {section}{Appendices}{}
+ \contentsline {section}{\hspace {0.5cm}1 Model ABC}{}

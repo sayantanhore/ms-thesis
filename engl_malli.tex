@@ -1,0 +1,392 @@
+\documentclass[english]{tktltiki}
+\usepackage[pdftex]{graphicx}
+\usepackage{subfigure}
+\usepackage{url}
+\usepackage{amsmath}
+
+\begin{document}
+%\doublespacing
+%\singlespacing
+\onehalfspacing
+
+\title{IMSE, A content based image retrieval system}
+\author{Sayantan Hore}
+\date{\today}
+
+\maketitle
+
+\numberofpagesinformation{\numberofpages\ pages + \numberofappendixpages\ appendices}
+\classification{\protect{\ \\
+A.1 [Introductory and Survey],\\
+I.7.m [Document and text processing]}}
+
+\keywords{layout, summary, list of references}
+
+\begin{abstract}
+
+Content based image retrieval systems are out there for a few years now. We present a system, IMSE, here which searches out images using Gaussian Process Upper Confidence Bound algorithm. This algorithm has performed better in comparison to random search and plain exploration. We present a comparison of how the algorithm performs on CPU as well as GPU. We also evaluate the user experience and with the search interface.
+
+\end{abstract}
+
+\mytableofcontents
+
+
+
+
+\section{Introduction}
+
+
+Content based image retrieval systems have been proven to be better fits in retrieval performance. Text or tag based matching systems rely only on texts. Therefore the images themselves are secondary in the search procedure. The user sees the image and selects one by the objects and color the image represents. The combination of those objects and colors should actually be searched for instead of tags. Tags hardly represent an entire image. An image portraying a cloudy afternoon can be tagged as "Sad", based on the mood and understanding of the person creating the tags. Another images of the same genre, tagged by different persons, might miss the tag. If a user is in search for "Sad" images and finds one with the tag, selects it. The other "Sad" image would not appear in the search results as it lacks the tag. Had features and content of the image been searched for, this situation could be avoided.
+
+IMSE is just another content based image retrieval system, using Gaussian Process Upper Confidence Bound (GP-UCB) as a retrieval algorithm. We are using MIRFLICKR 25000 image set for testing. As this produces a huge kernel, GP-UCB is slow on CPU. We have written a GPU version of the algorithm and made a comparative study of running time over CPU and GPU. The system is written in Python (and Django for the web interface). Any system has to have a pleasing and assisting user interface. As our system is targeted towards web users, we cared for having a decent web interface, written in Twitter Bootstrap (v3.0) framework, jQuery (v1.11.1), CSS and javascript. We have followed Human Computer Interaction guidelines for user interaction.
+
+In subsequent section, we will present the theoretical background of Reinforcement Learning, Gaussian Process, Upper Confidence Bound, Image Retrieval, GPU implementation details, user experience and performance measures.
+
+
+\section{The need for content based retrieval in detail}
+
+...
+
+\subsection{Shortcomings of traditional image search}
+%\enlargethispage{5mm}
+
+...
+
+\subsection{Why content based retrieval is better}
+
+
+...
+
+
+\subsection{Approaches}
+
+...
+
+%\pagebreak
+\section{Theoritical background}
+
+...
+
+
+\subsection{Reinforcement Learning}
+
+...
+
+\subsection{Regression Problems}
+
+Regression problems are supervised learning problems where we have multiple random variables. At least one of those variables are dependant on a subset of the rest. Lets' assume that we have to predict rainfall prediction in a city for the coming monsoon based on average summer temperature. We first take a dataset consisting of year by year rainfall and average summer temperature recorded over the past few years. We denote the temperature by $x$ and rainfall by $y$. Clearly $x$ is an independent random variable and $y$ is dependent on $x$. We take a set $S = \{x_i, y_i\}$ for the past years. The goal here is to learn the relation between $x$ and $y$. We will apply the relation on unknown $x$ values to get the corresponding $y$ values. Here relation basically means a mathematical function.
+
+In its simplest form the function could be a linear one like,
+
+\begin{equation}
+f(x_i) = \theta_1 x_i + \theta_0
+\end{equation}
+
+
+But often in real life scenarios we have more than one independent variables. Besides temperature we can have amount of $CO_2$ emission, amount of deforestation (in square kilometres) and so forth. Therefore in these cases instead of having a single $x_i$ we have a vector $\mathbf{x}_i = \{x_{i1}, x_{i2}, x_{i3}, ..., x_{im}\}$. We rewrite equation 1 as,
+
+\begin{equation}
+f(\mathbf{x}_i) = \sum_{j=1}^m \theta_j x_{ij} + \theta_0
+\end{equation}
+
+It is not possible to match each and every $y_i$ because of the randomness of the data. We try to go as close as possible so that $f(x)$ can represent the pattern of the output. The closeness is measured by \textit{least square} method. The goal is to minimize the distance between $y_i$ and $f(x_i)$ over the entire dataset. Say $d^2_i$ represents the squared distance between $y_i$ and $f(x_i)$.
+
+\begin{eqnarray}
+d^2_i = [y_i - f(\mathbf{x}_i)]^2
+\end{eqnarray}
+
+Let $d^2$ denote the summation of all $d^2_i$,
+
+\begin{eqnarray}
+d^2 = \sum_i[y_i - f(\mathbf{x}_i)]^2 \nonumber\\
+d^2 = \sum_i[y_i - \sum_{j=1}^m \theta_j x_{ij} - \theta_0]^2 \nonumber\\
+d^2 = \sum_i[y_i - \theta_1x_{i1} - \theta_2x_{i2} - \theta_3x_{i3} - ... - \theta_mx_{im} - \theta_0]^2
+\end{eqnarray}
+
+To obtain minimum $d^2$ we take partial derivative with respect to each $\theta_i$ and set those to zero. Therefore we get a set of partial differential equations as follows,
+
+\begin{eqnarray}
+\frac{\partial}{\partial{\theta_0}}(d^2) = -2\sum_i[y_i - \theta_1x_{i1} - \theta_2x_{i2} - \theta_3x_{i3} - ... - \theta_mx_{im} - \theta_0] = 0\nonumber \\
+\frac{\partial}{\partial{\theta_1}}(d^2) = -2\sum_i[y_i - \theta_1x_{i1} - \theta_2x_{i2} - \theta_3x_{i3} - ... - \theta_mx_{im} - \theta_0]x_{i1} = 0\nonumber \\
+\frac{\partial}{\partial{\theta_2}}(d^2) = -2\sum_i[y_i - \theta_1x_{i1} - \theta_2x_{i2} - \theta_3x_{i3} - ... - \theta_mx_{im} - \theta_0]x_{i2} = 0\nonumber \\
+\vdots \nonumber \\
+\frac{\partial}{\partial{\theta_m}}(d^2) = -2\sum_i[y_i - \theta_1x_{i1} - \theta_2x_{i2} - \theta_3x_{i3} - ... - \theta_mx_{im} - \theta_0]x_{im} = 0
+\end{eqnarray}
+
+Assuming we have n observed data points, We can write this set of equations as,
+
+\begin{eqnarray}
+\theta_0 n + \theta_1 \sum_{i=1}^n x_{i1} + \theta_2 \sum_{i=1}^n x_{i2} + ... + \theta_m \sum_{i=1}^n x_{im} = \sum_{i=1}^n y_i \nonumber \\
+\theta_0 \sum_{i=1}^n x_{i1} + \theta_1 \sum_{i=1}^n x_{i1}^2 + \theta_2 \sum_{i=1}^n x_{i1} x_{i2} +  ... + \theta_m \sum_{i=1}^n x_{i1} x_{im} = \sum_{i=1}^n y_i x_1 \nonumber \\
+\theta_0 \sum_{i=1}^n x_{i2} + \theta_1 \sum_{i=1}^n x_{i1} x_{i2} + \theta_1 \sum_{i=1}^n x_{i2}^2 + ... + \theta_m \sum_{i=1}^n x_{i2} x_{im} = \sum_{i=1}^n y_i x_2 \nonumber \\
+\vdots \nonumber \\
+\theta_0 \sum_{i=1}^n x_{im} + \theta_1 \sum_{i=1}^n x_{i1} x_{im} + \theta_1 \sum_{i=1}^n x_{i2} x_{im} + ... + \theta_m \sum_{i=1}^n x_{im}^2 = \sum_{i=1}^n y_i x_m
+\end{eqnarray}
+
+This can be written in matrix form,
+
+$$
+\begin{pmatrix}
+\sum_{i=1}^n y_i \\
+\sum_{i=1}^n y_i x_i \\
+\sum_{i=1}^n y_i x_2 \\
+\vdots \\
+\sum_{i=1}^n y_i x_m
+\end{pmatrix}
+=%
+\begin{pmatrix}
+n & \sum_{i=1}^n x_{i1} & \sum_{i=1}^n x_{i2} \hdots \sum_{i=1}^n x_{im} \\
+\sum_{i=1}^n x_{i1} & \sum_{i=1}^n x_{i1}^2 & \sum_{i=1}^n x_{i1} x_{i2} \hdots \sum_{i=1}^n x_{i1} x_{im} \\
+\sum_{i=1}^n x_{i2} & \sum_{i=1}^n x_{i1} x_{i2} & \sum_{i=1}^n x_{i2}^2 \hdots \sum_{i=1}^n x_{i2} x_{im} \\
+\vdots \\
+\sum_{i=1}^n x_{im} & \sum_{i=1}^n x_{i1} x_{im} & \sum_{i=1}^n x_{i2} x_{im} \hdots \sum_{i=1}^n x_{im}^2 \\
+\end{pmatrix}
+%
+\begin{pmatrix}
+\theta_0 \\
+\theta_1 \\
+\theta_2 \\
+\vdots \\
+\theta_m
+\end{pmatrix}
+$$
+
+In simplified notation,
+
+\begin{eqnarray}
+\mathbf{Y} = \mathbf{X \theta} \nonumber \\
+\mathbf{X^TY} = \mathbf{X^T X \theta} \nonumber \\
+\mathbf{\theta} = \mathbf{(X^T X)^{-1} X^T Y}
+\end{eqnarray}
+
+We obtained the optimal $\theta$.
+
+\subsection{Bayesian Probability Model}
+
+The traditional linear regression method is rigid in terms of learning the parameters. It gives fixed values for parameters for one observed dataset. Therefore for every new observed datapoint, the parameters are bound to change. It would be effective to learn a probability distribution over the parameters rather than fixed values. Having a distribution over parameters gives us space where the parameters can move, which is convenient to understand a stochastic process. Bayesian probability model starts with a prior distribution over parameters and changes the distribution based on observations.
+
+Bayesian probability model is built after \textit{Bayes'} rule. It allows us to start with a prior belief on the data, which is an initial probability distribution associated to the data. Experiments generate evidences, which are used to change the prior belief, i.e. the initial distribution. The new distribution we get after incorporating the evidences is called posterior. The formulation is given below.
+
+\subsubsection{Bayes' Rule}
+
+We start with the expression of Bayes' rule. Say we have two random variables, $x$ and $y$, where $x$ is an independent variable but $y$ depends on $x$. The probability of $x$ is given by $p(x)$, the joint probability of $x$ and $y$ is given by $p(y, x)$. We can break $p(y, x)$ in $p(y|x)p(x)$ or $p(x|y)p(y)$ (Here $p(x|y)$ cannot be written as $p(x)$ if $x$ is conditionally dependant on $y$). Therefore,
+
+\begin{eqnarray}
+p(y, x) = p(y|x)p(x) = p(x|y)p(y)\nonumber\\
+p(y|x) = \frac{p(x|y)p(y)}{p(x)}
+\end{eqnarray}
+
+
+The term $p(x)$ is marginalized over all possible values of $y$, so we can write $p(x)$ as,
+
+\begin{equation}
+p(x) = \sum_i{p(x|y_i)p(y_i)}
+\end{equation}
+
+
+Combining Eqn. 8 and Eqn. 9,
+
+\begin{equation}
+p(y|x) = \frac{p(x|y)p(y)}{\sum_i{p(x|y_i)p(y_i)}}
+\end{equation}
+
+In case $y$ is a continuous variable,
+
+\begin{equation}
+p(y|x) = \frac{p(x|y)p(y)}{\int_y{p(x|y)p(y)dy}}
+\end{equation}
+
+We start with the assumption that $y_i$ differs from $f(\mathbf{x}_i)$ because of noise, also Each noise term $\epsilon_i$ follows Gaussian i.i.d. $\mathcal{N}(0, \sigma ^2)$. Therefore the i\textsuperscript{th} can be written as,
+
+\begin{eqnarray}
+y_i = f(\mathbf{x}_i) + \epsilon_i \nonumber \\
+y_i = \theta ^T \mathbf{x}_i + \epsilon_i && \text{where $\theta, \mathbf{x}_i \in \mathcal{R}^m$}
+\end{eqnarray}
+
+The PDF associated with $\epsilon_i$ is,
+
+\begin{equation}
+p(\epsilon_i) = \frac{1}{\sqrt{2 \pi} \sigma} exp(-\frac{\epsilon^2}{2 \sigma^2})
+\end{equation}
+
+
+It follows from Eqn. 9 that $(y_i - \theta ^T x_i) \sim \mathcal{N}(0, \sigma^2)$, so by combining Eqn. 9 and Eqn. 10,
+
+\begin{equation}
+p(y_i - \theta ^T x_i) = \frac{1}{\sqrt{2 \pi} \sigma} exp(-\frac{(y_i - \theta ^T x_i)^2}{2 \sigma^2})
+\end{equation}
+
+From Eqn. 11 we conclude,
+
+\begin{eqnarray}
+p(y_i - \theta ^T \mathbf{x}_i) \sim \mathcal{N}(0, \sigma^2) \nonumber \\
+p(y_i | \mathbf{x}_i, \theta) \sim \mathcal{N}(\theta^T \mathbf{x}_i, \sigma^2)
+\end{eqnarray}
+
+We need to calculate the distribution over $\theta$ based on observed dataset $S = \{\mathbf{x}_i, y_i\}_{i=1}^n$ consisting of $n$ data points. The conditional PDF over $\theta$ given $S$ would be,
+
+\begin{eqnarray}
+p(\theta | S) = \frac{p(\theta)p(S | \theta)}{p(S)} \nonumber \\
+p(\theta | S) = \frac{p(\theta)p(S | \theta)}{\int p(\theta)p(S | \theta)d\theta} \nonumber \\
+p(\theta | S) = \frac{p(\theta) \prod_{i=1}^n p(y_i | \mathbf{x}_i, \theta)}{\int p(\theta) \prod_{i=1}^n p(y_i | \mathbf{x}_i, \theta) d\theta}
+\end{eqnarray}
+
+We need to predict $y_*$ for the next unobserved data point $S_* = {y_*, x_*}$ for some $x_*$ given $S$ which can be formulated as below,
+
+\begin{equation}
+p(y_* | x_*, S) = \int p(y_* | x_*, \theta)p(\theta | S)d \theta
+\end{equation}
+
+\subsection{Gaussian Process}
+
+The problem with the multivariate Gaussian distribution is that we are confined to the number of operating variables or the dimension of the input $\mathbf{x_i} \in \mathcal{R}^m$. Therefore to calculate the posterior distribution for $y_*$, we had to go for a two step solution. Firstly we learned a multivariate Gaussian posterior $p(\theta | S)$ over the set of parameters $\theta \in \mathcal{R}^m$ and secondly used it to calculate the posterior over $y_*$.
+
+It would be nice to have a mathematical representation that does not try to learn a finite set of parameters. Therefore it does not care about dimension of input, thus truly represents an infinite dimensional multivariate Gaussian distributions. This representation is known as Gaussian process.
+
+
+
+\subsection{Upper Confidence Bound}
+
+...
+
+\subsection{Bandit Algorithms}
+
+...
+
+\subsubsection{Multi-Armed bandit}
+
+...
+
+\subsubsection{Contextual Bandit}
+
+...
+
+\subsection{Neural Networks}
+
+...
+
+\subsubsection{Multi-Layered Neural Network}
+
+...
+
+\section{Dissecting an Image}
+
+...
+
+\subsection{Extract objects from an Image}
+
+...
+
+\subsection{Extract color from an image}
+
+...
+
+\subsection{Combining objects and color features}
+
+...
+
+\section{CPU vs GPU}
+
+...
+
+
+\subsection{Why CPU is not enough}
+
+...
+
+
+\subsection{How does GPU help}
+
+...
+
+
+\section{Programming architecture of GPU}
+
+...
+
+
+\section{System design}
+
+...
+
+\subsection{On CPU}
+
+...
+
+
+\subsection{On GPU}
+
+...
+
+
+\section{Experiments and Results}
+
+...
+
+
+\subsection{System setup}
+
+...
+
+
+\subsection{Experiments}
+
+...
+
+
+\subsection{Performance evaluation on CPU}
+
+...
+
+\subsection{Performance evaluation On GPU}
+
+...
+
+\subsection{Performance comparison on CPU and GPU}
+
+...
+
+
+\section{User Interaction and Usability}
+
+Design Principles -
+
+Gestalt Laws
+
+Norman's principles
+
+Shneiderman's Golden Rules
+
+Evaluation Techniques -
+
+GOMS
+
+KLM
+
+Fitts Law
+
+
+
+
+\nocite{*}
+\bibliographystyle{tktl}
+\bibliography{lahteet}
+
+\lastpage
+
+\appendices
+
+\pagestyle{empty}
+
+\internalappendix{1}{Model ABC}
+
+The appendices here are just models of the table of contents and the presentation. Each appendix 
+usually starts on its own page, with the name and number of the appendix at the top. Each appendix is paginated separately.
+
+In addition to complementing the main document, each appendix is also its own, independent entity. 
+This means that an appendix cannot be just an image or a piece of programming, but the appendix must explain its contents and meaning.
+
+
+\end{document}
+
+
