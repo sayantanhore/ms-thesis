@@ -243,6 +243,20 @@ The problem with the multivariate Gaussian distribution is that we are confined 
 
 It would be nice to have a mathematical representation that does not try to learn a finite set of parameters. Therefore it does not care about dimension of input, thus truly represents an infinite dimensional multivariate Gaussian distributions. This representation is known as Gaussian process.
 
+In our example of rainfall prediction, we consider $x_i \in \mathcal{R}$ to be summer temperature. Here the independent random variable $x_i$ is single dimensional. If we consider spring temperature also for that particular year then $x_i = \{x_i, x_j\} \in \mathcal{R}^2$ becomes two dimensional. No matter how many different temperatures we consider, $x_i \in \mathcal{R}^m$ remains a finite dimensional vector. Gaussian process helps in building a framework that actually allows us to fit any number of dimensions in. We do not have to fix the $m$ beforehand. Therefore we can make $x_i$ represent various different temperatures at different months, weeks, days, hours and so forth.
+
+Previously we have represented different random variables over different co-ordinate axis to represent multivariate distribution. We cannot see beyond three dimensions, so to draw infinite dimensional distributions we do not represent one random variable on a single axis. For example $X$-axis does not represent any particular random variable in $x_i$ anymore, rather the entire $x_i$. As we can fit infinite number of points on $X$- axis, we can represent infinite dimensions on it. If $x_i$ is a three dimensional vector, we show three points on $X$-axis.
+
+To represent the regression problem here we have,
+
+\begin{equation}
+y_i = f(\mathbf{x}_i) + \epsilon_i
+\end{equation}
+
+$\epsilon_i \sim (0, 1)$ is the standard Gaussian noise.
+
+Without considering any parameter set, we try to learn the function $f$. We treat $f$ as a dependent random variable on $x_i$. A continuous function can represent infinite number of points on it. Therefore $f$ can fit over an infinite dimensional $x_i$. Thus Gaussian process gives us a multivariate distribution over functions.
+
 
 
 \subsection{Upper Confidence Bound}
