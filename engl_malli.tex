@@ -1,4 +1,4 @@
-\documentclass[english]{tktltiki}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        \documentclass[english]{tktltiki}
 \usepackage[pdftex]{graphicx}
 \usepackage{subfigure}
 \usepackage{url}
@@ -162,6 +162,61 @@ In simplified notation,
 
 We obtained the optimal $\theta$.
 
+\subsection{Gaussian Distribution}
+
+A one dimensional random variable $x$, which Gaussian distribution with mean $\mu$ and variance $\sigma$ has a PDF,
+
+\begin{equation}
+p(x) = \frac{1}{\sqrt{2 \pi}\sigma} \exp(\frac{(x - \mu)^2}{2 \sigma^2})
+\end{equation}
+
+
+
+This is the equation of a bell curve as shown in Figure \ref{fig:gaussian_1d}.
+
+Eqn. 8 can be written as,
+
+\begin{equation}
+p(x) \sim \mathcal{N}(\mu, \sigma^2)
+\end{equation}
+
+It means, $x$ comes from a Gaussian distribution with mean $\mu$ and variance $\sigma^2$.
+
+Sometimes we have a collection of random variables $\mathbf{x} = \{x_1, x_2, x_3, ..., x_m\}, m \in \mathcal{R}$, where each $x_i, i \in m$ follows Gaussian distribution, we write the PDF over $\mathbf{x}$ as,
+
+\begin{equation}
+p(\mathbf{x}) = \frac{1}{\sqrt{(2 \pi)^m |\Sigma|}}exp(-\frac{1}{2}(\mathbf{x} - \mu)^T \Sigma^{-1} (\mathbf{x} - \mu))
+\end{equation}
+
+Here $\mu = \{\mu_1, \mu_2, ..., \mu_m\}$ is a mean vector where each $\mu_i$ represents the mean of $x_i$ where $i \in m$. $\Sigma$ is a $mXm$ covariance matrix where any $\Sigma[i, j]$ represents the co-variance between $x_i$ and $x_j$.
+
+Figure \ref{fig:gaussian_2d} shows the plot of a two dimensional Gaussian.
+
+We can write Eqn. 10 as,
+
+\begin{equation}
+p(\mathbf{x}) \sim \mathcal{N}(\mathbf{\mu}, \Sigma^2)
+\end{equation}
+
+\begin{figure}
+\centering
+\begin{minipage}{.5\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{gp_1d.png}
+  \caption{Univariate Gaussian}
+  \label{fig:gaussian_1d}
+\end{minipage}%
+\begin{minipage}{.41\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{gp_2d.png}
+  \caption{Multivariate Gaussian}
+  \label{fig:gaussian_2d}
+\end{minipage}
+
+\label{fig:test}
+\end{figure}
+
+
 \subsection{Bayesian Probability Model}
 
 The traditional linear regression method is rigid in terms of learning the parameters. It gives fixed values for parameters for one observed dataset. Therefore for every new observed datapoint, the parameters are bound to change. It would be effective to learn a probability distribution over the parameters rather than fixed values. Having a distribution over parameters gives us space where the parameters can move, which is convenient to understand a stochastic process. Bayesian probability model starts with a prior distribution over parameters and changes the distribution based on observations.
@@ -248,7 +303,7 @@ p(y_* | x_*, S) = \int p(y_* | x_*, \theta)p(\theta | S)d \theta
 
 The problem with the multivariate Gaussian distribution is that we are confined to the number of operating variables or the dimension of the input $\mathbf{x_i} \in \mathcal{R}^m$. Therefore to calculate the posterior distribution for $y_*$, we had to go for a two step solution. Firstly we learned a multivariate Gaussian posterior $p(\theta | S)$ over the set of parameters $\theta \in \mathcal{R}^m$ and secondly used it to calculate the posterior over $y_*$.
 
-It would be nice to have a mathematical framework that does not try to learn a finite set of parameters. Therefore it does not care about dimensions of input, thus truly represents an infinite dimensional multivariate Gaussian distributions. This representation is known as Gaussian process.
+It would be nice to have a mathematical framework that does not try to learn a finite set of parameters. Therefore it does not care about dimensions of input, thus truly represents an infinite dimensional multivariate Gaussian distribution. This representation is known as Gaussian process.
 
 In our example of rainfall prediction, we consider $x_i \in \mathcal{R}$ to be summer temperature. Here the independent random variable $x_i$ is single dimensional. If we consider spring temperature also for that particular year then $x_i = \{x_i, x_j\} \in \mathcal{R}^2$ becomes two dimensional. No matter how many different temperatures we consider, $x_i \in \mathcal{R}^m$ remains a finite dimensional vector. Gaussian process helps in building a framework that actually allows us to fit any number of dimensions in. We do not have to fix $m$ beforehand. Therefore we can make $x_i$ represent various different temperatures at different months, weeks, days, hours and so forth.
 
@@ -264,6 +319,37 @@ $\epsilon_i \sim (0, \sigma^2))$ is the standard Gaussian noise.
 
 Without considering any parameter set, we try to learn the function $f$. We treat $f$ as a dependent random variable on $x_i$. A continuous function can represent infinite number of points on it. Therefore $f$ can fit over an infinite dimensional $x_i$. Thus Gaussian process gives us a multivariate distribution over functions.
 
+\begin{figure}
+\centering
+\begin{minipage}{.5\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{gp.png}
+  \caption{Prior with zero mean}
+  \label{fig:sub1}
+\end{minipage}%
+\begin{minipage}{.5\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{gp_2.png}
+  \caption{Posterior with one evidence}
+  \label{fig:sub2}
+\end{minipage}
+
+\begin{minipage}{.5\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{gp_3.png}
+  \caption{More evidences}
+  \label{fig:sub1}
+\end{minipage}%
+\begin{minipage}{.5\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{gp_4.png}
+  \caption{Learned function with entire training set}
+  \label{fig:sub2}
+\end{minipage}
+
+\label{fig:test}
+\end{figure}
+
 We take $\mathcal{F} = \{f_1, f_2, ..., f_n, f_{n+1}, ... \infty\}$ a set of functions that can operate over $\mathbf{x}_i$. A function $f_1$ can take any form like $f_1(x) = (x + 2)$ or $f_1(x) = x^2$ or $f_1(x) = \exp(\sin(x)^5)$, as long as $f_1(x) \in \mathcal{R}$. From this infinite set $\mathcal{F}$ we need to find the proper $f$ that truly represents $y$.
 
 To differentiate a function from a regular random variable we denote a function $f$ as $f(.)$ from now on. We start with a prior distribution over $\mathcal{F}$, given by,
@@ -271,6 +357,8 @@ To differentiate a function from a regular random variable we denote a function 
 \begin{equation}
 f(.) \sim (m(.), k(.,.))
 \end{equation}
+
+The prior is shown in Figure 1 with zero mean. Before getting evidences, the prior distribution has uniform confidence interval around the mean for the entire space. Figure 2 shows that after getting one evidence point the space around that point shrinked. We exclude all the functions that do not pass through our evidence point. The mean function has to pass through that point, therefore it shifted and the confidence interval also narrowed down accordingly. Figure 3 shows the same effect for more evidence points. Figure 4 finally shows the shape of the posterior function when we have enough evidences.
 
 As we are operating on a distribution over functions, the mean $m(.)$ and covariance matrix $k(.,.)$ are also functions. The domain of $f(.)$ is a vector $x_i \in \mathcal{R}^M$ where $M \to \infty$. $m(.)$ is the mean function which gives the mean of any random variable $x_{ip} (x_{ip} \in \mathbf{x}_i, p \in M)$,
 
@@ -404,6 +492,8 @@ Using Bayesian posterior calculation it can be shown that,
 \begin{equation}
 \mathbf{y_m}^* | \mathbf{y_m}, \mathbf{x}_m, \mathbf{x}_m^* \sim (\mu^*, \Sigma^*)
 \end{equation}
+
+This is the function represented by Figure 4.
 
 where,
 
