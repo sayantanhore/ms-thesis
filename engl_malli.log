@@ -1,23 +1,17 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.6.7)  2 JUL 2014 04:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  15 JUL 2014 20:18
 entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
 **engl_malli.tex
-(C:\Users\Sayantan\Documents\GitHub\ms-thesis\engl_malli.tex
-LaTeX2e <2011/06/27>
-Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
-abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
-croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
-lician, german, german-x-2013-05-26, greek, gujarati, hindi, hungarian, iceland
-ic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latvian,
- lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, n
-german-x-2013-05-26, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
-ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
-an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
-ishmax, welsh, loaded.
-(C:\Users\Sayantan\Documents\GitHub\ms-thesis\tktltiki.cls
+(./engl_malli.tex
+LaTeX2e <2014/05/01>
+Babel <3.9k> and hyphenation patterns for 78 languages loaded.
+(./tktltiki.cls
 Document Class: tktltiki 2007/09/12 v1.1 Dokumenttiluokka TiKi-kurssia varten
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\article.cls"
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\size12.clo"
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/size12.clo
 File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
@@ -32,41 +26,35 @@ File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\latexsym.sty"
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/latexsym.sty
 Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
 \symlasy=\mathgroup4
 LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
 (Font)                  U/lasy/m/n --> U/lasy/b/n on input line 47.
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\inputenc.sty"
-Package: inputenc 2008/03/30 v1.1d Input encoding file
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2014/04/30 v1.2b Input encoding file
 \inpenc@prehook=\toks14
 \inpenc@posthook=\toks15
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\latin9.def"
-File: latin9.def 2008/03/30 v1.1d Input encoding file
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/latin9.def
+File: latin9.def 2014/04/30 v1.2b Input encoding file
 ))
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\fontenc.sty"
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\t1enc.def"
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/t1enc.def
 File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
 ))
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\babel\babel.sty"
-Package: babel 2008/07/08 v3.8m The Babel package
+(/usr/local/texlive/2014/texmf-dist/tex/generic/babel/babel.sty
+Package: babel 2014/03/24 3.9k The Babel package
 
-*************************************
-* Local config file bblopts.cfg used
-*
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\bblopts.cfg"
-File: bblopts.cfg 2006/07/31 v1.0 MiKTeX 'babel' configuration
-)
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\babel\english.ldf"
-Language: english 2005/03/30 v3.3o English support from the babel system
+(/usr/local/texlive/2014/texmf-dist/tex/generic/babel-english/english.ldf
+Language: english 2012/08/20 v3.3p English support from the babel system
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\babel\babel.def"
-File: babel.def 2008/07/08 v3.8m Babel common definitions
+(/usr/local/texlive/2014/texmf-dist/tex/generic/babel/babel.def
+File: babel.def 2014/03/24 3.9k Babel common definitions
 \babel@savecnt=\count87
 \U@D=\dimen103
 )
@@ -74,22 +62,22 @@ File: babel.def 2008/07/08 v3.8m Babel common definitions
 \l@australian = a dialect from \language\l@british 
 \l@newzealand = a dialect from \language\l@british 
 ))
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\geometry\geometry.sty"
+(/usr/local/texlive/2014/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2010/09/12 v5.6 Page Geometry
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
-Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/05/08 v1.15 key=value parser (DPC)
 \KV@toks@=\toks16
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ifpdf.sty
 Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
 Package ifpdf Info: pdfTeX in PDF mode is detected.
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ifvtex.sty"
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ifvtex.sty
 Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
 Package ifvtex Info: VTeX not detected.
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty"
+(/usr/local/texlive/2014/texmf-dist/tex/generic/ifxetex/ifxetex.sty
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
 \Gm@cnth=\count88
@@ -104,38 +92,37 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@layouthoffset=\dimen110
 \Gm@layoutvoffset=\dimen111
 \Gm@dimlist=\toks17
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\geometry\geometry.cfg"))
+)
 
 Package geometry Warning: Over-specification in `h'-direction.
     `width' (426.79134pt) is ignored.
 
 \c@appendix=\count91
 \c@appendixpage=\count92
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\openbib.sty")
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/openbib.sty)
 \@abstract=\box26
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
-Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/04/25 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
-File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+(/usr/local/texlive/2014/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
 Package graphics Info: Driver file: pdftex.def on input line 91.
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
+(/usr/local/texlive/2014/texmf-dist/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/infwarerr.sty
 Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 )
 \Gread@gobject=\count93
@@ -143,8 +130,8 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen112
 \Gin@req@width=\dimen113
 )
-(C:\Users\Sayantan\AppData\Roaming\MiKTeX\2.9\tex\latex\subfigure\subfigure.sty
-Package: subfigure 2002/07/30 v2.1.4 subfigure package
+(/usr/local/texlive/2014/texmf-dist/tex/latex/subfigure/subfigure.sty
+Package: subfigure 2002/03/15 v2.1.5 subfigure package
 \subfigtopskip=\skip43
 \subfigcapskip=\skip44
 \subfigcaptopadj=\dimen114
@@ -155,36 +142,36 @@ Package: subfigure 2002/07/30 v2.1.4 subfigure package
 \c@lofdepth=\count95
 \c@subtable=\count96
 \c@lotdepth=\count97
+
 ****************************************
 * Local config file subfigure.cfg used *
 ****************************************
-
-(C:\Users\Sayantan\AppData\Roaming\MiKTeX\2.9\tex\latex\subfigure\subfigure.cfg
-)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/subfigure/subfigure.cfg)
 \subfig@top=\skip47
 \subfig@bottom=\skip48
-) (C:\Users\Sayantan\AppData\Roaming\MiKTeX\2.9\tex\latex\url\url.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip10
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty"
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2013/01/14 v2.14 AMS math features
 \@mathmargin=\skip49
 
 For additional information on amsmath, use the `?' option.
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amstext.sty"
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2000/06/29 v2.01
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty"
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
 \@emptytoks=\toks18
 \ex@=\dimen116
 ))
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty"
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d
 \pmbraise@=\dimen117
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty"
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 1999/12/14 v2.01 operator names
 )
 \inf@bad=\count98
@@ -225,7 +212,7 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
 )
-(C:\Users\Sayantan\Documents\GitHub\ms-thesis\engl_malli.aux
+(./engl_malli.aux
 
 LaTeX Warning: Label `fig:sub1' multiply defined.
 
@@ -236,6 +223,8 @@ LaTeX Warning: Label `fig:sub2' multiply defined.
 LaTeX Warning: Label `fig:test' multiply defined.
 
 )
+\openout1 = `engl_malli.aux'.
+
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
 LaTeX Font Info:    ... okay on input line 7.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
@@ -283,7 +272,7 @@ LaTeX Font Info:    ... okay on input line 7.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-(C:\Users\Sayantan\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
+(/usr/local/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count110
 \scratchdimen=\dimen125
@@ -296,9 +285,53 @@ LaTeX Font Info:    ... okay on input line 7.
 \MPnumerator=\count114
 \makeMPintoPDFobject=\count115
 \everyMPtoPDFconversion=\toks24
-) [1
+) (/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
 
-{C:/Users/Sayantan/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+))
+(/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+[1
+
+{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 Overfull \hbox (153.20865pt too wide) in paragraph at lines 29--29
 [][] 
  []
@@ -307,27 +340,28 @@ Overfull \hbox (153.20865pt too wide) in paragraph at lines 29--29
 Overfull \vbox (190.58662pt too high) has occurred while \output is active []
 
 
-[1] (C:\Users\Sayantan\Documents\GitHub\ms-thesis\engl_malli.toc
+[1] (./engl_malli.toc
 LaTeX Font Info:    Try loading font information for U+lasy on input line 4.
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ulasy.fd"
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 ) [2])
 \tf@toc=\write3
+\openout3 = `engl_malli.toc'.
+
  [3] [1]
-[2] [3] [4] <gp_1d.png, id=43, 361.35pt x 225.84375pt>
+[2] [3] [4] <gp_1d.png, id=44, 361.35pt x 225.84375pt>
 File: gp_1d.png Graphic file (type png)
  <use gp_1d.png>
 Package pdftex.def Info: gp_1d.png used on input line 205.
 (pdftex.def)             Requested size: 213.39568pt x 133.37415pt.
 
-<gp_2d.png, id=44, 366.36874pt x 280.04625pt>
+<gp_2d.png, id=45, 366.36874pt x 280.04625pt>
 File: gp_2d.png Graphic file (type png)
  <use gp_2d.png>
 Package pdftex.def Info: gp_2d.png used on input line 211.
 (pdftex.def)             Requested size: 174.98601pt x 133.75832pt.
- [5 <C:/Users/Sayantan/Documents/GitHub/ms-thesis/gp_1d.png (PNG copy)> <C:/Use
-rs/Sayantan/Documents/GitHub/ms-thesis/gp_2d.png (PNG copy)>] [6]
+ [5 <./gp_1d.png (PNG copy)> <./gp_2d.png (PNG copy)>] [6]
 
 Package amsmath Warning: Cannot use `split' here;
 (amsmath)                trying to recover with `aligned' on input line 281.
@@ -335,83 +369,84 @@ Package amsmath Warning: Cannot use `split' here;
 
 Overfull \hbox (1.02571pt too wide) in paragraph at lines 284--285
 []\T1/cmr/m/n/12 We need to cal-cu-late the dis-tri-bu-tion over $\OML/cmm/m/it
-/12 $ \T1/cmr/m/n/12 based on ob-served dataset $\OML/cmm/m/it/12 S \OT1/cmr/m
-/n/12 = \OMS/cmsy/m/n/12 f\OT1/cmr/bx/n/12 x[]\OML/cmm/m/it/12 ; y[]\OMS/cmsy/m
-/n/12 g[]$
+/12 ^^R$ \T1/cmr/m/n/12 based on ob-served dataset $\OML/cmm/m/it/12 S \OT1/cmr
+/m/n/12 = \OMS/cmsy/m/n/12 f\OT1/cmr/bx/n/12 x[]\OML/cmm/m/it/12 ; y[]\OMS/cmsy
+/m/n/12 g[]$
  []
 
 
 Package amsmath Warning: Cannot use `split' here;
 (amsmath)                trying to recover with `aligned' on input line 293.
 
-[7] <gp.png, id=55, 664.4825pt x 419.5675pt>
-File: gp.png Graphic file (type png)
- <use gp.png>
-Package pdftex.def Info: gp.png used on input line 326.
-(pdftex.def)             Requested size: 213.39568pt x 134.74449pt.
+[7] <figures/GP_1.png, id=56, 1027.84pt x 770.88pt>
+File: figures/GP_1.png Graphic file (type png)
+ <use figures/GP_1.png>
+Package pdftex.def Info: figures/GP_1.png used on input line 326.
+(pdftex.def)             Requested size: 213.39568pt x 160.04283pt.
 
-<gp_2.png, id=57, 642.4pt x 411.5375pt>
-File: gp_2.png Graphic file (type png)
- <use gp_2.png>
-Package pdftex.def Info: gp_2.png used on input line 332.
-(pdftex.def)             Requested size: 213.39568pt x 136.70576pt.
+<figures/GP_2.png, id=58, 1027.84pt x 770.88pt>
+File: figures/GP_2.png Graphic file (type png)
+ <use figures/GP_2.png>
+Package pdftex.def Info: figures/GP_2.png used on input line 332.
+(pdftex.def)             Requested size: 213.39568pt x 160.04283pt.
 
-<gp_3.png, id=58, 656.4525pt x 406.51875pt>
-File: gp_3.png Graphic file (type png)
- <use gp_3.png>
-Package pdftex.def Info: gp_3.png used on input line 339.
-(pdftex.def)             Requested size: 213.39568pt x 132.14804pt.
+<figures/GP_3.png, id=59, 1027.84pt x 770.88pt>
+File: figures/GP_3.png Graphic file (type png)
+ <use figures/GP_3.png>
+Package pdftex.def Info: figures/GP_3.png used on input line 339.
+(pdftex.def)             Requested size: 213.39568pt x 160.04283pt.
 
-<gp_4.png, id=59, 652.4375pt x 410.53375pt>
-File: gp_4.png Graphic file (type png)
- <use gp_4.png>
-Package pdftex.def Info: gp_4.png used on input line 345.
-(pdftex.def)             Requested size: 213.39568pt x 134.27382pt.
- [8] [9 <C:/Users/Sayantan/Documents/GitHub/ms-thesis/gp.png> <C:/Users/Sayanta
-n/Documents/GitHub/ms-thesis/gp_2.png> <C:/Users/Sayantan/Documents/GitHub/ms-t
-hesis/gp_3.png> <C:/Users/Sayantan/Documents/GitHub/ms-thesis/gp_4.png>] [10]
+<figures/GP_4.png, id=60, 1027.84pt x 770.88pt>
+File: figures/GP_4.png Graphic file (type png)
+ <use figures/GP_4.png>
+Package pdftex.def Info: figures/GP_4.png used on input line 345.
+(pdftex.def)             Requested size: 213.39568pt x 160.04283pt.
+ [8]
+[9 <./figures/GP_1.png> <./figures/GP_2.png> <./figures/GP_3.png> <./figures/GP
+_4.png>] [10]
 Overfull \hbox (8.50633pt too wide) in alignment at lines 445--488
  [][][] []
  []
 
 [11] [12] [13] [14]
 No file engl_malli.bbl.
-[15] [1] (C:\Users\Sayantan\Documents\GitHub\ms-thesis\engl_malli.aux)
+[15] [1] (./engl_malli.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 3191 strings out of 493921
- 41353 string characters out of 3144868
- 111556 words of memory out of 3000000
- 6421 multiletter control sequences out of 15000+200000
- 17364 words of font info for 46 fonts, out of 3000000 for 9000
- 841 hyphenation exceptions out of 8191
- 31i,13n,24p,4731b,285s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\Sayantan\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi6
-00\ecrm0800.pk> <C:\Users\Sayantan\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jkn
-appen\ec\dpi600\ecti1200.pk> <C:\Users\Sayantan\AppData\Local\MiKTeX\2.9\fonts\
-pk\ljfour\jknappen\ec\dpi600\ecbx1200.pk> <C:\Users\Sayantan\AppData\Local\MiKT
-eX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1728.pk> <C:\Users\Sayantan\AppDa
-ta\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm0600.pk> <C:\Users\S
-ayantan\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1000.pk
-> <C:\Users\Sayantan\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi60
-0\ecbx1440.pk> <C:\Users\Sayantan\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jkna
-ppen\ec\dpi600\ecrm1200.pk><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/publi
-c/amsfonts/cm/cmbx12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/
-amsfonts/cm/cmbx8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/ams
-fonts/cm/cmex10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfo
-nts/cm/cmmi12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfont
-s/cm/cmmi6.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/c
-m/cmmi8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
-mr12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8
-.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.p
-fb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb>
-<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on engl_malli.pdf (20 pages, 323506 bytes).
+ 3625 strings out of 493117
+ 48565 string characters out of 6135433
+ 129937 words of memory out of 5000000
+ 6999 multiletter control sequences out of 15000+600000
+ 17364 words of font info for 46 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 38i,13n,25p,4730b,285s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
+</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
+/usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></u
+sr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
+r/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr
+/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/l
+ocal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/loc
+al/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local
+/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/te
+xlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/tex
+live/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texli
+ve/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive
+/2014/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2
+014/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/201
+4/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive/2014/
+texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb></usr/local/texlive/2014/te
+xmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2014/texm
+f-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2014/texmf-
+dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2014/texmf-di
+st/fonts/type1/public/cm-super/sfti1200.pfb>
+Output written on engl_malli.pdf (20 pages, 424329 bytes).
 PDF statistics:
- 484 PDF objects out of 1000 (max. 8388607)
+ 158 PDF objects out of 1000 (max. 8388607)
+ 105 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
