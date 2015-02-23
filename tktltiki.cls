@@ -210,7 +210,7 @@
   \hspace{1em}%
 }
 \RequirePackage{openbib}
-\addto\captionsfinnish{\def\refname{L‰hteet}}
+\addto\captionsfinnish{\def\refname{L√§hteet}}
 \addto\captionsenglish{\def\enclname{Appendices}}
 \addto\captionsswedish{\def\enclname{Bilagor}}
 \renewenvironment{thebibliography}[1]
@@ -237,7 +237,7 @@
 \level{}
 
 \addto\captionsfinnish{%
-  \def\dateofacceptance{hyv‰ksymisp‰iv‰}%
+  \def\dateofacceptance{hyv√§ksymisp√§iv√§}%
   \def\grade{arvosana}%
   \def\instructor{arvostelija}%
   \def\uh{HELSINGIN YLIOPISTO}%
@@ -255,7 +255,7 @@
 \addto\captionsswedish{%
   \def\dateofacceptance{godk.datum}%
   \def\grade{vitsord}%
-  \def\instructor{bedˆmare}%
+  \def\instructor{bed√∂mare}%
   \def\uh{HELSINGFORS UNIVERSITET}%
   \def\helsinki{Helsingfors}%
   \def\ccs{ACM Computing Classification System (CCS):}%
@@ -317,8 +317,8 @@
 
 \addto\captionsfinnish{%
   \faculty{Matemaattis-luonnontieteellinen tiedekunta}
-  \department{Tietojenk‰sittelytieteen laitos}%
-  \subject{Tietojenk‰sittelytiede}
+  \department{Tietojenk√§sittelytieteen laitos}%
+  \subject{Tietojenk√§sittelytiede}
 }
 \addto\captionsenglish{%
   \faculty{Faculty of Science}
@@ -327,7 +327,7 @@
 }
 \addto\captionsswedish{%
   \faculty{Matematisk-naturvetenskapliga fakulteten}
-  \department{Institutionen fˆr datavetenskap}%
+  \department{Institutionen f√∂r datavetenskap}%
   \subject{Datavetenskap}
 }
 \newsavebox{\@abstract}

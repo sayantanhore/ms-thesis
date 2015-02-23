@@ -1,0 +1,15 @@
+\begin{thebibliography}{HWdR11}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{{\tt #1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\input babelbst.tex
+\newcommand{\Capitalize}[1]{\uppercase{#1}}
+\newcommand{\capitalize}[1]{\expandafter\Capitalize#1}
+
+\bibitem[HWdR11]{contextual_bandits}
+Hofmann, K., Whiteson, S. \bbland{} de~Rijke, M., Contextual bandits for
+  information retrieval.
+\newblock  {\em NIPS 2011 Workshop on Bayesian Optimization, Experimental
+  Design, and Bandits}, 2011.
+
+\end{thebibliography}

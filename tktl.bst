@@ -36,14 +36,14 @@
 %%   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %%   Right brace   \}     Tilde         \~}
  % BibTeX-bibliografiatyyli `tktl'
-    % versio 1.0  BibTeX-versiolle 0.99c ja myˆhemmille ja
+    % versio 1.0  BibTeX-versiolle 0.99c ja my√∂hemmille ja
     %   LaTeX-versiolle 2e.
     % Copyright (C) 2002 Mikael Puolakka.
-    % T‰m‰ bibliografiatyylitiedosto tarvitsee tiedostot
+    % T√§m√§ bibliografiatyylitiedosto tarvitsee tiedostot
     %   babelbst.tex, finnbst.tex, englbst.tex ja swedbst.tex,
-    %   jotka sis‰lt‰v‰t sanakomentojen, kuten \bbleditor, jne.,
-    %   m‰‰ritelm‰t.
-    % T‰m‰ tiedosto on modifioitu tiedostosta
+    %   jotka sis√§lt√§v√§t sanakomentojen, kuten \bbleditor, jne.,
+    %   m√§√§ritelm√§t.
+    % T√§m√§ tiedosto on modifioitu tiedostosta
  % BibTeX standard bibliography style `alpha'
     % version 0.99a for BibTeX versions 0.99a or later, LaTeX version 2.09.
     % Copyright (C) 1985, all rights reserved.

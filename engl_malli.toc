@@ -12,28 +12,29 @@
 \contentsline {subsubsection}{\numberline {3.4.1}Bayes' Rule}{6}
 \contentsline {subsection}{\numberline {3.5}Gaussian Process}{8}
 \contentsline {subsection}{\numberline {3.6}Upper Confidence Bound}{12}
-\contentsline {subsection}{\numberline {3.7}Bandit Algorithms}{12}
-\contentsline {subsubsection}{\numberline {3.7.1}Multi-Armed bandit}{12}
-\contentsline {subsubsection}{\numberline {3.7.2}Contextual Bandit}{12}
-\contentsline {subsection}{\numberline {3.8}Neural Networks}{13}
-\contentsline {subsubsection}{\numberline {3.8.1}Multi-Layered Neural Network}{13}
-\contentsline {section}{\numberline {4}Dissecting an Image}{13}
-\contentsline {subsection}{\numberline {4.1}Extract objects from an Image}{13}
-\contentsline {subsection}{\numberline {4.2}Extract color from an image}{13}
-\contentsline {subsection}{\numberline {4.3}Combining objects and color features}{13}
-\contentsline {section}{\numberline {5}CPU vs GPU}{13}
-\contentsline {subsection}{\numberline {5.1}Why CPU is not enough}{13}
-\contentsline {subsection}{\numberline {5.2}How does GPU help}{13}
-\contentsline {section}{\numberline {6}Programming architecture of GPU}{14}
-\contentsline {section}{\numberline {7}System design}{14}
-\contentsline {subsection}{\numberline {7.1}On CPU}{14}
-\contentsline {subsection}{\numberline {7.2}On GPU}{14}
-\contentsline {section}{\numberline {8}Experiments and Results}{14}
-\contentsline {subsection}{\numberline {8.1}System setup}{14}
-\contentsline {subsection}{\numberline {8.2}Experiments}{14}
-\contentsline {subsection}{\numberline {8.3}Performance evaluation on CPU}{14}
-\contentsline {subsection}{\numberline {8.4}Performance evaluation On GPU}{15}
-\contentsline {subsection}{\numberline {8.5}Performance comparison on CPU and GPU}{15}
-\contentsline {section}{\numberline {9}User Interaction and Usability}{15}
+\contentsline {subsection}{\numberline {3.7}Bandit Problems}{12}
+\contentsline {subsubsection}{\numberline {3.7.1}Applying Gaussian Process to Bandit Problems}{13}
+\contentsline {subsubsection}{\numberline {3.7.2}Contextual Bandit}{14}
+\contentsline {subsection}{\numberline {3.8}Neural Networks}{14}
+\contentsline {subsubsection}{\numberline {3.8.1}Multi-Layered Neural Network}{14}
+\contentsline {section}{\numberline {4}Dissecting an Image}{14}
+\contentsline {subsection}{\numberline {4.1}Extract objects from an Image}{14}
+\contentsline {subsection}{\numberline {4.2}Extract color from an image}{14}
+\contentsline {subsection}{\numberline {4.3}Combining objects and color features}{14}
+\contentsline {section}{\numberline {5}CPU vs GPU}{15}
+\contentsline {subsection}{\numberline {5.1}Why CPU is not enough}{15}
+\contentsline {subsection}{\numberline {5.2}How does GPU help}{15}
+\contentsline {section}{\numberline {6}Programming architecture of GPU}{15}
+\contentsline {section}{\numberline {7}System design}{15}
+\contentsline {subsection}{\numberline {7.1}On CPU}{15}
+\contentsline {subsection}{\numberline {7.2}On GPU}{15}
+\contentsline {section}{\numberline {8}Experiments and Results}{15}
+\contentsline {subsection}{\numberline {8.1}System setup}{16}
+\contentsline {subsection}{\numberline {8.2}Experiments}{16}
+\contentsline {subsection}{\numberline {8.3}Performance evaluation on CPU}{16}
+\contentsline {subsection}{\numberline {8.4}Performance evaluation On GPU}{16}
+\contentsline {subsection}{\numberline {8.5}Performance comparison on CPU and GPU}{16}
+\contentsline {section}{\numberline {9}User Interaction and Usability}{16}
+\contentsline {section}{References}{17}
 \contentsline {section}{Appendices}{}
  \contentsline {section}{\hspace {0.5cm}1 Model ABC}{}
