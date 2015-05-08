@@ -930,8 +930,7 @@ EXPLOIT performed considerably better, almost as good as GPUCB, in target search
 
 Figure \ref{positive_feedback} shows the cumulative number of images getting positive feedback over the three tasks in all three algorithms. We are using unannotated or untagged images, therefore the number of positive feedback over iterations are the only measure of how relevant the images were, presented to the user. As mentioned before, exploration did not affect target search to a great extent, so GPUCB and EXPLOIT generated more or less equal number of positive images. Both in category search and open ended search, GPUCB generated more positive feedback than the other two. In all three tasks, EXPLOIT started producing more positive feedbacks in the initial iterations, as GPUCB produced some irrelevant images due to exploration, but in the end fell behind GPUCB. GPUCB performed well to finish around twenty iterations in target search and fifteen in open ended search. The other two continued. RAND was clearly outperformed by the other two everywhere.
 
-Figure \ref{red_rose_1} to Figure \ref{city_night_5} show the images shown per iteration, up to five iterations, for two cases, Red Rose and City by Night. It reflects how well GPUCB performed and how more relevant images appeared with iterations. Red rose is shown from Figure \ref{red_rose_1} to \ref{red_rose_5}.
-
+Figure \ref{red_rose_1} and Figure \ref{red_rose_2} show the first two iterations of the experiment for red rose. Clearly the experiment started with images from random colour domains. Figure \ref{red_rose_5} shows how the experiment converged to a merely red dominated colour space with three red roses. Figure \ref{city_night_1} to Figure \ref{city_night_5} show the same for city by night. It reflects how well GPUCB performed and how more relevant images appeared with later iterations.
 \begin{figure}[!h]
   \centering
     \includegraphics[width=0.90\textwidth,height=6cm]{figures/Rose_1.png}
@@ -944,20 +943,6 @@ Figure \ref{red_rose_1} to Figure \ref{city_night_5} show the images shown per i
     \includegraphics[width=0.90\textwidth,height=6cm]{figures/Rose_2.png}
     \caption{Red Rose Iteration 2}
     \label{red_rose_2}
-\end{figure}
-
-\begin{figure}[h!]
-  \centering
-    \includegraphics[width=0.90\textwidth,height=6cm]{figures/Rose_3.png}
-    \caption{Red Rose Iteration 3}
-    \label{red_rose_3}
-\end{figure}
-
-\begin{figure}[h!]
-  \centering
-    \includegraphics[width=0.90\textwidth,height=6cm]{figures/Rose_4.png}
-    \caption{Red Rose Iteration 4}
-    \label{red_rose_4}
 \end{figure}
 
 \begin{figure}[h!]
@@ -984,22 +969,8 @@ Figure \ref{red_rose_1} to Figure \ref{city_night_5} show the images shown per i
 
 \begin{figure}[h!]
   \centering
-    \includegraphics[width=0.90\textwidth,height=6cm]{figures/City_Night_3.png}
-    \caption{City by night 3}
-    \label{city_night_3}
-\end{figure}
-
-\begin{figure}[h!]
-  \centering
-    \includegraphics[width=0.90\textwidth,height=6cm]{figures/City_Night_4.png}
-    \caption{City by night 4}
-    \label{city_night_4}
-\end{figure}
-
-\begin{figure}[h!]
-  \centering
     \includegraphics[width=0.90\textwidth,height=6cm]{figures/City_Night_5.png}
-    \caption{City by night 5}
+    \caption{City by night Iteration 5}
     \label{city_night_5}
 \end{figure}
 
@@ -1046,7 +1017,7 @@ In this experiment we introduce a new interface which helps eliminating the prob
     \label{fut_samp_2}
 \end{figure}
 
-Therefore the user sees an early view of the next iteration. If images there are not suitable, the user can change the feedbacks and get new images. Once the user feels that the images in the FutureView are suitable, he can go next and the images from the FutureView will replace the images in the left section, we will refer to this as current view from now on, and the same procedure follows. Initially each iteration starts with an empty FutureView as shown in Figure: \ref{fut_samp_1} and as soon as the user gives one feedback, the FutureView fills up with images based on that feedback. Whenever the user gives a feedback to any of the images in the current view, the FutureView gets refreshed with new images as shown in Figure: \ref{fut_samp_2}.
+Therefore the user sees an early view of the next iteration. If images there are not suitable, the user can change the feedbacks and get new images. Once the user feels that the images in the FutureView are suitable, he can go next and the images from the FutureView will replace the images in the left section, we will refer to this as current view from now on, and the same procedure follows. Initially each iteration starts with an empty FutureView as shown in Figure \ref{fut_samp_1} and as soon as the user gives one feedback, the FutureView fills up with images based on that feedback. Whenever the user gives a feedback to any of the images in the current view, the FutureView gets refreshed with new images as shown in Figure \ref{fut_samp_2}.
 
 \subsection{Participants}
 
@@ -1303,7 +1274,7 @@ From these information we calculated the average iterations taken by experiments
 \begin{table}
 	
 	\begin{center}
-	\scalebox{0.65}{
+	\scalebox{0.62}{
     \begin{tabular}{|l|r|r|r|r|r|r|}
         \hline
         \multicolumn{7}{|c|}{\textbf{Task wise Mean (Standard Deviation)}} \\
@@ -1609,10 +1580,28 @@ We also calculated the aggregates on usability parameters extracted from the NAS
     \label{table:use_wilcoxon_genre}
 \end{table}
 
+\begin{figure}[!h]
+  \centering
+    \includegraphics[width=0.90\textwidth,height=6cm]{figures/gardening_1.jpg}
+    \caption{Gardening 1}
+    \label{gardening_1}
+\end{figure}
 
+\begin{figure}[!h]
+  \centering
+    \includegraphics[width=0.90\textwidth,height=6cm]{figures/gardening_2.jpg}
+    \caption{Gardening 2}
+    \label{gardening_2}
+\end{figure}
 
+\begin{figure}[!h]
+  \centering
+    \includegraphics[width=0.90\textwidth,height=6cm]{figures/gardening_5.jpg}
+    \caption{Gardening 5}
+    \label{gardening_5}
+\end{figure}
 
-From Table \ref{table:use_mean_std_task} we see that for tasks city by night, gardening, happiness, red rose and seashore, users felt more successful in the FutureView, while only for tall building both the views performed equally good.
+From Table \ref{table:use_mean_std_task} we see that for tasks city by night, gardening, happiness, red rose and seashore, users felt more successful in the FutureView, while only for tall building both the views performed equally good. Figure \ref{gardening_1} and Figure \ref{gardening_2} shows the first two iterations of the experiment with task Gardening in FutureView. They show how the experiment started with images in random colour spaces even in FutureView and Figure \ref{gardening_5} shows how it converged to a green heavy colour space with a few relevant images in the last iteration.
 
 \subsection{Excerpts from interviewes}
 
