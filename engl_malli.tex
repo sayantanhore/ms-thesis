@@ -48,7 +48,7 @@ Images are not built with letters, so in case of a text based search, the keywor
 \end{itemize}
 
 
-To tackle these issues, it is required to search for and by the actual contents of images. Contents of images can be represented on a computer as features like RGB colour space, colour gradient, texture, shape etc. These representations are known as "features". If all the images are represented in features, they can be searched for applying search algorithms onto those features. This image retrieval procedure is known as \textit{content based image retrieval} or CBIR \cite{cbir_1} \cite{cbir_2}. Researchers have been involved into building such systems over the past few years \cite{cbir_3} \cite{cbir_4}. The first experiment on CBIR took place in 1992 \cite{cbir_1st} and after that several systems came out. Some of them involve multiple image features and apply machine learning techniques to retrieve images. Some of them use a supervised learning approach to train a multi-class classifier which classifies images based on available annotated training image set, but it is time consuming to train an agent before it can go live and perform. Others use unsupervised approach to cluster images based on the similarity in their contents, then first try to retrieve the most suitable cluster and from there pick up relevant images based on the search query. Some systems use reinforcement learning where the learning agent collects relevance feedback \cite{rel_feed} from the users on the images they liked till the search session ends in an iterative process \cite{pichunter} \cite{PicSOM} \cite{inter_rel_feed}. There is no need to train it offline. These system have great potential in searching for abstract themes say "sorrow", because it lets the user choose images based on what they have in mind. It reduces the chance of mis-classification or mis-clustering. Our system is modelled after this philosophy. We use \textit{Gaussian process bandits} in reinforcement learning setting to retrieve relevant images. In the subsequent sections we include the necessary theoretical background, a brief description of similar but relevant systems, construction of our system following the theory given, experiment setup and conclusion. 
+To tackle the above mentioned issues, it is required to search for and by the actual contents of images. Contents of images can be represented on a computer as RGB colour space, colour gradient, texture, shape etc. These representations are known as "features". If all the images are represented in features, appropriate pattern recognition and search algorithms can be applied on them. This image retrieval procedure is known as \textit{content based image retrieval} or CBIR \cite{cbir_1} \cite{cbir_2}. Researchers have been involved into building such systems over the past few years \cite{cbir_3} \cite{cbir_4}. The first experiment on CBIR took place in 1992 \cite{cbir_1st} and after that several systems came out. Some of them involve multiple image features and apply machine learning techniques to retrieve images. Some of them use a supervised learning approach to train a multi-class classifier which classifies images based on available annotated training image set, but it is time consuming to train an agent before it can go live and perform. Others use unsupervised approach to cluster images based on the similarity in their contents, then first try to retrieve the most suitable cluster and from there pick up relevant images based on the search query. Some systems use reinforcement learning where the learning agent collects relevance feedback \cite{rel_feed} from the users on the images they liked till the search session ends in an iterative process \cite{pichunter} \cite{PicSOM} \cite{inter_rel_feed}. There is no need to train it offline. These system have great potential in searching for abstract themes say "sorrow", because it lets the user choose images based on what they have in mind. It reduces the chance of mis-classification or mis-clustering. Our system is modelled after this philosophy. We use \textit{Gaussian process bandits} in reinforcement learning setting to retrieve relevant images. In the subsequent sections we include the necessary theoretical background, a brief description of similar but relevant systems, construction of our system following the theory given, experiment setup and conclusion. 
 
 \iffalse
 Content based image retrieval systems have been proven to fit better in retrieval performance. Text or tag based matching systems rely only on texts, thus the images themselves are secondary in the search procedure. The user sees the image and selects one by the objects and color the image represents. The combination of those objects and colors should actually be searched for instead of tags. Tags hardly represent an entire image. An image portraying a cloudy afternoon can be tagged as "Sad", based on the mood and understanding of the person creating the tags. Another image of the same genre, tagged by different persons, might miss the tag. If a user is in search for "Sad" images and finds one with the tag, selects it. The other "Sad" image would not appear in the search results as it lacks the tag. Had features and content of the image been searched for, we could get better and more appropriate search results.
@@ -83,15 +83,33 @@ In subsequent section, we will present the theoretical background of Reinforceme
 
 \section{Related Work}
 
-We had many content based image retrieval systems so far over the past few years. These include Query By Image Content (QBIC) by IBM \cite{QBIC}, Photobook by MIT \cite{Photobook}, Virage by Virage Technologies \cite{Virage}, PicSOM \cite{PicSOM} and Pinview \cite{Pinview}. PicSOM arranges images in \textit{Self Organizing Maps}(SOM) \cite{SOM} and in relies relevance feedback collected on example images shown to users. We have taken inspiration from PicSOM in our study. Next we will discuss PicSOM and Pinview briefly.
+We had many content based image retrieval systems so far over the past few years. These include Query By Image Content (QBIC) by IBM \cite{QBIC}, Photobook by MIT \cite{Photobook}, Virage by Virage Technologies \cite{Virage}, PicSOM \cite{PicSOM} and Pinview \cite{Pinview}. PicSOM arranges images in \textit{Self Organizing Maps}(SOM) \cite{SOM} and in relies relevance feedback collected on example images shown to users. We have taken inspiration from PicSOM and Pinview in our study which we will discuss next.
 
 \subsection{PicSOM}
 
 PicSOM is a recent CBIR system that uses large unannotated image databases. It is the first system in its genre that uses SOM, especially it uses tree structured SOM (TS-SOM) \cite{TSSOM} \cite{TSSOM_progress}. The system can be configured to use with multiple image databases and it can handle multiple features. New features can also be introduced to the system as long as the feature can be represented in fixed dimensions and Euclidean metric can be applied to measure the distances between images. The system uses five different features namely, Average Colour, Colour Moments, Texture Neighbourhood, Shape Histogram and Shape FFT. For each of these features the system calculates the corresponding TS-SOM. The TS-SOMs are trained in a top-to-bottom manner by presenting the extracted feature vectors for each image to the corresponding TS-SOM multiple times. After the training, each node in the TS-SOM contains a model vector which roughly averages all the feature vectors mapped to that node down below. Also if the training is proper, each node at the bottom of a TS-SOM should uniquely represent one single image.
 
-PicSOM is a web application and it starts with providing a choice of the image database to the user. Once the user selects the database, it shows a few images from that database to the user. The user selects a subset of the images from the shown set and continues. This subset is passed as a query to the system. The feature vectors for respective features for images from the selected subset are calculated and passed to the TS-SOMS to find out similar images. Different TS-SOMs will give different images as a result of similarity measure. Somwhow the results need to be combined or only the TS-SOM, whose feature best represents the user's intention in the selection, have to be used. The user could have been given a choice regarding which feature he wants to use for the current search. But features are not very straight forward always. For example if the user is a layman, he might not be aware about Shape-FFT. Therefore it is better if the system decides which feature would perform better by observing the selected subset. PicSOM has a very good solution to this problem. It passes the feature vectors for selected images to all the TS-SOMs and observes the spread of the images. The TS-SOM that represents the selected images the closest to each other or the least scattered, has the best performing feature for the current search.
+PicSOM starts with providing a choice of the image database to the user. Once the user selects the database, it shows a few images from that database to the user. The user selects a subset of the images from the shown set and continues. This subset is passed as a query to the system. The feature vectors for respective features for images from the selected subset are calculated and passed to the TS-SOMS to find out similar images. Different TS-SOMs will give different images as a result of similarity measure. Somwhow the results need to be combined or only the TS-SOM, whose feature best represents the user's intention in the selection, have to be used. The user could have been given a choice regarding which feature he wants to use for the current search. But features are not very straight forward always. For example if the user is a layman, he might not be aware about Shape-FFT. Therefore it is better if the system decides which feature would perform better by observing the selected subset. PicSOM has a very good solution to this problem. It passes the feature vectors for selected images to all the TS-SOMs and observes the spread of the images. The TS-SOM that represents the selected images the closest to each other or the least scattered, has the best performing feature for the current search.
 
 The images in the selected subset are marked as positive and the images ignored by the user are marked as negative. The system uses a low pass filter mask to convolve the TS-SOM. This way the positive effect of the nodes, mainly associated with images marked so, are conveyed to the neighbouring nodes. In the next iteration, images from nodes with high positive values are selected and shown to the user and the process continues.
+
+\subsubsection{Inspirations from PicSOM}
+
+We have taken three major ideas from PicSOM for our CBIR implementation, which are,
+
+\begin{itemize}
+	\item \textbf{QBPE} - This stands for Query by Pictorial Example \cite{qbpe}. The idea is to replace text queries by images themselves. The query image can be an existing one from the image dataset being used or any random image choosen by the user. In our system we show random images from the image set to the user and the user selects the suitable ones. Those selected images are sent to the system as queries.
+	\item \textbf{RF} - This stands for relevance feedback \cite{rel_feed}. The user selects and rates images and those ratings are sent to the system as positive feedback or reward.
+	\item \textbf{Hierarchical ordering of images} - PicSOM represents image features in SOM \cite{SOM}. In our system we represent image features in hierarchical K-Means \cite{k_means} clusters.
+\end{itemize}
+
+\subsubsection{Differences from PicSOM}
+
+\begin{itemize}
+	\item PicSOM uses a lot of features in combination whereas we only use colour as a feature.
+	\item PicSOM categorised tasks mainly based on specific objects as faces, cars etc. We categorised tasks based on varying abstractness like red rose, happiness etc. This is explained in detailed in Section 4 later.
+\end{itemize}
+
 
 \subsection{Pinview}
 
@@ -116,6 +134,20 @@ k_{\eta}(i, j) = \sum_{i=1}^n \eta_i k_i(i, j)
 $$
 
 Here $\eta = \{\eta_1, ...\eta_n\}$ are the weights given to kernel functions.
+
+\subsection{Inspirations from Pinview}
+
+\begin{itemize}
+	\item Pinview uses multiple input modalities like click and eye-movements as means of registering user feedback. We used a draggable slider (a modified click feedback mechanism) for giving feedback.
+	\item Pinview uses multi-armed-bandit \cite{bandits} algorithm Linrel \cite{linrel} for recommending images. 
+\end{itemize}
+
+\subsection{Differences from Pinview}
+
+\begin{itemize}
+	\item We used Tobii eye-tracker to capture user's gaze to understand how implicit feedback (from gaze) correlates with explicit feedback (from slider-drag). Though we did not do any extensive study on that.
+	\item We have used multi-armed-bandit \cite{bandits} algorithm Gaussian Process Bandits for recommending images. 
+\end{itemize}
 
 \section{Theoretical background}
 
@@ -153,13 +185,13 @@ Reinforcement learning fits well with bandit problems where the user, who pulls 
 
 \subsection{Gittin's Indices}
 
-Bandit problems require us to find out a proper sequence of actions over the time steps, to achieve the maximum discounted cumulative total reward. Therefore at each time step, we should have a mechanism to decide which action to take. Gittins and Jones \cite{gittins_indices} provided an indexing scheme for each available action, known as Gittins index. For each state $x_i$ of an action $i$, the Gittins index for $i$ is given as,
+Bandit problems require us to find out a proper sequence of actions over the time steps, to achieve the maximum discounted cumulative total reward. Therefore at each time step, we should have a mechanism to decide which action to take. Gittins and Jones \cite{gittins_indices} provided an indexing scheme for each available action, known as Gittins index. For each state $s_i$ of an action $i$, the Gittins index for $i$ is given as,
 
 \begin{equation}
-G_i(x_i) = \sup_{\tau > 1}{\frac{E\Big[\sum_{t = 0}^{\tau - 1} r_i(x_i(t))\beta^t | x_i(0) = x_i\Big]}{E\Big[\sum_{t = 0}^{\tau - 1}\beta^t | x_i(0) = x_i\Big]}}
+G_i(s_i) = \sup_{\tau > 1}{\frac{E\Big[\sum_{t = 0}^{\tau - 1} r_i(s_i(t))\beta^t | s_i(0) = s_i\Big]}{E\Big[\sum_{t = 0}^{\tau - 1}\beta^t | s_i(0) = s_i\Big]}}
 \end{equation}
 
-Here $r_i$ is the reward function for $i$, which generates immediate reward  $r_i(x_i(t))$ if $i$ is chosen at time $t$. $x_i(0)$ is the starting state. $\tau$ is a predefined stopping step. At each step $t$, the $i$ with the highest $G_i(x_i)$ is chosen.
+Here $r_i$ is the reward function for $i$, which generates immediate reward  $r_i(s_i(t))$ if $i$ is chosen at time $t$. $s_i(0)$ is the starting state. $\tau$ is a predefined stopping step. At each step $t$, the $i$ with the highest $G_i(s_i)$ is chosen.
 
 \subsubsection{Upper Confidence Bound}
 \label{sec:UCB}
@@ -218,7 +250,11 @@ UCB(a_t) = \mathbf{x}_{at}^T . \theta_a^* + \alpha \sqrt{\mathbf{x}_{at}^T (\mat
 
 The action with highest UCB value is picked up.
 
-\subsection{Regression Problems}
+\subsection{Gaussian Process Bandits}
+
+Gaussian processes are nonparametric regression techniques. Before starting with Gaussian processes, we need to discuss regression problems, bandits, Gaussian distribution, Baye's rule, Bayesian linear regression models including the standard linear model and basis function models both. In the subsequent subsections we will address these topics briefly.
+
+\subsubsection{Regression Problems}
 \label{subsec:reg_prob}
 
 In regression problems we have multiple random variables. At least one of those variables are dependent on a subset of the rest. Let us assume that we have to predict rainfall in a city for the coming monsoon based on average summer temperature. We take a dataset consisting of year by year rainfall and average summer temperature recorded over the past few years. We denote the temperature by $x$ and rainfall by $y$. We assume $x$ is an independent random variable and $y$ is dependent on $x$. We take a set $S = \{x_i, y_i|i = 0, 1, ...\}$ for the past years. The goal here is to learn the relation between $x$ and $y$. We will apply the learned relation on unknown $x$ values to get the corresponding $y$ values. Here relation basically means a mathematical function.
@@ -230,7 +266,7 @@ f(x_i) = \theta_1 x_i + \theta_0
 \end{equation}
 
 
-But often in real life scenarios we have more than one independent input variables. Besides temperature we can have amount of $CO_2$ emission, amount of deforestation (in square kilometres) and so forth. Therefore in these cases instead of having a single $x_i$ we have a vector $\mathbf{x}_i = \{x_{i1}, x_{i2}, x_{i3}, ..., x_{im}\}$. We rewrite equation 1 as,
+But often in real life scenarios we have more than one independent input variables. Besides temperature we can have amount of $CO_2$ emission, amount of deforestation (in square kilometres) and so forth. Therefore instead of having a single $x_i$ we have a vector $\mathbf{x}_i = \{x_{i1}, x_{i2}, x_{i3}, ..., x_{im}\}$. We rewrite equation 1 as,
 
 \begin{equation}
 f(\mathbf{x}_i) = \sum_{j=1}^m \theta_j x_{ij} + \theta_0
@@ -296,25 +332,25 @@ n & \sum_{i=1}^n x_{i1} & \sum_{i=1}^n x_{i2} \hdots \sum_{i=1}^n x_{im} \\
 \vdots \\
 \theta_m
 \end{pmatrix}
+\label{eq:lin_reg_matrix}
 $$
 
-In simplified notation,
+To simplify the notation, let's denote the left hand side of Eqn. \ref{eq:lin_reg_matrix} as $\mathbf{B}$, the matrix at the right hand side as $\mathbf{X}$ and the vector $\theta$ as $\hat{\mathbf{\theta}}$. Therefore Eqn. \ref{eq:lin_reg_matrix} can be written as,
 
 \begin{eqnarray}
-\mathbf{Y} = \mathbf{X \theta} \nonumber \\
-\mathbf{X^TY} = \mathbf{X^T X \theta} \nonumber \\
-\mathbf{\theta} = \mathbf{(X^T X)^{-1} X^T Y}
+\mathbf{B} = \mathbf{X \hat{\theta}} \nonumber \\
+\hat{\theta} = \mathbf{X^{-1}} \mathbf{B}
 \label{reg_param}
 \end{eqnarray}
 
-We obtained the optimal $\theta = \{\theta_1, \theta_2, \theta_3, ...,\theta_m\}$.
+We obtained the optimal $\hat{\theta} = \{\theta_1, \theta_2, \theta_3, ...,\theta_m\}$.
 
-\subsection{Gaussian Distribution}
+\subsubsection{Gaussian Distribution}
 
 A one dimensional random variable $x$, which follows Gaussian distribution with mean $\mu$ and variance $\sigma$ has a probability density function (PDF),
 
 \begin{equation}
-p(x) = \frac{1}{\sqrt{2 \pi}\sigma} \exp(\frac{(x - \mu)^2}{2 \sigma^2})
+p(x) = \frac{1}{\sqrt{2 \pi}\sigma} \exp \Big[-\frac{(x - \mu)^2}{2 \sigma^2}\Big]
 \label{gauss_single_var_dist}
 \end{equation}
 
@@ -334,7 +370,7 @@ It means, $x$ comes from a Gaussian distribution with mean $\mu$ and variance $\
 Sometimes we have a collection of random variables $\mathbf{x} = \{x_1, x_2, x_3, ..., x_m\}, m \in \mathcal{R}$, where each $x_i$ where $i \in m$ follows Gaussian distribution, we write the PDF over $\mathbf{x}$ as,
 
 \begin{equation}
-p(\mathbf{x}) = \frac{1}{\sqrt{(2 \pi)^m |\Sigma|}}exp(-\frac{1}{2}(\mathbf{x} - \mu)^T \Sigma^{-1} (\mathbf{x} - \mu))
+p(\mathbf{x}) = \frac{1}{\sqrt{(2 \pi)^m |\Sigma|}}exp \Big[-\frac{1}{2}(\mathbf{x} - \mu)^T \Sigma^{-1} (\mathbf{x} - \mu) \Big]
 \label{gauss_multi_var_dist}
 \end{equation}
 
@@ -368,7 +404,7 @@ p(\mathbf{x}) \sim \mathcal{N}(\mathbf{\mu}, \Sigma^2)
 \end{figure}
 
 
-\subsection{Bayesian Linear Regression Model}
+\subsubsection{Bayesian Linear Regression Model}
 
 The traditional linear regression method is rigid in terms of learning the parameters. It gives fixed values for parameters for one observed datapoint. Therefore for every new observed datapoint, the parameters are bound to change. As always we only know numeric values of the parameters, it is hard to predict about how much they can change for the next ovserved data point.  It would be effective to learn a probability distribution over the parameters rather than fixed values. Having a distribution over parameters gives us space where the parameters can move, which is convenient to understand a stochastic process. Bayesian probability model starts with a prior distribution over parameters and changes the distribution based on observations.
 
@@ -417,7 +453,7 @@ y_i = \boldsymbol\theta ^T \mathbf{x}_i + \epsilon_i && \text{where $\boldsymbol
 The PDF associated with $\epsilon_i$ is,
 
 \begin{equation}
-p(\epsilon_i) = \frac{1}{\sqrt{2 \pi} \sigma} exp(-\frac{\epsilon^2}{2 \sigma^2})
+p(\epsilon_i) = \frac{1}{\sqrt{2 \pi} \sigma} exp \Big[-\frac{\epsilon^2}{2 \sigma^2} \Big]
 \end{equation}
 
 
@@ -425,8 +461,8 @@ Replacing $\epsilon_i$ by $(y_i - \boldsymbol\theta ^T \mathbf{x}_i)$ from Eqn. 
 
 \begin{eqnarray}
 \begin{split}
-	&p(y_i - \boldsymbol\theta ^T \mathbf{x}_i) = \frac{1}{\sqrt{2 \pi} \sigma} exp(-\frac{(y_i - \boldsymbol\theta ^T \mathbf{x}_i)^2}{2 \sigma^2}) \\
-	&p(y_i | \mathbf{x}_i, \boldsymbol\theta) = \frac{1}{\sqrt{2 \pi} \sigma} exp(-\frac{(y_i - \boldsymbol\theta ^T \mathbf{x}_i)^2}{2 \sigma^2})
+	&p(y_i - \boldsymbol\theta ^T \mathbf{x}_i) = \frac{1}{\sqrt{2 \pi} \sigma} exp \Big[-\frac{(y_i - \boldsymbol\theta ^T \mathbf{x}_i)^2}{2 \sigma^2} \Big] \\
+	&p(y_i | \mathbf{x}_i, \boldsymbol\theta) = \frac{1}{\sqrt{2 \pi} \sigma} exp \Big[-\frac{(y_i - \boldsymbol\theta ^T \mathbf{x}_i)^2}{2 \sigma^2} \Big]
 \end{split}
 \end{eqnarray}
 
@@ -439,7 +475,7 @@ Over the entire training dataset $S = \{\mathbf{x}_i, y_i\}_{i=1}^n$, as $y_i$'s
 \label{eqn:likelihood}
 \begin{split}
 	p(\mathbf{y} | \mathbf{X}, \boldsymbol\theta) &= \prod_{i = 1}^n p(y_i | \boldsymbol\theta ^T \mathbf{x}_i) \\
-	&= \prod_{i = 1}^n \frac{1}{\sqrt{2 \pi} \sigma} exp(-\frac{(y_i - \boldsymbol\theta ^T \mathbf{x}_i)^2}{2 \sigma^2}) 
+	&= \prod_{i = 1}^n \frac{1}{\sqrt{2 \pi} \sigma} exp \Big[-\frac{(y_i - \boldsymbol\theta ^T \mathbf{x}_i)^2}{2 \sigma^2} \Big]
 \end{split}
 \end{eqnarray}
 
@@ -535,9 +571,9 @@ This kernel has extreme importance in practical applications. Once we get the ke
 
 Here the problem we need to deal with is to choose the appropriate amount of basis functions, their location centres, their width etc. As the kernel function is built with the inner product of input vectors elevated to the basis feature space, these parameters play important role and if not chosen carefully they might not reflect the proper covariance between the given input. The most obvious drawback is the correlation between the inputs falls of quickly when they move far away from the basis function centres. We need an infinite amount of basis functions to reflect the true covariance between the inputs. This discussion is out of scope of this text. In the next section, we will see how we can build an efficient kernel function that do not have to deal with the setting of these basis function parameters, rather it directly relates the given inputs and instead of trying to get the distribution over parameters, it directly calculates the posterior over the function $f\mathbf(x)$. In other words, instead of calculating posterior over $\mathbf(X)^T \boldsymbol\theta$ or $\boldsymbol\phi \mathbf(X)^T \boldsymbol\theta$, we directly calculate the posterior over $f\mathbf(x)$. It frees us from dealing with $\boldsymbol \theta$ or $\boldsymbol \phi$. Here comes the idea of \textit{Gaussian Process}.
 
-\subsection{Gaussian Process}
+\subsubsection{Gaussian Process}
 
-Gaussian process \cite{gaussian_process_for_machine_learning} is a mathematical framework that does not try to learn a finite set of parameters. It models the output as a function of covariances between input data points. It tries to learn the function that gives that output over any input. In other words it tries to learn the distribution over the functions. As it expresses the function in terms of input covariances, it does not care about dimensions of input once covariances are calculated, thus truly represents a non parametric multivariate Gaussian framework. This representation is known as Gaussian process.
+Gaussian process \cite{gaussian_process_for_machine_learning} is a mathematical framework that does not try to learn a finite set of parameters. It models the output as a function of covariances between the input data points. It tries to learn the function that gives that output over any input. In other words it tries to learn the distribution over the functions. As it expresses the function in terms of input covariances, it does not care about dimensions of input once covariances are calculated, thus truly represents a non parametric multivariate Gaussian framework. This representation is known as Gaussian process.
 
 In our example of rainfall prediction, we consider $x_i \in \mathcal{R}$ to be summer temperature. Here the independent random variable $x_i$ is single dimensional. If we consider spring temperature also for that particular year then $\mathbf{x}_i = \{x_i, x_j\} \in \mathcal{R}^2$ becomes two dimensional. No matter how many different temperatures we consider, $\mathbf{x}_i \in \mathcal{R}^d$ remains a finite dimensional vector. Gaussian process helps in building a framework that actually allows us to fit any number of dimensions in. We do not have to fix $d$ beforehand. Therefore we can make $\mathbf{x}_i$ represent various different temperatures at different months, weeks, days, hours and so forth.
 
@@ -1603,7 +1639,7 @@ We also calculated the aggregates on usability parameters extracted from the NAS
 
 From Table \ref{table:use_mean_std_task} we see that for tasks city by night, gardening, happiness, red rose and seashore, users felt more successful in the FutureView, while only for tall building both the views performed equally good. Figure \ref{gardening_1} and Figure \ref{gardening_2} shows the first two iterations of the experiment with task Gardening in FutureView. They show how the experiment started with images in random colour spaces even in FutureView and Figure \ref{gardening_5} shows how it converged to a green heavy colour space with a few relevant images in the last iteration.
 
-\subsection{Excerpts from interviewes}
+\subsection{Excerpts from interviews}
 
 The users liked the concept of FutureView overall and they talked about that in the interviews. They said some positive things about the FutureView, like, the FutureView helped them reaching their target image more quickly than the single view, they felt secure in the navigation more in the FutureView as they could see what images are getting picked up in each step, they did not see a live view before in any of the image search systems they have used before, the FutureView is more useful to people whose job includes searching for images. The last statement supports our goal to make a system that does not just search for discrete individual images, but helps building up a story or help reaching near a story step by step. It helps searching for images which are hard to describe in a finite combination of tags.
 
