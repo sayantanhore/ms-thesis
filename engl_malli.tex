@@ -6,12 +6,13 @@
 \usepackage{tikz}
 \usepackage{multirow}
 
+
 \begin{document}
 %\doublespacing
 %\singlespacing
 \onehalfspacing
 
-\title{A formal study on Content Based Image Retrieval systems}
+\title{FutureView: An innovative CBIR interface to peek into the future}
 \author{Sayantan Hore}
 \date{\today}
 
@@ -26,7 +27,7 @@ I.7.m [Document and text processing]}}
 
 \begin{abstract}
 
-Content based image retrieval systems are out there for a few years now. We present a system, IMSE, here which searches out images using Gaussian Process Upper Confidence Bound algorithm. This algorithm has performed better in comparison to random search and plain exploration. We present a comparison of how the algorithm performs on CPU as well as GPU. We also evaluate the user experience and with the search interface.
+Content Based Image Retrieval or CBIR systems has become the state of the art image retrieval technique over the past few years. It showed commendable retrieval performance over traditional annotation based retrieval. CBIR systems use relevance feedback as input query. CBIR systems developed so far did not put much effort to come up with suitable user interfaces for accepting relevance feedback efficiently i.e. by putting less cognitive load to the user and providing a higher amount of exploration in a limited amount of time. In this study we promote a new interface "FutureView" which allows peeking into the future providing access to more number of images into a lesser amount of time than traditional interfaces. This idea helps the user to choose more appropriate images without getting diverted. We used Gaussian process upper confidence bound algorithm for recommending images. We successfully compared this algorithm with Random and Exploitation algorithms with positive results.
 
 \end{abstract}
 
@@ -83,13 +84,13 @@ In subsequent section, we will present the theoretical background of Reinforceme
 
 \section{Related Work}
 
-We had many content based image retrieval systems so far over the past few years. These include Query By Image Content (QBIC) by IBM \cite{QBIC}, Photobook by MIT \cite{Photobook}, Virage by Virage Technologies \cite{Virage}, PicSOM \cite{PicSOM} and Pinview \cite{Pinview}. PicSOM arranges images in \textit{Self Organizing Maps}(SOM) \cite{SOM} and in relies relevance feedback collected on example images shown to users. We have taken inspiration from PicSOM and Pinview in our study which we will discuss next.
+We have seen many content based image retrieval systems coming up so far over the past few years. These include Query By Image Content (QBIC) by IBM \cite{QBIC}, Photobook by MIT \cite{Photobook}, Virage by Virage Technologies \cite{Virage}, PicSOM \cite{PicSOM} and Pinview \cite{Pinview}. PicSOM arranges images in \textit{Self Organizing Maps}(SOM) \cite{SOM} and in relies relevance feedback collected on example images shown to users. We have taken inspiration from PicSOM and Pinview in our study which we will discuss next.
 
 \subsection{PicSOM}
 
 PicSOM is a recent CBIR system that uses large unannotated image databases. It is the first system in its genre that uses SOM, especially it uses tree structured SOM (TS-SOM) \cite{TSSOM} \cite{TSSOM_progress}. The system can be configured to use with multiple image databases and it can handle multiple features. New features can also be introduced to the system as long as the feature can be represented in fixed dimensions and Euclidean metric can be applied to measure the distances between images. The system uses five different features namely, Average Colour, Colour Moments, Texture Neighbourhood, Shape Histogram and Shape FFT. For each of these features the system calculates the corresponding TS-SOM. The TS-SOMs are trained in a top-to-bottom manner by presenting the extracted feature vectors for each image to the corresponding TS-SOM multiple times. After the training, each node in the TS-SOM contains a model vector which roughly averages all the feature vectors mapped to that node down below. Also if the training is proper, each node at the bottom of a TS-SOM should uniquely represent one single image.
 
-PicSOM starts with providing a choice of the image database to the user. Once the user selects the database, it shows a few images from that database to the user. The user selects a subset of the images from the shown set and continues. This subset is passed as a query to the system. The feature vectors for respective features for images from the selected subset are calculated and passed to the TS-SOMS to find out similar images. Different TS-SOMs will give different images as a result of similarity measure. Somwhow the results need to be combined or only the TS-SOM, whose feature best represents the user's intention in the selection, have to be used. The user could have been given a choice regarding which feature he wants to use for the current search. But features are not very straight forward always. For example if the user is a layman, he might not be aware about Shape-FFT. Therefore it is better if the system decides which feature would perform better by observing the selected subset. PicSOM has a very good solution to this problem. It passes the feature vectors for selected images to all the TS-SOMs and observes the spread of the images. The TS-SOM that represents the selected images the closest to each other or the least scattered, has the best performing feature for the current search.
+PicSOM starts with providing a choice of the image database to the user. Once the user selects the database, it shows a few images from that database to the user. The user selects a subset of the images from the shown set and continues. This subset is passed as a query to the system. The feature vectors for respective features for images in the selected subset are calculated and passed to the TS-SOMS to find out similar images. Different TS-SOMs will return different images. The results need to be combined or only the TS-SOM, whose feature best represents the user's intention in the selection, have to be used. The user could have been given a choice regarding which feature he wants to use for the current search. But features are not very straight forward always. For example if the user is a layman, he might not be aware about Shape-FFT. Therefore it is better if the system decides which feature would perform better by observing the selected subset. PicSOM has a very good solution to this problem. It passes the feature vectors for selected images to all the TS-SOMs and observes the spread of the images. The TS-SOM that represents the selected images the closest to each other or the least scattered, has the best performing feature for the current search.
 
 The images in the selected subset are marked as positive and the images ignored by the user are marked as negative. The system uses a low pass filter mask to convolve the TS-SOM. This way the positive effect of the nodes, mainly associated with images marked so, are conveyed to the neighbouring nodes. In the next iteration, images from nodes with high positive values are selected and shown to the user and the process continues.
 
@@ -98,8 +99,8 @@ The images in the selected subset are marked as positive and the images ignored 
 We have taken three major ideas from PicSOM for our CBIR implementation, which are,
 
 \begin{itemize}
-	\item \textbf{QBPE} - This stands for Query by Pictorial Example \cite{qbpe}. The idea is to replace text queries by images themselves. The query image can be an existing one from the image dataset being used or any random image choosen by the user. In our system we show random images from the image set to the user and the user selects the suitable ones. Those selected images are sent to the system as queries.
-	\item \textbf{RF} - This stands for relevance feedback \cite{rel_feed}. The user selects and rates images and those ratings are sent to the system as positive feedback or reward.
+	\item \textbf{QBPE} - QBPE stands for Query by Pictorial Example \cite{qbpe}. The idea is to replace text queries by images themselves. The query image can be an existing one from the image dataset being used or any random image choosen by the user. In our system we show random images from the image set to the user and the user selects the suitable ones. Those selected images are sent to the system as queries.
+	\item \textbf{RF} - RF stands for relevance feedback \cite{rel_feed}. The user selects and rates images and those ratings are sent to the system as positive feedback or reward.
 	\item \textbf{Hierarchical ordering of images} - PicSOM represents image features in SOM \cite{SOM}. In our system we represent image features in hierarchical K-Means \cite{k_means} clusters.
 \end{itemize}
 
@@ -139,43 +140,45 @@ Here $\eta = \{\eta_1, ...\eta_n\}$ are the weights given to kernel functions.
 
 \begin{itemize}
 	\item Pinview uses multiple input modalities like click and eye-movements as means of registering user feedback. We used a draggable slider (a modified click feedback mechanism) for giving feedback.
-	\item Pinview uses multi-armed-bandit \cite{bandits} algorithm Linrel \cite{linrel} for recommending images. 
+	\item Pinview uses multi-armed-bandit \cite{bandits} algorithm Linrel \cite{linrel} for recommending images. We use Gaussian process bandits for the same.
 \end{itemize}
 
 \subsection{Differences from Pinview}
 
 \begin{itemize}
 	\item We used Tobii eye-tracker to capture user's gaze to understand how implicit feedback (from gaze) correlates with explicit feedback (from slider-drag). Though we did not do any extensive study on that.
-	\item We have used multi-armed-bandit \cite{bandits} algorithm Gaussian Process Bandits for recommending images. 
 \end{itemize}
 
 \section{Theoretical background}
 
-Here we discuss the theoretical background necessary for understanding the modelling of image retrieval, especially the model we went for. We discuss reinforcement learning, bandit problems, upper confidence bound, regression problems, Bayesian probability model, Gaussian process and application of Gaussian process in bandit problems one by one.
+Here we discuss the theoretical background necessary for understanding the modelling of content based image retrieval, especially the model we went for. We discuss reinforcement learning, bandit problems, upper confidence bound, regression problems, Bayesian probability model, Gaussian process and application of Gaussian process in bandit problems one by one.
 
 
 \subsection{Reinforcement Learning}
 
-Reinforcement learning enables a learner to learn to act from experience. It resembles mostly the form of learning we human being follow from our childhood. The learner performs an act, observe the reaction of the surrounding and based on that decides the next move or action. It is similar to play a chase game. The reaction from the surrounding, often termed as "feedback" or "reward", either promotes or demotes the action taken. The possible set of values of the reward changes based on the nature of the given problem. Sometimes it is a binary value where a $1$ denotes a correct action and a $0$ otherwise. Sometimes it is a number where a positive number denotes a correct action and a negative number denotes otherwise. The magnitude of the number reflects how correct or incorrect the action was, i.e. the severity of the action taken.
+Reinforcement learning enables a learner to learn to act from experience. It resembles mostly the form of learning human being follow from our childhood. The learner performs an act, observe the reaction of the surrounding and based on that reaction decides the next move or action. It is similar to play a game of chase. The reaction from the surrounding, often termed as "feedback" or "reward", either promotes or demotes the action taken. The possible set of values of the reward changes based on the nature of the given problem. Sometimes it is a binary value where a $1$ denotes a correct action and a $0$ otherwise. Sometimes it is a number where a positive number denotes a correct action and a negative number denotes otherwise. The magnitude of the number reflects how much correct or incorrect the action was, i.e. the severity of the action taken.
 
-The settings of reinforcement learning problems differs greatly from  one another. One very common set of problems has an environment with a set of states $S$, at any given time the learning agent can be in any of the given states. As the agent performs an action, it changes state. The target is to reach a goal state in the end. The agent is allowed to perform an action $a$ from a set of allowed actions $A$. After performing an action, it receives an immediate reward $r$. The reward denotes whether the agent is nearing the goal state or going away. The target is to reach the goal state in minimum number of moves or collecting the maximum cumulative total reward. An example of this setting can be a learner as a robotic car where it has a starting point (state) and a destination (goal state) and some stations to go through (intermediate states). The actions allowed are "move forward", "move backward", "move left" and "move right". The car has a limited amount of fuel to use. After performing an action, it changes state and it gets the amount of fuel left as a reward value (we assume one unit of fuel consumption for each move).
+The settings of reinforcement learning problems differs greatly from  one another. One very common set of problems has an environment with a set of states $S$, at any given time the learning agent can be in any of the given states. As the agent performs an action, it changes state. The target is to reach a goal state in the end. The agent is allowed to perform an action $a$ from a set of allowed actions $A$. After performing an action, it receives an immediate reward $r$. The reward denotes whether the agent is nearing the goal state or going away. The target is to reach the goal state in minimum number of moves or collecting the maximum cumulative total reward. An example of this setting can be a learner as a robotic car where it has a starting point (state) and a destination (goal state) and some stations to go through (intermediate states). The actions allowed are "move forward", "move backward", "move left" and "move right". The car has a limited amount of fuel to use. After performing an action, it changes state and it gets the amount of fuel left as a feedback value (we assume one unit of fuel consumption for each move).
 
 Another common class of problems don't allow state change. The agent remains in one state always. It collects rewards for each action and the goal is to collect the maximum amount of reward. One common example of this kind of problems is multi-armed-bandits \cite{bandits}.
 
 \iffalse
 Reinforcent learning \cite{reinforcement_learning} is a form of machine learning in which the learning agent interacts with its surroundings, by performing an action. The surroundings or the environment reacts by giving some feedback to the agent. The feedback, perceived to be either positive or negative, helps the agent to understand whether the action was correct or incorrect respectively. The feedback is considered as a reward associated with the action performed. The agent has a goal to reach which is quantified as receiving the maximum cumulative reward after a finite sequence of actions. A system modelled after reinforcement learning, has a finite number of states $S = \{s_1, s_2, ..., s_n\}$. The agen starts from a state $s_i$ and tries to reach a \textit{goal state} $s_j; j \neq i$. Any state $s_k \in S$ has a set of actions $A = \{a_1, a_2, ..., a_m\}$ associated with it. The agent while being in $s_k$ can perform any one of the available actions. It receives a reward $r_k$, which is positive if the action takes the agent closer to the goal state $s_j$, otherwise negative. Clearly the same action (moving forward or backward for example), associated to more than one different states, can produce different rewards depending on the starting state, the goal state and the position of the current state in between. The task of learning here is to predict the reward for a particular action given the state. As the agent goes through trials, it gathers knowledge or inference about the outcome of an action for a state in terms of rewards, as it receives an immediate reward for each action performed. The knowledge of the agent, about different combinations of state-action pairs, is reinforced real time.
 \fi
-Reinforcement learning is a form of machine learning. It is different from supervised and unsupervised learning in the sense that it learns immediately from rewards after each action performed. It is widely used in applications of game theory, robotics, web advertisement, product recommendation in online stores etc. For example in product recommendation in an online store, the system, acting as an agent, recommends a product and the customer, acting as the environment, can either choose the product or not, thus generating positive or negative reward respectively.
+Reinforcement learning is a form of machine learning. It is different from supervised and unsupervised learning in the sense that it learns immediately from rewards after each action performed. It is widely used in applications of game theory, robotics, web advertisement, product recommendation in online stores etc. For example in product recommendation in an online store, the system, acting as an agent, recommends a product. The customer, acting as the environment, can either choose the product or not, thus generating positive or negative reward respectively.
 
 \subsubsection{Exploration and Exploitation}
 
-There are problems where there is an infinitely large set of states and multiple actions to choose one from in each state. But the agent has to reach the goal state in finite steps. Generally, the shortest path generates the maximum reward. As the step size is finite, the agent cannot try each available state-action pair. In each state it visits, it would rather try to repeat the action that has generated the maximum reward so far. This way it might miss an action in a particular state that could generate a bigger reward. Again one action might generate a lower immediate reward in a state but it might be a keypoint that follows a shorter path than the known one to the goal state or larger subsequent rewards thereafter, thus contributing to a bigger overall gain. The agent has two problems here, firstly, as it has to achieve the goal in finite time, it cannot go through all possible combinations (i.e. \textit{exploration}) much. Secondly, always performing the best known action (i.e. \textit{exploitation}) might miss a better action. This situation is known as exploration-exploitation dilemma \cite{reinforcement_learning}. There exist some solutions to this problem depending on the nature of the problem. In a simple reinforcement learning problem we apply \textit{epsilon-greedy} or $\epsilon$ \textit{-greedy} \cite{reinforcement_learning} method to control the amount of exploration by a probabilistic measure $\epsilon$. In bandit problems, the amount of exploration is controlled by upper confidence bound \cite{ucb}, a quantity probabilistically calculated. We will discuss all these later.
+A reinforcement learning agent has multiple actions to choose one from in each step. Some actions may have been explored and the rest not. For the actions already explored, the agent knows the reward values. Therefore the learner also knows which action produced the maximum reward so far and at each subsequent step choose that action again and again to produce the maximum cumulative total reward. This phenomenon is known as exploitation. If there are unexplored actions which can produce even a greater reward than the highest known one, then certainly the agent won't be producing the highest possible maximum reward. Therefore we see that exploitation is not the best option always. The agent should explore the other actions. On the other hand, it may so happen that there is no unexplored action that produces a higher reward than the known ones. In that case exploration will be a loss and pure exploitation is beneficial. We see that the agent cannot clearly determine whether to go for exploitation or exploration. This situation is known as exploration and exploitation dilemma \cite{reinforcement_learning}.
+
+One solution to this problem is \textit{epsilon-greedy} \cite{reinforcement_learning} or $\epsilon$ \textit{-greedy} method. It provides $\epsilon$ as a measure of the amount of exploration allowed. This is a probabilistic quantity. Therefore the amount of exploitation would be $1 - \epsilon$. $\epsilon$ is set to achieve the optimally maximum total reward. In bandit problems, the amount of exploration is controlled by upper confidence bound \cite{ucb}, a quantity probabilistically calculated.
+
 
 \subsection{Bandit Problems}
 
 Bandit problems \cite{bandits} deal with sequential decision making where each step in the sequence has multiple action to choose one from. Each action is associated with a distribution of numerical rewards. Each action also leads to an observation which is a reward value from the associated distribution. The goal is to maximise the reward over a finite number of trials. The definition of the problem reflects the properties of a reinforcement learning problem as in both cases the learner performs an action and gets a reward in return. It learns the appropriateness of the performed action from the reward received. Therefore we can model bandit problems with reinforcement learning and train a bandit problem solver as a reinforcement learning agent.
 
-The situation can be best described in terms of a slot machine in a casino. The machine has $K$ arms each with a distribution of reward. A player can play one arm at a time and gets an immediate reward. In this stochastic process the user has to find out which arm is giving the maximum reward. Thus the user has to explore various arms in succession. This kind of problems are examples of bandit problems. Precisely, as the slot machine has $K$ arms or the problem has $K$ choices in each iteration, the problem is often termed as $K$ - \textit{armed} or \textit{multi-armed} bandit. Once the user gets an arm with a satisfactorily large reward, he can go on pulling that arm again and again. This is known as Exploitation. But the user might miss another unexplored arm with a bigger reward. Therefore the user might want to explore all the possible arms to find out that particular arm with the biggest reward (here we assume that $K$ is uncountably large). This is known as Exploration. But in finite number of trials the user might not get that desired arm and in the mean time might not exploit the already found big-reward-arm enough, generating a low overall feedback. Therefore there is always an issue of optimization between exploitation and exploration. The learning agent tries to learn an optimal combination of these two.
+The situation can be best described in terms of a slot machine in a casino. The machine has $K$ arms each with a distribution of rewards. A player can play one arm at a time and gets an immediate reward. In this stochastic process the user has to find out which arm is giving the maximum reward. Thus the user has to explore various arms in succession. This kind of problems are examples of bandit problems. Precisely, as the slot machine has $K$ arms or the problem has $K$ choices in each iteration, the problem is often termed as $K$ - \textit{armed} or \textit{multi-armed} bandit. Once the user gets an arm with a satisfactorily large reward, he can go on pulling that arm again and again. This is known as Exploitation. But the user might miss another unexplored arm with a bigger reward. Therefore the user might want to explore all the possible arms to find out that particular arm with the biggest reward (here we assume that $K$ is uncountably large). This is known as Exploration. But in finite number of trials the user might not get that desired arm and in the mean time might not exploit the already found highest-reward-arm enough, generating a low overall feedback. Therefore there is always an issue of optimisation between exploitation and exploration. The learning agent tries to learn an optimal combination of these two.
 
 Bandit problems can be categorised as independent-arm bandits (\cite{independent_arm_bandits_1} \cite{independent_arm_bandits_2}) and dependent-arm bandits (\cite{dependent_arm_bandits}). Independent-arm bandits are the simplest of the two where the success probabilities or the probabilities of getting a positive reward of the arms are independent of each other. On the other hand dependent-arm bandit problems assume that these rewards influence each other. One example of dependent-arm bandits could be internet ad placement. We consider each separate ad as an arm. Therefore the probability of an ad to have had generated a positive reward is strongly dependent on the previous ads displayed and their generated rewards.
 
@@ -183,7 +186,11 @@ Bandit problems can be categorised as independent-arm bandits (\cite{independent
 Reinforcement learning fits well with bandit problems where the user, who pulls the arms of slot machines, is the agent and the machine or the collection of machines as a whole, is the environment, provides an immediate reward.
 \fi
 
-\subsection{Gittin's Indices}
+\subsection{Bandit algorithms}
+
+There are a few techniques that choose which action to choose in each step of a multi-armed-bandit problem. We discuss two of them below.
+
+\subsubsection{Gittin's Indices}
 
 Bandit problems require us to find out a proper sequence of actions over the time steps, to achieve the maximum discounted cumulative total reward. Therefore at each time step, we should have a mechanism to decide which action to take. Gittins and Jones \cite{gittins_indices} provided an indexing scheme for each available action, known as Gittins index. For each state $s_i$ of an action $i$, the Gittins index for $i$ is given as,
 
@@ -202,7 +209,11 @@ This solution works quite well in a finite action space. Because, to estimate al
 Gaussian process allows us to solve a special kind of regression problem, so before going into Gaussian process, we need to discuss about regression problems.
 \fi
 
-\subsection{LinRel}
+\subsection{UCB algorithms}
+
+There are two popular algorithms based on the upper confidence bound technique. We discuss them one by one.
+
+\subsubsection{LinRel}
 
 LinRel algorithm \cite{linrel} provides an alternative approach for obtaining the action that produces the highest reward in each step. It assumes that for any action $i$, the estimated reward $r_i(t)$ at iteration $t$ is a linear function of all the rewards obtained in the last $t-1$ iterations. Therefore the algorithm tries to learn a weight vector $\mathbf{w}_i(t)$ such that if $\mathbf{r_i}$ represents the reward vector containing all the previous rewards for action $i$, then the expected reward at step $t$ is calculated as,
 
@@ -226,7 +237,7 @@ UCB_i(t) = E\big[r_i(t)\big] + \sigma_i(t)
 The action that produces the highest UCB value is considered.
 
 
-\subsection{LinUCB}
+\subsubsection{LinUCB}
 
 LinUCB \cite{linucb} is very similar to LinREL and is mostly used in personalized news article recommendation. It also describes the expected reward of an action as linear combination of state vectors or feature vectors of that action over the previous trials. Say at time $t$, action $a$ is in state $\mathbf{x}_{at}$ and it generates reward $r_{at}$, so the expected value of $r_{at}$ is,
 
@@ -406,13 +417,13 @@ p(\mathbf{x}) \sim \mathcal{N}(\mathbf{\mu}, \Sigma^2)
 
 \subsubsection{Bayesian Linear Regression Model}
 
-The traditional linear regression method is rigid in terms of learning the parameters. It gives fixed values for parameters for one observed datapoint. Therefore for every new observed datapoint, the parameters are bound to change. As always we only know numeric values of the parameters, it is hard to predict about how much they can change for the next ovserved data point.  It would be effective to learn a probability distribution over the parameters rather than fixed values. Having a distribution over parameters gives us space where the parameters can move, which is convenient to understand a stochastic process. Bayesian probability model starts with a prior distribution over parameters and changes the distribution based on observations.
+The traditional linear regression method is rigid in terms of learning the parameters. It gives fixed values for parameters for one observed datapoint. Therefore for every new observed datapoint, the parameters are most likely to change. As always we only know numeric values of the parameters, it is hard to predict about how much they can change for the next observed data point.  It would be effective to learn a probability distribution over the parameters rather than fixed values. Having a distribution over parameters gives us the space where the parameters can move, which is convenient to understand a stochastic process. Bayesian probability model starts with a prior distribution over parameters and changes the distribution based on observations.
 
 Bayesian probability model is built after \textit{Bayes'} rule. It allows us to start with a prior belief on the data, which is an initial probability distribution associated to the data. Experiments generate evidences, which are used to change the prior belief, i.e. the initial distribution. The new distribution we get after incorporating the evidences is called posterior. The formulation is given below.
 
 \subsubsection{Bayes' Rule}
 
-We start with the expression of Bayes' rule. Say we have two random variables, $x$ and $y$, where $x$ is an independent variable but $y$ depends on $x$. The probability of $x$ is given by $p(x)$, the joint probability of $x$ and $y$ is given by $p(y, x)$. We can break $p(y, x)$ in $p(y|x)p(x)$ or $p(x|y)p(y)$ (Here $p(x|y)$ cannot be written as $p(x)$ if $x$ is conditionally dependent on $y$). Therefore,
+We start with the expression of Bayes' rule. Say we have two random variables, $x$ and $y$, where $x$ is an independent variable but $y$ depends on $x$. For the sake of regression problems we assume both $x$ and $y$ as continuous variables. The probability of $x$ is given by $p(x)$, the joint probability of $x$ and $y$ is given by $p(y, x)$. We can break $p(y, x)$ in $p(y|x)p(x)$ or $p(x|y)p(y)$ (Here $p(x|y)$ cannot be written as $p(x)$ if $x$ is conditionally dependent on $y$). Therefore,
 
 \begin{eqnarray}
 p(y, x) = p(y|x)p(x) = p(x|y)p(y)\nonumber\\
@@ -423,21 +434,24 @@ p(y|x) = \frac{p(x|y)p(y)}{p(x)}
 The term $p(x)$ is marginalized over all possible values of $y$, so we can write $p(x)$ as,
 
 \begin{equation}
-p(x) = \sum_i{p(x|y_i)p(y_i)}
+p(x) = \int_y{p(x|y)p(y)dy}
 \end{equation}
 
 
 Combining Eqn. \ref{reg_param} and Eqn. \ref{gauss_single_var_dist},
 
 \begin{equation}
-p(y|x) = \frac{p(x|y)p(y)}{\sum_i{p(x|y_i)p(y_i)}}
+p(y|x) = \frac{p(x|y)p(y)}{\int_y{p(x|y)p(y)dy}}
 \end{equation}
 
+\iffalse
 In case $y$ is a continuous variable,
 
 \begin{equation}
 p(y|x) = \frac{p(x|y)p(y)}{\int_y{p(x|y)p(y)dy}}
 \end{equation}
+
+\fi
 
 \subsubsection{The Standard Linear Model}
 
@@ -485,7 +499,7 @@ Here $\mathbf{y}_i = \{y_1, y_2, .... y_n\}$ denotes the output vector and $X = 
 
 
 
-Eqn \ref{eqn:likelihood} gives us the likelihood function w.r.t. $\boldsymbol \theta$. We could take a maximum likelihood estimate here and calculate the optimal $\boldsymbol \theta$. But instead of point estimation of individual parameters, we want to calculate the distribution over $\boldsymbol \theta$ based on observed dataset $S$. We assume a prior over $\boldsymbol \theta$ as,
+Eqn \ref{eqn:likelihood} gives us the likelihood function w.r.t. $\boldsymbol \theta$. We could take a maximum likelihood estimate here and calculate the optimal $\boldsymbol \theta$. But instead of point estimation of individual parameters, we want to calculate the distribution over $\boldsymbol \theta$ based on the observed dataset $S$. We assume a prior over $\boldsymbol \theta$ as,
 
 \begin{eqnarray}
 \label{eqn:prior}
@@ -528,17 +542,27 @@ The problem with this model is that it suffers from input dimensionality issues.
 
 
 \subsubsection{The Basis Function Model}
-There are special functions called \textit{basis functions}, which are used to transform the input vectors into another feature space of different dimension as follows,
+There are special functions called \textit{basis functions}, which are used to transform the input vectors into another feature space of different dimension. We can define a collection of basis functions as below,
 
 \begin{equation}
 \label{eqn:basis_function}
 \begin{split}
-	&\mathbf{x}_i \in \mathcal{R}^d \\
-	&\phi(\mathbf{x}_i) \in \mathcal{R}^n
+	&\Phi(.) = \{\phi_1(.), \phi_2(.), ...,\phi_n(.)\} \mid n \in \mathcal{R}
 \end{split}
 \end{equation}
 
-The model changes into,
+Say we have an input vector $\mathbf{x}_i \in \mathcal{R}^d$ as $\mathbf{x}_i = \{x_{i1}, x_{i2}, ..., x_{id}\}$, which changes when passed through the basis function. Each function from the basis function set is applied to each component of the input vector to generate $d$ numbers which are then passed to another function to generate a single number. This way we generate $\Phi(\mathbf{x}_i) \in \mathcal{R}^n$  
+
+\begin{align}
+\label{eqn:basis_function}
+	\Phi(\mathbf{x}_i) =  &\Bigg\{f\bigg(\phi_1(x_{i1}), \phi_1(x_{i2}), ..., \phi_1(x_{id})\bigg), \nonumber \\ 
+	 &f\bigg(\phi_2(x_{i1}), \phi_2(x_{i2}), ..., \phi_2(x_{id})\bigg), \nonumber \\ 
+	 &. \nonumber \\
+	 &. \nonumber \\
+	 &f\bigg(\phi_n(x_{i1}), \phi_n(x_{i2}), ..., \phi_n(x_{id})\bigg)\Bigg\}
+\end{align}
+
+The standard linear model changes into,
 
 \begin{equation}
 \label{eqn:basis_function_model}
@@ -567,7 +591,7 @@ We see that some identical terms appear several times in Eqn. \ref{eqn:basis_fun
 \end{split}
 \end{equation}
 
-This kernel has extreme importance in practical applications. Once we get the kernel, the entire posterior calculation is done upon that. We see from Eqn. \ref{eqn:basis_function_model_predictive_distribution} that the entire expression is made up of kernel functions. Therefore once we calculate the kernel, we do not need the individual input feature vectors anymore. We can build up the kernel for any given $\mathbf{x}$ and $\mathbf{x_*}$ using Eqn. \ref{eqn:basis_function_model_kernel}.
+This kernel has extreme importance in practical applications. We see from Eqn. \ref{eqn:basis_function_model_predictive_distribution} that the entire expression is made up of kernel functions. We can pre-calculate the entire kernel for all possible $\mathbf{x}$ and $\mathbf{x_*}$ and then we do not need the individual input feature vectors anymore. Here we are achieving some kind of dimensionality reduction.
 
 Here the problem we need to deal with is to choose the appropriate amount of basis functions, their location centres, their width etc. As the kernel function is built with the inner product of input vectors elevated to the basis feature space, these parameters play important role and if not chosen carefully they might not reflect the proper covariance between the given input. The most obvious drawback is the correlation between the inputs falls of quickly when they move far away from the basis function centres. We need an infinite amount of basis functions to reflect the true covariance between the inputs. This discussion is out of scope of this text. In the next section, we will see how we can build an efficient kernel function that do not have to deal with the setting of these basis function parameters, rather it directly relates the given inputs and instead of trying to get the distribution over parameters, it directly calculates the posterior over the function $f\mathbf(x)$. In other words, instead of calculating posterior over $\mathbf(X)^T \boldsymbol\theta$ or $\boldsymbol\phi \mathbf(X)^T \boldsymbol\theta$, we directly calculate the posterior over $f\mathbf(x)$. It frees us from dealing with $\boldsymbol \theta$ or $\boldsymbol \phi$. Here comes the idea of \textit{Gaussian Process}.
 
@@ -588,7 +612,7 @@ y_i = f(\mathbf{x}_i) + \epsilon_i
 
 $\epsilon_i \sim (0, \sigma^2))$ is the standard Gaussian noise.
 
-Without considering any parameter set, we try to learn the function $f$. We treat $f$ as a dependent random variable on $\mathbf{x}_i$. A continuous function can represent infinite number of points on it. Therefore $f$ can fit over an infinite number of $\mathbf{x}_i$ where $i = 0, 1, ... \infty$. Thus Gaussian process gives us a multivariate distribution over functions.
+Without considering any parameter set, we try to learn the function $f$. We treat $f$ as a dependent random variable on $\mathbf{x}_i$. A continuous function can represent an infinite number of points on it. Therefore $f$ can fit an infinite number of $\mathbf{x}_i$ where $i = 0, 1, ... \infty$. Thus Gaussian process gives us an infinite dimensional multivariate Gaussian distribution or a distribution over functions.
 
 \begin{figure}[h!]
 \centering
@@ -621,7 +645,7 @@ Without considering any parameter set, we try to learn the function $f$. We trea
 \label{fig:test}
 \end{figure}
 
-Say, $\mathcal{F} = \{f_1, f_2, ..., f_n, f_{n+1}, ... \infty\}$ is a set of functions that can operate over $\mathbf{x}_i$. Any function $f$ over any $x$ can take any form like $f(x) = (x + 2)$ or $f(x) = x^2$ or $f(x) = \exp(\sin(x)^5)$, as long as $f(x) \in \mathcal{R}$. From this infinite set $\mathcal{F}$, we need to find the proper $f$ that truly represents $y$.
+Say, $\mathcal{F} = \{f_1, f_2, ..., f_n, f_{n+1}, ... \infty\}$ is a set of functions that can operate over $\mathbf{x}_i$. Any function $f$ over an $x$ can take any form like $f(x) = (x + 2)$ or $f(x) = x^2$ or $f(x) = \exp(\sin(x)^5)$, as long as $f(x) \in \mathcal{R}$. From this infinite set $\mathcal{F}$, we need to find the proper $f$ that truly represents $y$ i.e. truly fits the data.
 
 To differentiate a function from a regular random variable we denote a function $f$ as $f(.)$ from now on. We start with a prior distribution over $\mathcal{F}$, given by,
 
@@ -629,15 +653,15 @@ To differentiate a function from a regular random variable we denote a function 
 f(.) \sim (m(.), k(.,.))
 \end{equation}
 
-The prior is shown in Figure 1 with zero mean. Before getting evidences, the prior distribution has uniform confidence interval around the mean for the entire space. Figure 2 shows that after getting one evidence point the space around that point shrinked. We exclude all the functions that do not pass through our evidence point. The mean function has to pass through that point, therefore it shifted and the confidence interval also narrowed down accordingly. Figure 3 shows the same effect for more evidence points. Figure 4 finally shows the shape of the posterior function when we have enough evidences.
+The prior is shown in Figure 1 with zero mean. Before getting evidences, the prior distribution has uniform confidence interval around the mean for the entire input space. Figure 2 shows that after getting one evidence point the space around that point shrinked. We exclude all the functions that do not pass through our evidence point. The mean function has to pass through that point, therefore it shifted and the confidence interval also narrowed down accordingly. Figure 3 shows the same effect for more evidence points. Figure 4 finally shows the shape of the posterior function when we have enough evidences.
 
-As we are operating on a distribution over functions, the mean $m(.)$ and covariance matrix $k(.,.)$ are also functions. The domain of $f(.)$ is a vector $\mathbf{x}_i \in \mathcal{R}^d$ where $d \to \infty$. $m(.)$ is the mean function which gives the mean of any input $\mathbf{x}_k \in \mathcal{X}$,
+As we are operating on a distribution over functions, the mean $m(.)$ and covariance $k(.,.)$ are also functions. The domain of $f(.)$ is a vector $\mathbf{x}_i \in \mathcal{R}^d$ where $d \to \infty$. $m(.)$ is the mean function which gives the mean of any input $\mathbf{x}_k \in \mathcal{X}$ as $m(\mathbf{x}_k) = \mu_{\mathbf{x}_k}$ and it generates a mean vector over $\mathcal{X}$ as,
 
 $$
-m(\mathbf{x}_k) = \mu_{\mathbf{x}_k}
+m(\mathcal{X}) = \{m(\mathbf{x}_k) \mid k = 0, 1, 2, ...\} = \{\mu_{\mathbf{x}_k} \mid k = 0, 1, 2, ...\} 
 $$
 
-$k(.,.)$ takes two random variables, $\mathbf{x}_k$ and $\mathbf{x}_l$ and gives the covariance between them as,
+$k(.,.)$ takes two random vectors, $\mathbf{x}_k$ and $\mathbf{x}_l$ from $\mathcal{X}$ and gives the covariance between them as,
 
 $$
 k(\mathbf{x}_k, \mathbf{x}_l) = Covariance(\mathbf{x}_k, \mathbf{x}_l)
@@ -654,7 +678,7 @@ f(\mathbf{x}_2) \\
 \vdots \\
 f(\mathbf{x}_m)
 \end{pmatrix}
-\sim\left(%
+\sim \mathcal{N} \left(%
 \begin{pmatrix}
 m(\mathbf{x}_1) \\
 m(\mathbf{x}_2) \\
@@ -670,10 +694,10 @@ k(\mathbf{x}_m, \mathbf{x}_1) k(\mathbf{x}_m, \mathbf{x}_2) \hdots k(\mathbf{x}_
 \end{pmatrix}\right)
 $$
 
-Which can be written as,
+Here the left hand side represents the output vector, the right hand side represents the multivariate Gaussian distribution over functions with a mean vector and a covariance matrix. Which can be written as,
 
 \begin{equation}
-f(\mathcal{X}_m) \sim (m(\mathcal{X}_m), K(\mathcal{X}_m))
+f(\mathcal{X}_m) \sim \mathcal{N} (m(\mathcal{X}_m), K(\mathcal{X}_m))
 \label{gauss_proc_multi_var_sym}
 \end{equation}
 
@@ -682,30 +706,32 @@ We see how easy Gaussian process is to customize, any time we can extract a fini
 To simplify the calculation, we start with a zero mean prior as,
 
 \begin{equation}
-f(.) \sim (0, k(.,.))
+f(.) \sim \mathcal{N} (0, k(.,.))
 \label{gauss_proc_func_0_mean_sym}
 \end{equation}
 
 Combining Eqn. \ref{gauss_proc_multi_var_sym} and Eqn. \ref{gauss_proc_func_0_mean_sym} we get,
 
 \begin{equation}
-f(\mathcal{X}_m) \sim (0, K(\mathcal{X}_m))
+f(\mathcal{X}_m) \sim \mathcal{N} (0, K(\mathcal{X}_m))
+\label{eq:gp_training}
 \end{equation}
 
 We take $\mathcal{X}_m$ as training set, so we have observed $\mathbf{y}_m$. Say we have another finite subset $\mathcal{X}_m^*$, which is the test set. We need to predict outputs $\mathbf{y}_m^*$ for $\mathcal{X}_m^*$. Both the subsets came from the same infinite Gaussian distribution. So for $\mathcal{X}_m^*$ we write,
 
 \begin{equation}
-f(\mathcal{X}_m^*) \sim (0, K(\mathcal{X}_m^*))
+f(\mathcal{X}_m^*) \sim \mathcal{N} (0, K(\mathcal{X}_m^*))
+\label{eq:gp_test}
 \end{equation}
 
-We combine Eqn. \ref{conti_rnd_var_bayes_poster} and Eqn. \ref{reg_sym_noise} together as,
+We combine Eqn. \ref{eq:gp_training} and Eqn. \ref{eq:gp_test} together as,
 
 \begin{equation}
 \begin{pmatrix}
 f(\mathcal{X}_m) \\
 f(\mathcal{X}_m^*)
 \end{pmatrix}
-\sim \left( %
+\sim \mathcal{N} \left( %
 0, %
 \begin{pmatrix}
 K(\mathcal{X}_m, \mathcal{X}_m) & K(\mathcal{X}_m, \mathcal{X}_m^*) \\
@@ -730,29 +756,7 @@ f(\mathcal{X}_m^*)
 \mathbf{\varepsilon} \\
 \mathbf{\varepsilon^*}
 \end{pmatrix}
-\sim \left( %
-0, %
-\begin{pmatrix}
-K(\mathcal{X}_m, \mathcal{X}_m) + \sigma^2 \mathbf{I} & K(\mathcal{X}_m, \mathcal{X}_m^*) \\
-K(\mathcal{X}_m^*, \mathcal{X}_m) & K(\mathcal{X}_m^*, \mathcal{X}_m^*) + \sigma^2 \mathbf{I}
-\end{pmatrix}\right) \nonumber \\
-\left.
-\begin{pmatrix}
-\mathbf{y} \\
-\mathbf{y}^*
-\end{pmatrix}
-\right\vert_{\mathbf{x}_m, \mathbf{x}_m^*}
-= %
-\begin{pmatrix}
-f(.) \\
-f(.)^*
-\end{pmatrix}
-+%
-\begin{pmatrix}
-\mathbf{\varepsilon} \\
-\mathbf{\varepsilon^*}
-\end{pmatrix}
-\sim \left( %
+\sim \mathcal{N} \left( %
 0, %
 \begin{pmatrix}
 K(\mathcal{X}_m, \mathcal{X}_m) + \sigma^2 \mathbf{I} & K(\mathcal{X}_m, \mathcal{X}_m^*) \\
@@ -782,22 +786,30 @@ and,
 \label{gauss_poster_var}
 \end{equation}
 
+\begin{figure*}[htb] 
+\centering
+ \include{GP_UCB}
+\caption{Gaussian process upper confidence bound}
+\label{fig:gp_ucb}
+\end{figure*}
 
 \subsubsection{Applying Gaussian Process to Bandit Problems}
 
-We ended \ref{sec:UCB} by mentioning that upper confidence bound works well in finite action spaces. Here we will see how gaussian process helps us is determining upper confidence bound in infinitely large action spaces, where estimating mean for each action distribution is practically impossible. We represent the actions $A$ as our input space as before and we want to learn a function that gives mean rewards $\mu_{a_i}$ for each $a_i$. Theoretically the more $a_i$s we explore, the closer we get to the actual reward function. But in real life experiments it is not always possible to try all or nearly all the actions from a very large action space.
+We ended \ref{sec:UCB} by mentioning that upper confidence bound works well in finite action spaces. Gaussian process helps us is determining upper confidence bound in infinitely large action spaces, where estimating mean for each action distribution is practically impossible. We represent the actions $A$ as our input space as before and we want to learn a function that gives mean rewards $\mu_{a_i}$ for each $a_i$. Theoretically the more $a_i$s we explore, the closer we get to the actual reward function. But in real life experiments it is not always possible to try all or nearly all the actions from a very large action space.
 
-\include{GP_UCB}
 
-By carefully observing how the posterior of the reward function changes given the ovservations so far and then choosing the next action, we can nearly estimate the actual reward function very quickly. This requires some optimization over selection of actions which is beyond the scope of this discussion. Also the more we select each action, by the \textit{law of large numbers}, the closer we go to the actual mean reward associated with that action.
 
-Next we will see how we modelled our system based on these discussion. But before that we will get an overview of other CBIR systems present.
+
+
+By carefully observing how the posterior of the reward function changes given the observations so far and then choosing the next action, we can nearly estimate the actual reward function very quickly. This requires some optimisation over selection of actions which is beyond the scope of this discussion. Also the more we select each action, by the \textit{law of large numbers}, the closer we go to the actual mean reward associated with that action. Figure \ref{fig:gp_ucb} shows the upper confidence bound as the positive standard deviation added to mean.
+
+Next we will see how we modelled our system based on these discussion.
 
 
 
 \section{System description}
 
-Our objective was to build a CBIR system with a useful and easy to use interface which supports query less exploratory image search \cite{pichunter} \cite{PicSOM} \cite{iter_rel_feed} while keeping the cognitive load of the user as low as possible. We went for a simple and clean interface, intuitive to understand, supporting visual guidance and feedback and with minimum textual instructions on screen. Our system uses relevance feedback from users as immediate rewards in each step. The system exploits according to the given feedback thus it can show more and more relevant images to the users in forthcoming iterations. But if the exploitation is too high, the system could get stuck into a context trap. We needed to have a proper balance in the amount of exploration and exploitation to avoid the context trap \cite{dir_expl_search} \cite{cbir_multinomial_rel_feed} \cite{iter_rel_feed}. Faceted search \cite{faceted_search_1} \cite{faceted_search_2} tried to avoid context trap using global image features but as global features are huge in number, the user had to traverse a vast area of the information space \cite{info_space} leading to a cognitively demanding task. We set a fixed exploration rate to control the amount of exploration.
+Our objective was to build a CBIR system with a useful and easy to use interface which supports query less exploratory image search \cite{pichunter} \cite{PicSOM} \cite{iter_rel_feed} while keeping the cognitive load of the user as low as possible. We went for a simple and clean interface, intuitive to understand, supporting visual guidance and feedback and with minimum textual instructions on screen. Our system uses relevance feedback from users as immediate rewards in each step. The system uses the given feedback thus it can show more and more relevant images to the users in forthcoming iterations. But if it exploits too much, it could get stuck into a context trap. We needed to have a proper balance in the amount of exploration and exploitation to avoid the context trap \cite{dir_expl_search} \cite{cbir_multinomial_rel_feed} \cite{iter_rel_feed}. Faceted search \cite{faceted_search_1} \cite{faceted_search_2} tried to avoid context trap using global image features but as global features are huge in number, the user had to traverse a vast area of the information space \cite{info_space} leading to a cognitively demanding task. We set a fixed value for the exploration rate.
 
 We start with a set of images, assuming each of them having an equal prior probability to get selected. A few of them are shown to the user and relevance feedback is collected. These images, shown to the user, along with their acquired relevance feedback, are fed to the gaussian process regression framework to calculate the posterior probability on each image not shown so far. UCB for each of these images are then calculated by adding the posterior mean and the positive standard deviation as discussed before. The image with largest UCB value is picked to be shown next.
 
@@ -811,7 +823,7 @@ The main idea behind the design of the interface was to make it support query le
 
 \subsection{Offline step}
 
-We needed to process the images before starting the actual experiments. Therefore we break the operation into two parts as described below.
+We needed to process the images before starting the actual experiments. Therefore we broke the operation down into two parts as described below.
 
 \subsubsection{Feature extraction}
 
@@ -832,11 +844,11 @@ We calculate all the pairwise distances among the images and build a $(25000 \ti
 
 \subsubsection{Clustering images}
 
-As we have a huge number of images, calculating UCB values for nearly all of them would be severely time consuming in each iteration. We can avoid so for very distant images. We apply K-means \cite{k_means} clustering algorithm to cluster images as mentioned by \cite{hierarchical_gp}. Each cluster centroid is the average of all the feature vectors allocated to it. To select an image, we first calculate the UCB values for the cluster centroids and select the nearest one. Then we calculate UCB values for images only in that cluster and find out the nearest image.
+As we have a huge number of images, calculating UCB values for nearly all of them would be severely time consuming in each iteration. We can avoid doing so for very distant images. We apply K-means \cite{k_means} clustering algorithm to cluster images as mentioned by \cite{hierarchical_gp}. Each cluster centroid is the average of all the feature vectors allocated to it. To select an image, we first calculate the UCB values for the cluster centroids and select the nearest one. Then we calculate UCB values for images only in that cluster and find out the nearest image.
 
 \subsection{The online step}
 
-The user finds one or more suitable images inside that set (there might not be one, we will discuss that later) and provides relevance feedback as shown in Figure \ref{system_diagram_1}. The system collects the shown image set with the given relevance feedbacks and sends the indices of the shown images and the feedbacks along with the cluster centroids to the Gaussian process. This is the first run of the Gaussian process. The process returns the nearest cluster to the shown images. Now the system sends the images assigned to the selected cluster along with the same set of shown images with their received feedback again into the Gaussian process as the second run. The system returns the nearest image to show to the user. This two phase procedure is run with proper inclusion of pseudo feedback discussed earlier to come up with the next set of suitable images until the user gets the desired image. The iterations continue and as soon as the user finds the most desired image or several very much desired images he has in mind, the experiment ends.
+The user is presented a set of random images. He finds one or more suitable images inside that set (there might not be one, we will discuss that later) and provides relevance feedback as shown in Figure \ref{system_diagram_1}. The system collects the shown image set with the given relevance feedbacks and sends the indices of the shown images and the feedbacks along with the cluster centroids to the Gaussian process. This is the first run of the Gaussian process. The process returns the nearest cluster to the shown images. Now the system sends the images assigned to the selected cluster along with the same set of shown images with their received feedback again into the Gaussian process as the second run. The process returns the nearest image to show to the user. This two phase procedure is run with proper inclusion of pseudo feedback discussed earlier to come up with the next set of suitable images until the user gets the desired image.
 
 
 \begin{figure}[h!]
@@ -874,7 +886,7 @@ We assign search tasks to users, say to find a "red rose". Each experiment consi
 
 \subsection{Tasks and Task-Categories}
 
- We could think of three different task types in terms of abstractness of the given task. Some tasks are very particular in nature. While having such a task, the user has to find out that very image described by the task. No other similar image can terminate the search. For example if the user has to find the Eiffel Tower or the Statue of Liberty etc. Some tasks are a bit generic than the ones mentioned before. For example if the user has to find out an image of sunset or seashore. They are not specific objects but are combination of objects in different colours and shapes with some similarities. They form a category. There are a third kind of tasks which are very abstract in nature. Say the user has to find out happiness. We cannot attach any specific object to it. It is a state of mind and a matter of perception. For an user a picture of a happy face can be happiness, for another user a rainbow can be happiness or children in a playground can be happiness. We followed Pichunter \cite{pichunter} to design three different categories of tasks for users as follows,
+ We could think of three different task types in terms of abstractness of the given task. Some tasks are very particular in nature. While having such a task, the user has to find out that very image described by the task. No other similar image can terminate the search. For example if the user has to find the Eiffel Tower or the Statue of Liberty etc. Some tasks are a bit generic than the ones mentioned before. For example if the user has to find out an image of sunset or seashore. They are not specific objects but are combination of objects in different colours and shapes with some similarities. There are a third kind of tasks which are very abstract in nature. Say the user has to find out happiness. We cannot attach any specific object to it. It is a state of mind and a matter of perception. For an user a picture of a happy face can be happiness, for another user a rainbow can be happiness or children in a playground can be happiness. We followed Pichunter \cite{pichunter} to design three different categories of tasks for users as follows,
 
 \begin{enumerate}
   \item Target search - Look for a specific image
@@ -886,7 +898,7 @@ We assign search tasks to users, say to find a "red rose". Each experiment consi
 
 \textit{Category search} was a bit broader, say to find a cat.
 
-\textit{Open ended search} was the most broad one where the user was given no specific image to search for but a topic or theme like a visit to paris, out of which several image could be listed for an article on the same.
+\textit{Open ended search} was the most broad one where the user was given no specific image to search for but a topic or theme like a visit to paris, out of which several images could be listed for an article on the same.
 
 Each of these searches had three separate sub tasks as follows,
 
@@ -942,7 +954,7 @@ In total we had 20 participants, each running a separate experiment out of a ran
 
 \section{Results}
 
-We studied mainly two things, firstly, how quickly i.e. in how many iterations, GPUCB can finish compared two the EXPLOIT and RAND. Secondly, how many images get positive feedback on average in GPUCB compared to EXPLOIT and RAND \cite{explor_exploit_img_ret}.
+We studied two things, firstly, how quickly i.e. in how many iterations, GPUCB can finish compared two the EXPLOIT and RAND. Secondly, how many images get positive feedback on average in GPUCB compared to EXPLOIT and RAND \cite{explor_exploit_img_ret}.
 
 \begin{figure}[h!]
   \centering
@@ -1016,8 +1028,8 @@ Figure \ref{red_rose_1} and Figure \ref{red_rose_2} show the first two iteration
 We have noticed issues from the results. Next we present them one by one.
 
 \begin{enumerate}
-	\item One of the major issues is the applicability of GPUCB. It could not outperform EXPLOIT in target search. The reason is, once the user feedbacks a suitable image, say a "red rose", EXPLOIT will bring more red roses only. The probability that the user will like one of them the most and finish the search is highest in case of EXPLOIT. The exploration in GPUCB here might introduce some irrelevant images, thus prolonging the process of getting the most suitable "red rose". On the contrary, sometimes it might be extremely useful to have exploration in target search. As we are showing random images initially, it might so happen that the user got no red, but a few reddish yellow images while starting. Assuming a reddish yellow to be the closest available match, the user gave a feedback to that. It is highly probable that EXPLOIT would bring up only reddish yellow images afterwards. Only exploration could bring up red images again to direct the search to a positive end.
-	\item As the first iteration for both red rose (Figure \ref{red_rose_1}) and city by night (Figure \ref{city_night_1}) shows images randomly, it might so happen that completely irrelevant images had been shown requiring the experiment to restart \label{issue_random_initial_images}.
+	\item One of the major issues is the applicability of GPUCB. It could not outperform EXPLOIT in target search. The reason is, once the user feedbacks a suitable image, say a "red rose", EXPLOIT will bring more red roses only. The probability that the user will like one of them the most and finish the search is highest in case of EXPLOIT. The exploration in GPUCB here might introduce some irrelevant images, thus prolonging the process of getting the most suitable "red rose". On the contrary, sometimes it might be extremely useful to have exploration in target search. As we are showing random images initially, it might so happen that the user got no red, but a few reddish yellow images while starting. Assuming a reddish yellow to be the closest available match, the user gave a feedback to that. It is highly probable that EXPLOIT would bring up only reddish yellow images afterwards. Only exploration could bring up red images again to direct the search towards a positive end.
+	\item As the first iterations for both red rose (Figure \ref{red_rose_1}) and city by night (Figure \ref{city_night_1}) show images randomly, it might so happen that completely irrelevant images had been shown requiring the experiment to restart \label{issue_random_initial_images}.
 	\item The system was slow in fetching images because gaussian process took a long time to run on CPU \label{issue_CPU_slow}.
 	\item Once the user gives all the feedbacks he wants and moves to the next iteration, it might so happen that the outcome is not very favourable and the user might want to change some of the previous feedbacks. But it is not possible to go back and change the feedbacks \label{issue_single_view}.
 \end{enumerate}
@@ -1082,10 +1094,8 @@ Our goal was to run a comparative study between the traditional view (current vi
 
 We designed the experiments so that each participant had to perform 6 distinct tasks (Red Rose, Tall Building, City by Night, Seashore, Happiness and Gardening) altogether three being on the FutureView and the rest otherwise. We ensured each participant to perform only one task from a genre on each system (we refer to the current view and FutureView are two distinct systems), thus any participant who performed the task of red rose on current view, had to perform the task of tall building on FutureView as these two are from the same genre (target search). These scheme was followed for all three genres. This way we ensured that each participant performed three task (one from each genre) on single view and the rest, the other three task(left ones of each genre) on FutureView. This way we had $12 \times 3 = 36$ tasks performed on single view and $36$ tasks performed on FutureView. This also ensured that each task was performed $6$ times on each system.
 
-\begin{center}
+\begin{table}[h]
     \begin{tabular}{ |l|l|l| }
-		\hline
-		\multicolumn{3}{ |c| }{Task distribution} \\
 		\hline
 		User serial number & Task performed on Single View & Task performed on FutureView \\ 
 		\hline
@@ -1138,8 +1148,10 @@ We designed the experiments so that each participant had to perform 6 distinct t
  			& Happiness & Gardening \\
  		\hline
 	\end{tabular}
+	\caption{Task distribution per user}
     \label{table:table_task_allocation}
-\end{center}
+\end{table}
+
 
 In the previous experiment we had a random initial set to start with. But that led to having different impacts on the same task performed by different users. In this experiment, for each task, we kept a static initial set of images which can lead a user to the destination easily within $30$ iterations. The task allocation is shown in Table: \ref{table:table_task_allocation}. For each user and system combination, the three tasks were presented to the user one after another in random permutation.
 
@@ -1149,7 +1161,7 @@ We used a Tobii X2-60 eye tracker with sampling rate of 60Hz, to measure how muc
 \subsection{Procedure}
 
 
-Each participant was given an instruction sheet to go through before the study along with a set of Warm Up questions in google form as follows,
+Each participant was given an instruction sheet to go through before the study. We wanted to keep a record of how each individual user is familiar with searching for images on a computer, what do they look for in general and which image search engines they use etc. for later reference and better understanding of their background in using such systems. Thus we set up a Warm Up questionnaire in google form as follows,
 
 \begin{itemize}
 	\item How often do you search for images?
@@ -1162,7 +1174,7 @@ Each participant was given an instruction sheet to go through before the study a
 \end{itemize}
 
 
-After an user filled up the questionnaire and agreed upon the instructions, they were given a consent form to sign. The user was then introduced to both the systems and led through two training tasks on each of the systems. Once the user felt familiar, we calibrated the eye tracker and started logging user's gaze. Next we started the actual experiments. Six tasks were presented to the user in random order. After finishing each task, the user had to fill up a task usability questionnaire (modelled after NASA TLX questionnaire \cite{NASA_TLX}) and after every three tasks, i.e. after three experiments finished with each system, the user had to fill up a system usability questionnaire (modelled after SUS questionnaire). After all the six tasks finished, the eye tracker log is saved and we conducted a small interview with the user with mostly the following questions asked,
+Each user was asked to fill up the above mentioned questionnaire in the beginning. After a user filled up the questionnaire and agreed upon the instructions, they were given a consent form to sign. The user was then introduced to both the systems and led through two training tasks on each of the systems. Once the user felt familiar, we calibrated the eye tracker and started logging user's gaze. Next we started the actual experiments. Six tasks were presented to the user in random order. After finishing each task, the user had to fill up a task usability questionnaire (modelled after NASA TLX questionnaire \cite{NASA_TLX}) and after every three tasks, i.e. after three experiments finished with each system, the user had to fill up a system usability questionnaire (modelled after SUS questionnaire). After all the six tasks finished, the eye tracker log is saved and we conducted a small interview with the user with mostly the following questions asked,
 
 \begin{itemize}
 	\item How was your experience with this system?
@@ -1179,9 +1191,19 @@ After an user filled up the questionnaire and agreed upon the instructions, they
 
 \section{Results}
 
-For each experiment we saved the number of iterations, running time, the images shown, the feedbacks received, the feedback timestamps and the end of experiment timestamps. Here we refer to each task as one experiment.
+For each experiment we saved the following,
 
-From these information we calculated the average iterations taken by experiments, average running time per iteration of experiments, average total running time of an entire experiment and average number of feedback received per experiment. Table\ref{table:exp_mean_std_genre} shows genre wise mean and standard deviation of all the parameters we calculated. Table \ref{table:exp_wilcoxon_genre} shows the wilcoxon P value for each of the parameters comparing the FutureView and the single view. From Table \ref{table:exp_mean_std_genre} we see that the mean total running time is nearly equal in both the FutureView and single view but the average total images shown is much higher in FutureView than in single view across all the genres. We see from Table \ref{table:exp_wilcoxon_genre} that the P value is less than 0.05 in case of open and target searches, marginally over 0.05 in category search for total shown images and significantly greater than 0.05 for total duration. It supports the claim that total shown images is considerably higher in case of FutureView though it takes almost equal amount of time to finish. Therefore the FutureView allows much higher exploration in a lesser amount of time. Figure \ref{dur_vs_img} reflects the same.
+\begin{itemize}
+	\item number of iterations
+	\item start time of experiment
+	\item running time
+	\item images shown
+	\item feedbacks received
+	\item feedback timestamps
+	\item end time of experiment
+\end{itemize}
+
+From these information we calculated the average iterations taken by experiments, average running time per iteration of experiments, average total running time of an entire experiment and average number of feedback received per experiment. Table \ref{table:exp_mean_std_genre} shows genre wise mean and standard deviation of all the parameters we calculated. Table \ref{table:exp_wilcoxon_genre} shows the wilcoxon P value for each of the parameters comparing the FutureView and the single view. From Table \ref{table:exp_mean_std_genre} we see that the mean total running time is nearly equal in both the FutureView and single view but the average total images shown is much higher in FutureView than in single view across all the genres. We see from Table \ref{table:exp_wilcoxon_genre} that the P value is less than 0.05 in case of open and target searches, marginally over 0.05 in category search for total shown images and significantly greater than 0.05 for total duration. It supports the claim that total shown images is considerably higher in case of FutureView though it takes almost equal amount of time to finish. Therefore the FutureView allows much higher exploration in a lesser amount of time. Figure \ref{dur_vs_img} reflects the same.
 
 \begin{figure}[h!]
   \centering
@@ -1659,14 +1681,24 @@ Apart from what the users suggested we also felt some issues with the system whi
 
 \begin{itemize}
 	\item The web server (Apache 2) needed to be restarted after each user finishes otherwise the system might crash. It crashed a couple of times resulting a restart in the ongoing task. Actually we show a lot of images which somehow clogs the browser or the memory in the backend. Restarting a server cannot be a solution. We should have a mechanism to clear images from previous experiments.
-	\item The FutureView takes nearly a second to load. Sometimes users being too impatient, clicked on the next button right after dragging a slider without waiting for the FutureView to load. It lead to a crash in the front end. We should disable the next button while the FutureView loads.
+	\item The FutureView takes nearly a second to load. Sometimes users being too impatient, clicked on the next button right after dragging a slider without waiting for the FutureView to load. It led to a crash in the front end. We should disable the next button while the FutureView loads.
 	\item One experiment had to be cancelled because a user used arrow keys on the keyboard to move the slider rather than dragging with mouse. We record mouse events to sync with eye tracker therefore arrow key press was useless. We should have had disabled those keys. 
 \end{itemize}
 
+\section{Future plan}
+
+The study gave rise to a few questions and place for improvements which we will try to address in the next study.
+
+\begin{itemize}
+	\item One obvious place for improvement is to change the feedback system. Instead of dragging a tiny slider control, we can let the user rate the images quicker and with more convenience. This will bring the cognitive load down further.
+	\item Enabling user to circle parts of images and let the system detect identifiable objects from the circled area and search for those objects is another area of research.
+	\item Right now the system uses only colour as feature. We can put other features as texture, shape etc. and build separate kernels for them. We can then make the system search in all these different kernels and combine results from these multiple kernels in the end.
+	\item The eye-tracker can be put to further use. We can record the implicit feedback from the eye-tracker and compare that with the actual recorded feedback to infer the mental state of the user. We can see how attentive they were during the experiment and whether they provided feedback keeping the task in mind or randomly.
+\end{itemize}
 
 \section{Conclusion}
 
-The aim of this study was to create a novel interface that helps users in searching through contents of images while keeping the cognitive load low. From the results we claim that our interface performed quite well in exploring a lot of images within a comparable amount of time. The users were happy with the FutureView and according to the NASA TLX questionnaire they were more successful in accomplishing their given tasks in FutureView. The study gave rise to a few questions and place for improvements which we will try to address in the next study. One obvious place for improvement is to change the feedback system. Instead of dragging a tiny slider control, we can let the user rate the images quicker and with more convenience. This will bring the cognitive load down further. Enabling user to circle parts of images and let the system detect identifiable objects from the circled area and search for those objects is another area of research. The eye-tracker can be put to further use. We can record the implicit feedback from the eye-tracker and compare that with the actual recorded feedback to infer the mental state of the user. We can see how attentive they were during the experiment and whether they provided feedback keeping the task in mind or randomly.
+The aim of this study was to create a novel interface that helps users in searching through contents of images while keeping the cognitive load low. From the results we claim that our interface performed quite well in exploring a lot of images within a comparable amount of time. The users were happy with the FutureView and according to the NASA TLX questionnaire they were more successful in accomplishing their given tasks in FutureView. The study gave rise to a few questions and place for improvements which we will try to address in the next study as discussed in the last section. 
 
 
 % Task wise Mean of usability parameters
