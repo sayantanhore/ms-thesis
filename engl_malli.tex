@@ -12,7 +12,7 @@
 %\singlespacing
 \onehalfspacing
 
-\title{FutureView: An innovative CBIR interface to peek into the future}
+\title{Designing interfaces for content based image retrieval systems}
 \author{Sayantan Hore}
 \date{\today}
 
@@ -879,7 +879,7 @@ Next we will see how we modelled our system based on these discussion.
 
 \section{System description}
 
-Our system has a collection of $25000$ images. The system shows a random set of a few images to the user and collects relevance feedback on each shown image. If the user does not give feedback to any of the shown images, the system assumes zero feedback on all of them and proceeds accordingly. The indices of the shown images are taken to be the inputs and the collected relevance feedbacks as outputs, where these inputs and outputs together form the collected evidences. These evidences are then fed to the Gaussian process framework. For the rest of the images which are not shown so far, the Gaussian process calculates the mean and variance and then the UCB value as discussed before. The image with the largest UCB value is picked by the system.
+Our system has a collection of $25000$ images. The system \cite{re_qlir} shows a random set of a few images to the user and collects relevance feedback on each shown image. If the user does not give feedback to any of the shown images, the system assumes zero feedback on all of them and proceeds accordingly. The indices of the shown images are taken to be the inputs and the collected relevance feedbacks as outputs, where these inputs and outputs together form the collected evidences. These evidences are then fed to the Gaussian process framework. For the rest of the images which are not shown so far, the Gaussian process calculates the mean and variance and then the UCB value as discussed before. The image with the largest UCB value is picked by the system.
 
 Bandit algorithms are designed to make one prediction at a time and each prediction takes the immediate reward received by the previous prediction into account. To select a set of images at each iteration, we needed to run the algorithm a few times. But, as before showing an image to the user, we do not have the relevance score for it ready, we use pseudo feedback to pick the next image. This pseudo feedback is nothing but the posterior mean for the corresponding image. Once we select the desired number of images, we show them to the user, receive relevance feedback on them, replace the pseudo feedbacks with the actual feedbacks given by our user \cite{imse}. This way we nullify the long term effect of pseudo feedbacks in our system.
 
@@ -948,7 +948,14 @@ We saw in our discussion of Gaussian process that after observing a significant 
 
 \subsection{The interface}
 
-Our objective was to build a useful and easy to use interface which supports query less exploratory image search \cite{pichunter, PicSOM, iter_rel_feed} while keeping the cognitive load of the user as low as possible. We went for a simple and clean interface, intuitive to understand, supporting visual guidance and feedback and with minimum textual instructions on screen. The main idea behind the design of the interface was to make it support query less exploratory image search while accommodating feedback given by the users. The user navigates through images and gives ratings to images indicating how close they are to what the user is searching for. According to Cox et. al. \cite{pichunter} this type of interfaces are easy to use. The interface shows images in a grid like structure as shown in Figure \ref{red_rose_1}. The user has to drag a sliding bar shown on-mouse-over each image to provide the feedback. The user can give feedback to any number of images and then click 'Next' at the top right corner. The display is refreshed with the next set of images.
+Our objective was to build a useful and easy to use interface which supports query less exploratory image search \cite{pichunter, PicSOM, iter_rel_feed} while keeping the cognitive load of the user as low as possible. We went for a simple and clean interface, intuitive to understand, supporting visual guidance and feedback and with minimum textual instructions on screen. The main idea behind the design of the interface was to make it support query less exploratory image search while accommodating feedback given by the users. The user navigates through images and gives ratings to images indicating how close they are to what the user is searching for. According to Cox et. al. \cite{pichunter} this type of interfaces are easy to use. The interface shows images in a grid like structure as shown in Figure \ref{fig:sample_interface}. The user has to drag a sliding bar shown on-mouse-over each image to provide the feedback. The user can give feedback to any number of images and then click 'Next' at the top right corner. The display is refreshed with the next set of images.
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.90\textwidth,height=6cm]{figures/Seashore_4.png}
+    \caption{The interface}
+    \label{fig:sample_interface}
+\end{figure}
 
 \section{Experiments}
 
@@ -1587,7 +1594,7 @@ We also calculated the aggregates on usability parameters extracted from the NAS
 \begin{figure}[h!]
   \centering
     \includegraphics[width=1.0\textwidth,height=7cm]{figures/Bar_chart_usability_parameters_numbered.png}
-    \caption{Total duration vs number of shown images}
+    \caption{Comparison of usability parameters according to NASA TLX}
     \label{fig:bar_chart_NASA_TLX}
 \end{figure}
 
@@ -1630,7 +1637,7 @@ We also calculated the aggregates on usability parameters extracted from the NAS
     \end{tabular}
     }
 	\end{center}
-	\caption{Genre wise Mean and Standard Deviation of usability parameters}
+	\caption{Genre wise Mean and Standard Deviation of usability parameters according to NASA TLX questionnaire}
     \label{table:use_mean_std_genre}
 \end{table}
 
@@ -1713,7 +1720,7 @@ We also calculated the aggregates on usability parameters extracted from the NAS
         
     \end{tabular}
 	\end{center}
-	\caption{Genre wise Wilcoxon P value measure of usability parameters (FutureView vs Single View)}
+	\caption{Genre wise Wilcoxon P value measure of usability parameters according to NASA TLX questionnaire (FutureView vs Single View)}
     \label{table:use_wilcoxon_genre}
 \end{table}
 
@@ -1844,7 +1851,7 @@ For this study we have used only colour as features for simplicity, but the over
     \end{tabular}
     }
 	\end{center}
-	\caption{Task wise Mean and Standard Deviation of usability parameters}
+	\caption{Task wise Mean and Standard Deviation of usability parameters according to NASA TLX questionnaire}
     \label{table:use_mean_std_task}
 \end{table}
 
@@ -1974,7 +1981,7 @@ For this study we have used only colour as features for simplicity, but the over
         
     \end{tabular}
 	\end{center}
-	\caption{Task wise Wilcoxon P value measure of usability parameters (FutureView vs Single View)}
+	\caption{Task wise Wilcoxon P value measure of usability parameters according to NASA TLX questionnaire (FutureView vs Single View)}
     \label{table:use_wilcox_task}
 \end{table}
 
