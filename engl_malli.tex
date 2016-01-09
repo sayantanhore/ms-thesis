@@ -121,24 +121,24 @@ We have taken three major ideas from PicSOM for our CBIR implementation, which a
 
 \subsection{Pinview}
 
-Pinview uses PicSOM engine internally. It incorporates multiple input modalities for accepting relevance feedback namely click and eye movement. It uses multi-armed bandit algorithm, \textit{Linrel} \cite{linrel}, to calculate relevance score of an image as a linear combination of feature vectors of previously shown images. Say at iteration $t$, the feature vectors of all shown images over the past $t-1$ iterations are represented by the matrix of row vectors $\mathbf{X}_t = \{\mathbf{x}_1, ..., \mathbf{x}_{t-1}\}$. The collected relevance score so far is given by column vecror $y_t = \{y_1, ..., y_{t-1}\}$. The algorithm calculates an optimal weight vector $\hat{\mathbf{w_t}}$ such that,
+Pinview uses PicSOM engine internally. It incorporates multiple input modalities for accepting relevance feedback namely click and eye movement. It uses multi-armed bandit algorithm, \textit{Linrel} \cite{linrel}, to calculate relevance score of an image as a linear combination of feature vectors of previously shown images. Say at iteration $t$, the feature vectors of all shown images over the past $t-1$ iterations are represented by the matrix of row vectors $\mathbf{X}_t = \{\mathbf{x}_1, ..., \mathbf{x}_{t-1}\}$. The collected relevance score so far is given by column vecror $y_t = \{y_1, ..., y_{t-1}\}$. The algorithm calculates an optimal weight vector $\hat{\mathbf{w_t}}$ such that
 
 $$
-y_t = \mathbf{X}_t . \hat{\mathbf{w_t}}
+y_t = \mathbf{X}_t . \hat{\mathbf{w_t}}.
 $$
 
-After calculating $\hat{\mathbf{w_t}}$, for each new image $x_i \notin \mathbf{X}_t$, which has not been presented to the user so far, is given a relevance score calculated by,
+After calculating $\hat{\mathbf{w_t}}$, for each new image $x_i \notin \mathbf{X}_t$, which has not been presented to the user so far, is given a relevance score calculated by
 
 $$
-y_i = x_i . \hat{\mathbf{w_t}}
+y_i = x_i . \hat{\mathbf{w_t}}.
 $$
 
 Once the relevance score is estimated, the system computes the upper confidence bound of that relevance as $y_i + k \sigma_i$ and the image with the largest upper confidence value is presented next. Here $k$ is a constant that controls the exploration.
 
-PicSOM selects the best performing image feature by examining the adjacency of selected images on TS-SOMs. But sometimes it is really required to combine features. Colour might work well on a query where the user is searching for blue skies, but to search blue sky with cloud formation, colour and texture together might play better. Therefore sometimes it is required to combine various kernels of different features. Pinview does the same by \textit{multiple kernel learning} (MKL) \cite{mkl}. If there are $n$ different kernels, $K = \{k_1, k_2, ..., k_n\}$, for any two images $i, j$, the combined kernel function \cite{Pinview} would be,
+PicSOM selects the best performing image feature by examining the adjacency of selected images on TS-SOMs. But sometimes it is really required to combine features. Colour might work well on a query where the user is searching for blue skies, but to search blue sky with cloud formation, colour and texture together might play better. Therefore sometimes it is required to combine various kernels of different features. Pinview does the same by \textit{multiple kernel learning} (MKL) \cite{mkl}. If there are $n$ different kernels, $K = \{k_1, k_2, ..., k_n\}$, for any two images $i, j$, the combined kernel function \cite{Pinview} would be
 
 $$
-k_{\eta}(i, j) = \sum_{i=1}^n \eta_i k_i(i, j)
+k_{\eta}(i, j) = \sum_{i=1}^n \eta_i k_i(i, j).
 $$
 
 Here $\eta = \{\eta_1, ...\eta_n\}$ are the weights given to kernel functions.
@@ -200,10 +200,10 @@ There are a few techniques that choose which action to choose in each step of a 
 
 \subsubsection{Gittin's Indices}
 
-Bandit problems require us to find out a proper sequence of actions over the time steps to achieve the maximum discounted cumulative total reward. Therefore, at each time step, we should have a mechanism to decide which action to take. Gittins and Jones \cite{gittins_indices} provided an indexing scheme for each available action, known as Gittins index. For each state $s_i$ of an action $i$, the Gittins index for $i$ is given as,
+Bandit problems require us to find out a proper sequence of actions over the time steps to achieve the maximum discounted cumulative total reward. Therefore, at each time step, we should have a mechanism to decide which action to take. Gittins and Jones \cite{gittins_indices} provided an indexing scheme for each available action, known as Gittins index. For each state $s_i$ of an action $i$, the Gittins index for $i$ is given as
 
 \begin{equation}
-G_i(s_i) = \sup_{\tau > 1}{\frac{E\Big[\sum_{t = 0}^{\tau - 1} r_i(s_i(t))\beta^t | s_i(0) = s_i\Big]}{E\Big[\sum_{t = 0}^{\tau - 1}\beta^t | s_i(0) = s_i\Big]}}
+G_i(s_i) = \sup_{\tau > 1}{\frac{E\Big[\sum_{t = 0}^{\tau - 1} r_i(s_i(t))\beta^t | s_i(0) = s_i\Big]}{E\Big[\sum_{t = 0}^{\tau - 1}\beta^t | s_i(0) = s_i\Big]}}.
 \end{equation}
 
 Here, $r_i$ is the reward function for $i$, which generates immediate reward  $r_i(s_i(t))$ if $i$ is chosen at time $t$. $s_i(0)$ is the starting state. $\tau$ is a predefined stopping step. At each step $t$, the $i$ with the highest $G_i(s_i)$ is chosen.
@@ -223,24 +223,24 @@ UCB algorithms like \textit{UCB1} and \textit{UCB1-tuned} target independent arm
 
 \subsubsection{UCB1}
 
-UCB1 \cite{independent_arm_bandits_2} keeps the number of times each arm is played at each time step $t$, denoted by $n_i(t)$. The algorithm starts with playing each arm once. Say, it time $t$ the $i$th arm has a mean $\hat{\mu}_i$. The algorithm picks arm $j$ as,
+UCB1 \cite{independent_arm_bandits_1} keeps the number of times each arm is played at each time step $t$, denoted by $n_i(t)$. The algorithm starts with playing each arm once. Say, it time $t$ the $i$th arm has a mean $\hat{\mu}_i$. The algorithm picks arm $j$ as
 
 \begin{equation}
-	j(t) = arg max_{i = 1 ... k}\Bigg(\hat{\mu}_i + \sqrt{\frac{2 \ln t}{n_i}}\Bigg)
+	j(t) = arg max_{i = 1 ... k}\Bigg(\hat{\mu}_i + \sqrt{\frac{2 \ln t}{n_i}}\Bigg).
 \end{equation}
 
 \subsubsection{UCB1-Tuned}
 
-The authors of UCB1 also proposed a second algorithm, UCB1-Tuned \cite{independent_arm_bandits_algorithms}. According to the authors, this algorithm performs better than UCB1 in practice. It takes the variance $\hat{\sigma}_i$ of each term into account also besides the mean $\hat{\mu}_i$. The algorithm picks arm $j$ at time $t$ as,
+The authors of UCB1 also proposed a second algorithm, UCB1-Tuned \cite{independent_arm_bandits_2}. According to the authors, this algorithm performs better than UCB1 in practice. It takes the variance $\hat{\sigma}_i$ of each term into account also besides the mean $\hat{\mu}_i$. The algorithm picks arm $j$ at time $t$ as
 
 \begin{equation}
 	j(t) = arg max_{i = 1 ... k}\Bigg(\hat{\mu}_i + \sqrt{\frac{\ln t}{n_i}min\Big(\frac{1}{4}, V_i(n_i)\Big)}\Bigg)
 \end{equation}
 
-where,
+where
 
 \begin{equation}
-	V_i(t) = \hat{\sigma}^2(t) + \sqrt{\frac{2 \ln t}{n_i}}
+	V_i(t) = \hat{\sigma}^2(t) + \sqrt{\frac{2 \ln t}{n_i}}.
 \end{equation}
 
 The variance $\hat{\sigma}^2(t)$ is calculated using an empirical sum of squares of reward values.
@@ -254,23 +254,23 @@ Algorithms like \textit{LinRel} and \textit{LinUCB} target dependent armed bandi
 
 \subsubsection{LinRel}
 
-LinRel algorithm \cite{linrel} provides an alternative approach for obtaining the action that produces the highest reward in each step. It assumes that for any action $i$, the estimated reward $r_i(t)$ at iteration $t$ is a linear function of all the rewards obtained in the last $t-1$ iterations. Therefore the algorithm tries to learn a weight vector $\mathbf{w}_i(t)$ such that if $\mathbf{r_i}$ represents the reward vector containing all the previous rewards for action $i$, then the expected reward at step $t$ is calculated as,
+LinRel algorithm \cite{linrel} provides an alternative approach for obtaining the action that produces the highest reward in each step. It assumes that for any action $i$, the estimated reward $r_i(t)$ at iteration $t$ is a linear function of all the rewards obtained in the last $t-1$ iterations. Therefore the algorithm tries to learn a weight vector $\mathbf{w}_i(t)$ such that if $\mathbf{r_i}$ represents the reward vector containing all the previous rewards for action $i$, then the expected reward at step $t$ is calculated as
 
 \begin{equation}
-E\big[r_i(t)\big] = \mathbf{r_i} \cdot \mathbf{w}_i(t)^T
+E\big[r_i(t)\big] = \mathbf{r_i} \cdot \mathbf{w}_i(t)^T.
 \end{equation}
 
-Now to estimate $\mathbf{w}_i(t)$, let $\mathbf{x}_i(t)$ be the feature vector of the arm at time $t$ and $\mathbf{X}_i(t)$ be all the previous $t-1$ feature vectors, it can be shown that $\mathbf{w}_i(t)^T$ is calculated as,
+Now to estimate $\mathbf{w}_i(t)$, let $\mathbf{x}_i(t)$ be the feature vector of the arm at time $t$ and $\mathbf{X}_i(t)$ be all the previous $t-1$ feature vectors, it can be shown that $\mathbf{w}_i(t)^T$ is calculated as
 
 \begin{equation}
-\mathbf{w}_i(t)^T = \mathbf{x}_i(t)^T \cdot (\mathbf{X}_i(t) \cdot \mathbf{X}_i(t)^T)^{-1} \cdot \mathbf{X}_i(t)
+\mathbf{w}_i(t)^T = \mathbf{x}_i(t)^T \cdot (\mathbf{X}_i(t) \cdot \mathbf{X}_i(t)^T)^{-1} \cdot \mathbf{X}_i(t).
 \end{equation}
 
 
-This expected reward is taken to be the mean reward. A confidence bound $\sigma_i(t)$ is calculated using the upper bound of $\mathbf{w}_i(t)$. The upper confidence bound ($UCB_i(t)$) \cite{ucb} (we discuss this in the next section) is generated by adding the positive confidence bound with the mean reward as,
+This expected reward is taken to be the mean reward. A confidence bound $\sigma_i(t)$ is calculated using the upper bound of $\mathbf{w}_i(t)$. The upper confidence bound ($UCB_i(t)$) \cite{ucb} (we discuss this in the next section) is generated by adding the positive confidence bound with the mean reward as
 
 \begin{equation}
-UCB_i(t) = E\big[r_i(t)\big] + \sigma_i(t)
+UCB_i(t) = E\big[r_i(t)\big] + \sigma_i(t).
 \end{equation}
 
 The action that produces the highest UCB value is considered.
@@ -278,25 +278,25 @@ The action that produces the highest UCB value is considered.
 
 \subsubsection{LinUCB}
 
-LinUCB \cite{linucb} is very similar to LinREL and is mostly used in personalized news article recommendation. It also describes the expected reward of an action as linear combination of state vectors or feature vectors of that action over the previous trials. Say at time $t$, action $a$ is in state $\mathbf{x}_{at}$ and it generates reward $r_{at}$, so the expected value of $r_{at}$ is,
+LinUCB \cite{linucb} is very similar to LinREL and is mostly used in personalized news article recommendation. It also describes the expected reward of an action as linear combination of state vectors or feature vectors of that action over the previous trials. Say at time $t$, action $a$ is in state $\mathbf{x}_{at}$ and it generates reward $r_{at}$, so the expected value of $r_{at}$ is
 
 \begin{equation}
-E\big[r_{at}|\mathbf{x}_{at}\big] = \mathbf{x}_{at}^T . \theta_a^*
+E\big[r_{at}|\mathbf{x}_{at}\big] = \mathbf{x}_{at}^T . \theta_a^*.
 \end{equation}
 
 $\mathbf{x}_{at}$ is a $d$ dimensional vector. In each step we have a tuple $(\mathbf{X}_a, \mathbf{c}_a)$, consisting of a two dimensional matrix $\mathbf{X}_a$, whose rows correspond to feature vectors of action $a$ for all the previous steps and the click feedbacks for the previous steps which is a vector $\mathbf{c}_a$. Applying ridge regression we calculate $\theta_a^*$ as
 
 \begin{equation}
-\theta_a^* = (\mathbf{X}_a^T \mathbf{X}_a + \mathbf{I}_d)^{-1} \mathbf{X}_a^T \mathbf{c}_a
+\theta_a^* = (\mathbf{X}_a^T \mathbf{X}_a + \mathbf{I}_d)^{-1} \mathbf{X}_a^T \mathbf{c}_a.
 \end{equation}
 
 Here $\mathbf{I}_d$ is the $d$ dimensional identity matrix.
 
-Now we calculate the upper confidence bound value as follows,
+Now we calculate the upper confidence bound value as
 
 \begin{equation}
-UCB(a_t) = \mathbf{x}_{at}^T . \theta_a^* + \alpha \sqrt{\mathbf{x}_{at}^T (\mathbf{X}_a^T \mathbf{X}_a + \mathbf{I}_d)^{-1}) \mathbf{x}_{at}}
-\end{equation}
+UCB(a_t) = \mathbf{x}_{at}^T . \theta_a^* + \alpha \sqrt{\mathbf{x}_{at}^T (\mathbf{X}_a^T \mathbf{X}_a + \mathbf{I}_d)^{-1}) \mathbf{x}_{at}}.
+\end{equation}.
 
 The action with highest UCB value is picked up.
 
@@ -309,26 +309,27 @@ Gaussian processes are nonparametric regression techniques. Before starting with
 
 In regression problems we have multiple random variables. At least one of those variables are dependent on a subset of the rest. Let us assume that we have to predict rainfall in a city for the coming monsoon based on average summer temperature. We take a dataset consisting of year by year rainfall and average summer temperature recorded over the past few years. We denote the temperature by $x$ and rainfall by $y$. We assume $x$ is an independent random variable and $y$ is dependent on $x$. We take a set $S = \{x_i, y_i|i = 0, 1, ...\}$ for the past years. The goal here is to learn the relation between $x$ and $y$. We will apply the learned relation on unknown $x$ values to get the corresponding $y$ values. Here relation basically means a mathematical function.
 
-In its simplest form the function could be a linear one like,
+In its simplest form the function could be a linear one like
 
 \begin{equation}
-f(x_i) = \theta_1 x_i + \theta_0
+f(x_i) = \theta_1 x_i + \theta_0.
+\label{eqn:reg_prob}
 \end{equation}
 
 
-But often in real life scenarios we have more than one independent input variables. Besides temperature we can have amount of $CO_2$ emission, amount of deforestation (in square kilometres) and so forth. Therefore instead of having a single $x_i$ we have a vector $\mathbf{x}_i = \{x_{i1}, x_{i2}, x_{i3}, ..., x_{im}\}$. We rewrite equation 1 as,
+But often in real life scenarios we have more than one independent input variables. Besides temperature we can have amount of $CO_2$ emission, amount of deforestation (in square kilometres) and so forth. Therefore instead of having a single $x_i$ we have a vector $\mathbf{x}_i = \{x_{i1}, x_{i2}, x_{i3}, ..., x_{im}\}$. We rewrite equation \ref{eqn:reg_prob} as
 
 \begin{equation}
-f(\mathbf{x}_i) = \sum_{j=1}^m \theta_j x_{ij} + \theta_0
+f(\mathbf{x}_i) = \sum_{j=1}^m \theta_j x_{ij} + \theta_0.
 \end{equation}
 
-It is not possible to match each and every $y_i$ because of the randomness of the data. We try to go as close as possible so that $f(x)$ can represent the pattern of the output. The closeness is measured by \textit{least square} method. The goal is to minimize the distance between $y_i$ and $f(x_i)$ over the entire dataset. Say $d^2_i$ represents the squared distance between $y_i$ and $f(x_i)$.
+It is not possible to match each and every $y_i$ because of the randomness of the data. We try to go as close as possible so that $f(x)$ can represent the pattern of the output. The closeness is measured by \textit{least square} method. The goal is to minimize the distance between $y_i$ and $f(x_i)$ over the entire dataset. Say $d^2_i$ represents the squared distance between $y_i$ and $f(x_i)$ as
 
 \begin{eqnarray}
-d^2_i = [y_i - f(\mathbf{x}_i)]^2
+d^2_i = [y_i - f(\mathbf{x}_i)]^2.
 \end{eqnarray}
 
-Let $d^2$ denote the summation of all $d^2_i$,
+Let $d^2$ denote the summation of all $d^2_i$
 
 \begin{eqnarray}
 d^2 = \sum_i[y_i - f(\mathbf{x}_i)]^2 \nonumber\\
@@ -336,7 +337,7 @@ d^2 = \sum_i[y_i - \sum_{j=1}^m \theta_j x_{ij} - \theta_0]^2 \nonumber\\
 d^2 = \sum_i[y_i - \theta_1x_{i1} - \theta_2x_{i2} - \theta_3x_{i3} - ... - \theta_mx_{im} - \theta_0]^2
 \end{eqnarray}
 
-To obtain minimum $d^2$, we take partial derivative with respect to each $\theta_i$ and set those to zero. Therefore we get a set of partial differential equations as follows,
+To obtain minimum $d^2$, we take partial derivative with respect to each $\theta_i$ and set those to zero. Therefore we get a set of partial differential equations as follows
 
 \begin{eqnarray}
 \frac{\partial}{\partial{\theta_0}}(d^2) = -2\sum_i[y_i - \theta_1x_{i1} - \theta_2x_{i2} - \theta_3x_{i3} - ... - \theta_mx_{im} - \theta_0] = 0\nonumber \\
@@ -346,7 +347,7 @@ To obtain minimum $d^2$, we take partial derivative with respect to each $\theta
 \frac{\partial}{\partial{\theta_m}}(d^2) = -2\sum_i[y_i - \theta_1x_{i1} - \theta_2x_{i2} - \theta_3x_{i3} - ... - \theta_mx_{im} - \theta_0]x_{im} = 0
 \end{eqnarray}
 
-Assuming we have n observed data points, We can write this set of equations as,
+Assuming we have n observed data points, We can write this set of equations as
 
 \begin{eqnarray}
 \theta_0 n + \theta_1 \sum_{i=1}^n x_{i1} + \theta_2 \sum_{i=1}^n x_{i2} + ... + \theta_m \sum_{i=1}^n x_{im} = \sum_{i=1}^n y_i \nonumber \\
@@ -356,7 +357,7 @@ Assuming we have n observed data points, We can write this set of equations as,
 \theta_0 \sum_{i=1}^n x_{im} + \theta_1 \sum_{i=1}^n x_{i1} x_{im} + \theta_1 \sum_{i=1}^n x_{i2} x_{im} + ... + \theta_m \sum_{i=1}^n x_{im}^2 = \sum_{i=1}^n y_i x_m
 \end{eqnarray}
 
-These set of equations can be written in matrix form,
+These set of equations can be written in matrix form
 
 $$
 \begin{pmatrix}
@@ -385,11 +386,11 @@ n & \sum_{i=1}^n x_{i1} & \sum_{i=1}^n x_{i2} \hdots \sum_{i=1}^n x_{im} \\
 \label{eq:lin_reg_matrix}
 $$
 
-To simplify the notation, let's denote the left hand side of Eqn. \ref{eq:lin_reg_matrix} as $\mathbf{B}$, the matrix at the right hand side as $\mathbf{X}$ and the vector $\theta$ as $\hat{\mathbf{\theta}}$. Therefore Eqn. \ref{eq:lin_reg_matrix} can be written as,
+To simplify the notation, let's denote the left hand side of the above equation as $\mathbf{B}$, the matrix at the right hand side as $\mathbf{X}$ and the vector $\theta$ as $\hat{\mathbf{\theta}}$. Therefore the above equation can be written as
 
 \begin{eqnarray}
 \mathbf{B} = \mathbf{X \hat{\theta}} \nonumber \\
-\hat{\theta} = \mathbf{X^{-1}} \mathbf{B}
+\hat{\theta} = \mathbf{X^{-1}} \mathbf{B}.
 \label{reg_param}
 \end{eqnarray}
 
@@ -397,11 +398,11 @@ We obtained the optimal $\hat{\theta} = \{\theta_1, \theta_2, \theta_3, ...,\the
 
 \subsection{Gaussian Distribution}
 
-A one dimensional random variable $x$, which follows Gaussian distribution with mean $\mu$ and variance $\sigma$ has a probability density function (PDF),
+A one dimensional random variable $x$, which follows Gaussian distribution with mean $\mu$ and variance $\sigma$ has a probability density function (PDF)
 
 \begin{equation}
 p(x) = \frac{1}{\sqrt{2 \pi}\sigma} \exp \Big[-\frac{(x - \mu)^2}{2 \sigma^2}\Big]
-\label{gauss_single_var_dist}
+\label{gauss_single_var_dist}.
 \end{equation}
 
 
@@ -410,19 +411,19 @@ This is the equation of a bell curve as shown in Figure \ref{fig:gaussian_1d}.
 
 Here, $\mu$ is the expected value of a the random variable $x$ which is the peak of the bell shaped curve, as shown in Figure \ref{gauss_single_var_dist} and $\sigma$ is the maximum width of the distribution i.e. the width on both sides of $\mu$ in which most of the datapoints occur.
 
-Eqn. \ref{gauss_single_var_dist} can be written as,
+Eqn. \ref{gauss_single_var_dist} can be written as
 
 \begin{equation}
-p(x) \sim \mathcal{N}(\mu, \sigma^2)
+p(x) \sim \mathcal{N}(\mu, \sigma^2).
 \label{gauss_single_var_sym}
 \end{equation}
 
 It means, $x$ comes from a Gaussian distribution with mean $\mu$ and variance $\sigma^2$.
 
-Sometimes we have a collection of random variables $\mathbf{x} = \{x_1, x_2, x_3, ..., x_m\}, m \in \mathcal{R}$, where each $x_i$ where $i \in m$ follows Gaussian distribution, we write the PDF over $\mathbf{x}$ as,
+Sometimes we have a collection of random variables $\mathbf{x} = \{x_1, x_2, x_3, ..., x_m\}, m \in \mathcal{R}$, where each $x_i$ where $i \in m$ follows Gaussian distribution, we write the PDF over $\mathbf{x}$ as
 
 \begin{equation}
-p(\mathbf{x}) = \frac{1}{\sqrt{(2 \pi)^m |\Sigma|}}exp \Big[-\frac{1}{2}(\mathbf{x} - \mu)^T \Sigma^{-1} (\mathbf{x} - \mu) \Big]
+p(\mathbf{x}) = \frac{1}{\sqrt{(2 \pi)^m |\Sigma|}}exp \Big[-\frac{1}{2}(\mathbf{x} - \mu)^T \Sigma^{-1} (\mathbf{x} - \mu) \Big].
 \label{gauss_multi_var_dist}
 \end{equation}
 
@@ -430,10 +431,10 @@ Here $\mu = \{\mu_1, \mu_2, ..., \mu_m\}$ is a mean vector where each $\mu_i$ re
 
 Figure \ref{fig:gaussian_2d} shows the plot of a two dimensional Gaussian.
 
-We can write Eqn. \ref{gauss_multi_var_dist} as,
+We can write Eqn. \ref{gauss_multi_var_dist} as
 
 \begin{equation}
-p(\mathbf{x}) \sim \mathcal{N}(\mathbf{\mu}, \Sigma^2)
+p(\mathbf{x}) \sim \mathcal{N}(\mathbf{\mu}, \Sigma^2).
 \label{gauss_multi_var_sym}
 \end{equation}
 
@@ -464,25 +465,25 @@ Bayesian probability model is built after \textit{Bayes'} rule. It allows us to 
 
 \subsection{Bayes' Rule}
 
-We start with the expression of Bayes' rule. Say we have two random variables, $x$ and $y$, where $x$ is an independent variable but $y$ depends on $x$. For the sake of regression problems we assume both $x$ and $y$ as continuous variables. The probability of $x$ is given by $p(x)$, the joint probability of $x$ and $y$ is given by $p(y, x)$. We can break $p(y, x)$ in $p(y|x)p(x)$ or $p(x|y)p(y)$ (Here $p(x|y)$ cannot be written as $p(x)$ if $x$ is conditionally dependent on $y$). Therefore,
+We start with the expression of Bayes' rule. Say we have two random variables, $x$ and $y$, where $x$ is an independent variable but $y$ depends on $x$. For the sake of regression problems we assume both $x$ and $y$ as continuous variables. The probability of $x$ is given by $p(x)$, the joint probability of $x$ and $y$ is given by $p(y, x)$. We can break $p(y, x)$ in $p(y|x)p(x)$ or $p(x|y)p(y)$ (Here $p(x|y)$ cannot be written as $p(x)$ if $x$ is conditionally dependent on $y$). Therefore
 
 \begin{eqnarray}
 p(y, x) = p(y|x)p(x) = p(x|y)p(y)\nonumber\\
-p(y|x) = \frac{p(x|y)p(y)}{p(x)}
+p(y|x) = \frac{p(x|y)p(y)}{p(x)}.
 \end{eqnarray}
 
 
-The term $p(x)$ is marginalized over all possible values of $y$, so we can write $p(x)$ as,
+The term $p(x)$ is marginalized over all possible values of $y$, so we can write $p(x)$ as
 
 \begin{equation}
-p(x) = \int_y{p(x|y)p(y)dy}
+p(x) = \int_y{p(x|y)p(y)dy}.
 \end{equation}
 
 
-Combining Eqn. \ref{reg_param} and Eqn. \ref{gauss_single_var_dist},
+Combining Eqn. \ref{reg_param} and Eqn. \ref{gauss_single_var_dist} we get
 
 \begin{equation}
-p(y|x) = \frac{p(x|y)p(y)}{\int_y{p(x|y)p(y)dy}}
+p(y|x) = \frac{p(x|y)p(y)}{\int_y{p(x|y)p(y)dy}}.
 \end{equation}
 
 \iffalse
@@ -496,86 +497,86 @@ p(y|x) = \frac{p(x|y)p(y)}{\int_y{p(x|y)p(y)dy}}
 
 \subsection{The Standard Linear Model}
 
-We start with the assumption that $y_i$ differs from $f(\mathbf{x}_i)$ because of noise. In our discussion of regression problems in \ref{subsec:reg_prob} we had a constant parameter $\theta_0$. In this section we model that same $\theta_0$ as the noise term which, given by $\epsilon_i$, follows Gaussian i.i.d. $\mathcal{N}(0, \sigma ^2)$. Therefore the i\textsuperscript{th} observation can be written as,
+We start with the assumption that $y_i$ differs from $f(\mathbf{x}_i)$ because of noise. In our discussion of regression problems in \ref{subsec:reg_prob} we had a constant parameter $\theta_0$. In this section we model that same $\theta_0$ as the noise term which, given by $\epsilon_i$, follows Gaussian i.i.d. $\mathcal{N}(0, \sigma ^2)$. Therefore the i\textsuperscript{th} observation can be written as
 
 \begin{eqnarray}
 \label{eqn:standard_linear_model}
 y_i = f(\mathbf{x}_i) + \epsilon_i \nonumber \\
-y_i = \boldsymbol\theta ^T \mathbf{x}_i + \epsilon_i && \text{where $\boldsymbol\theta, \mathbf{x}_i \in \mathcal{R}^m$}
+y_i = \boldsymbol\theta ^T \mathbf{x}_i + \epsilon_i && \text{where $\boldsymbol\theta, \mathbf{x}_i \in \mathcal{R}^m$}.
 \label{gauss_noise}
 \end{eqnarray}
 
-The PDF associated with $\epsilon_i$ is,
+The PDF associated with $\epsilon_i$ is
 
 \begin{equation}
-p(\epsilon_i) = \frac{1}{\sqrt{2 \pi} \sigma} exp \Big[-\frac{\epsilon_i^2}{2 \sigma^2} \Big]
+p(\epsilon_i) = \frac{1}{\sqrt{2 \pi} \sigma} exp \Big[-\frac{\epsilon_i^2}{2 \sigma^2} \Big].
 \end{equation}
 
 
-Replacing $\epsilon_i$ by $(y_i - \boldsymbol\theta ^T \mathbf{x}_i)$ from Eqn. \ref{gauss_noise} ,
+Replacing $\epsilon_i$ by $(y_i - \boldsymbol\theta ^T \mathbf{x}_i)$ from Eqn. \ref{gauss_noise} we get
 
 \begin{eqnarray}
 \begin{split}
 	&p(y_i - \boldsymbol\theta ^T \mathbf{x}_i) = \frac{1}{\sqrt{2 \pi} \sigma} exp \Big[-\frac{(y_i - \boldsymbol\theta ^T \mathbf{x}_i)^2}{2 \sigma^2} \Big] \\
-	&p(y_i | \mathbf{x}_i, \boldsymbol\theta) = \frac{1}{\sqrt{2 \pi} \sigma} exp \Big[-\frac{(y_i - \boldsymbol\theta ^T \mathbf{x}_i)^2}{2 \sigma^2} \Big]
+	&p(y_i | \mathbf{x}_i, \boldsymbol\theta) = \frac{1}{\sqrt{2 \pi} \sigma} exp \Big[-\frac{(y_i - \boldsymbol\theta ^T \mathbf{x}_i)^2}{2 \sigma^2} \Big].
 \end{split}
 \end{eqnarray}
 
-Thus $y_i|\boldsymbol\theta ^T, \mathbf{x}_i$ is Gaussian distributed as $y_i | \boldsymbol\theta ^T \mathbf{x}_i \sim \mathcal{N}(\boldsymbol\theta^T \mathbf{x}_i, \sigma^2)
+Thus $y_i|\boldsymbol\theta ^T, \mathbf{x}_i$ is Gaussian distributed as $y_i | \boldsymbol\theta ^T \mathbf{x}_i \sim \mathcal{N}(\boldsymbol\theta^T \mathbf{x}_i, \sigma^2).
 $
 
-Over the entire training dataset $S = \{\mathbf{x}_i, y_i\}_{i=1}^n$, as $y_i$'s are independent and identically distributed, we can write,
+Over the entire training dataset $S = \{\mathbf{x}_i, y_i\}_{i=1}^n$, as $y_i$'s are independent and identically distributed, we can write
 
 \begin{eqnarray}
 \label{eqn:likelihood}
 \begin{split}
 	p(\mathbf{y} | \mathbf{X}, \boldsymbol\theta) &= \prod_{i = 1}^n p(y_i | \boldsymbol\theta ^T \mathbf{x}_i) \\
-	&= \prod_{i = 1}^n \frac{1}{\sqrt{2 \pi} \sigma} exp \Big[-\frac{(y_i - \boldsymbol\theta ^T \mathbf{x}_i)^2}{2 \sigma^2} \Big]
+	&= \prod_{i = 1}^n \frac{1}{\sqrt{2 \pi} \sigma} exp \Big[-\frac{(y_i - \boldsymbol\theta ^T \mathbf{x}_i)^2}{2 \sigma^2} \Big].
 \end{split}
 \end{eqnarray}
 
-Therefore $p(\mathbf{y} | \mathbf{X}, \boldsymbol\theta)$ is Gaussian distributed as $\mathbf{y} | \mathbf{X}, \boldsymbol\theta \sim \mathcal{N}(\boldsymbol\theta^T \mathbf{X}, \sigma^2 \mathbf{I})$
+Therefore $p(\mathbf{y} | \mathbf{X}, \boldsymbol\theta)$ is Gaussian distributed as $\mathbf{y} | \mathbf{X}, \boldsymbol\theta \sim \mathcal{N}(\boldsymbol\theta^T \mathbf{X}, \sigma^2 \mathbf{I})$.
 
 Here $\mathbf{y}_i = \{y_1, y_2, .... y_n\}$ denotes the output vector and $X = \{\mathbf{x_1}, \mathbf{x_2}, ..., \mathbf{x_n}\}$ is the matrix comprising of all the input vectors, sometimes denoted as the design matrix.
 
 
 
-Eqn \ref{eqn:likelihood} gives us the likelihood function w.r.t. $\boldsymbol \theta$. We could take a maximum likelihood estimate here and calculate the optimal $\boldsymbol \theta$. But instead of point estimation of individual parameters, we want to calculate the distribution over $\boldsymbol \theta$ based on the observed dataset $S$. We assume a prior over $\boldsymbol \theta$ as,
+Eqn \ref{eqn:likelihood} gives us the likelihood function w.r.t. $\boldsymbol \theta$. We could take a maximum likelihood estimate here and calculate the optimal $\boldsymbol \theta$. But instead of point estimation of individual parameters, we want to calculate the distribution over $\boldsymbol \theta$ based on the observed dataset $S$. We assume a prior over $\boldsymbol \theta$ as
 
 \begin{eqnarray}
 \label{eqn:prior}
 \begin{split}
-	\boldsymbol \theta \sim \mathcal{N}(\mathbf{0}, \Sigma_p)
+	\boldsymbol \theta \sim \mathcal{N}(\mathbf{0}, \Sigma_p).
 \end{split}
 \end{eqnarray}
 
-The posterior distribution over $\boldsymbol \theta$ given $S$ would be,
+The posterior distribution over $\boldsymbol \theta$ given $S$ would be
 
 \begin{eqnarray}
 \begin{split}
 p(\boldsymbol \theta | \mathbf{y}, \mathbf{X}) &= \frac{p(\mathbf{y} | \mathbf{X}, \boldsymbol\theta) p(\boldsymbol \theta)}{p(\mathbf{y} | \mathbf{X})} \\
 &~\\
-p(\boldsymbol \theta | \mathbf{y}, \mathbf{X}) & \propto p(\mathbf{y} | \mathbf{X}, \boldsymbol\theta) p(\boldsymbol \theta)
+p(\boldsymbol \theta | \mathbf{y}, \mathbf{X}) & \propto p(\mathbf{y} | \mathbf{X}, \boldsymbol\theta) p(\boldsymbol \theta).
 \end{split}
 \end{eqnarray}
 
-We omit the marginal likelihood term, $p(\mathbf{y} | \mathbf{X}) = \int p(\mathbf{y} | \mathbf{X}, \boldsymbol \theta)p(\boldsymbol \theta)d\boldsymbol \theta$, being a constant and this posterior over $\boldsymbol \theta$ can be shown to follow Gaussian as,
+We omit the marginal likelihood term, $p(\mathbf{y} | \mathbf{X}) = \int p(\mathbf{y} | \mathbf{X}, \boldsymbol \theta)p(\boldsymbol \theta)d\boldsymbol \theta$, being a constant and this posterior over $\boldsymbol \theta$ can be shown to follow Gaussian as
 
 \begin{eqnarray}
 \begin{split}
-\boldsymbol \theta | \mathbf{y}, \mathbf{X} & \sim \mathcal{N}(\frac{1}{\sigma^2} A^{-1} \mathbf{Xy}, A^{-1})
+\boldsymbol \theta | \mathbf{y}, \mathbf{X} & \sim \mathcal{N}(\frac{1}{\sigma^2} A^{-1} \mathbf{Xy}, A^{-1}).
 \end{split}
 \end{eqnarray}
 
-Here $A$ is given by $\sigma^{-2} \mathbf{XX^T + \Sigma_p^{-1}}$
+Here $A$ is given by $\sigma^{-2} \mathbf{XX^T + \Sigma_p^{-1}}$.
 
-Now for any next unobserved data point $S_* = \{y_*, x_*\}$, we can calculate the posterior distribution over $y_*$, given $x_*$ and $S$, as below,
+Now for any next unobserved data point $S_* = \{y_*, x_*\}$, we can calculate the posterior distribution over $y_*$, given $x_*$ and $S$, as below
 
 \begin{equation}
 \label{conti_rnd_var_bayes_poster}
 \begin{split}
 	&p(y_* | \mathbf{x}_*, \mathbf{X}, \mathbf{y}) = \int p(y_* | \mathbf{x}_*, \boldsymbol\theta)p(\boldsymbol\theta | \mathbf{X}, \mathbf{y})d \boldsymbol\theta \\
-	&y_* | \mathbf{x}_*, \mathbf{X}, \mathbf{y} \sim \mathcal{N}(\frac{1}{\sigma^2}\mathbf{x}_*^T A^{-1} \mathbf{Xy}, \mathbf{x}_*^T A^{-1} \mathbf{x}_*)
+	&y_* | \mathbf{x}_*, \mathbf{X}, \mathbf{y} \sim \mathcal{N}(\frac{1}{\sigma^2}\mathbf{x}_*^T A^{-1} \mathbf{Xy}, \mathbf{x}_*^T A^{-1} \mathbf{x}_*).
 \end{split}
 \end{equation}
 
@@ -583,12 +584,12 @@ The problem with this model is that it suffers from input dimensionality issues.
 
 
 \subsection{The Basis Function Model}
-There are special functions called \textit{basis functions}, which are used to transform the input vectors into another feature space of different dimension. We can define a collection of basis functions as below,
+There are special functions called \textit{basis functions}, which are used to transform the input vectors into another feature space of different dimension. We can define a collection of basis functions as below
 
 \begin{equation}
 \label{eqn:basis_function}
 \begin{split}
-	&\Phi(.) = \{\phi_1(.), \phi_2(.), ...,\phi_n(.)\} \mid n \in \mathcal{R}
+	&\Phi(.) = \{\phi_1(.), \phi_2(.), ...,\phi_n(.)\} \mid n \in \mathcal{R}.
 \end{split}
 \end{equation}
 
@@ -600,35 +601,35 @@ Say we have an input vector $\mathbf{x}_i \in \mathcal{R}^d$ as $\mathbf{x}_i = 
 	 &f\bigg(\phi_2(x_{i1}), \phi_2(x_{i2}), ..., \phi_2(x_{id})\bigg), \nonumber \\ 
 	 &. \nonumber \\
 	 &. \nonumber \\
-	 &f\bigg(\phi_n(x_{i1}), \phi_n(x_{i2}), ..., \phi_n(x_{id})\bigg)\Bigg\}
+	 &f\bigg(\phi_n(x_{i1}), \phi_n(x_{i2}), ..., \phi_n(x_{id})\bigg)\Bigg\}.
 \end{align}
 
-The standard linear model changes into,
+The standard linear model changes into
 
 \begin{equation}
 \label{eqn:basis_function_model}
 \begin{split}
-	y_i = \phi(\mathbf{x}_i)^T \boldsymbol\theta + \epsilon_i
+	y_i = \phi(\mathbf{x}_i)^T \boldsymbol\theta + \epsilon_i.
 \end{split}
 \end{equation}
 
-The predictive distribution becomes,
+The predictive distribution becomes
 
 \begin{equation}
 \label{eqn:basis_function_model_predictive_distribution}
 \begin{split}
-	y_* | \mathbf{x}_*, \mathbf{X}, \mathbf{y} \sim \mathcal{N}(\boldsymbol\phi_*^T \Sigma_p \boldsymbol\Phi(\mathcal{K} + \sigma^2 \mathcal{I})^{-1} \mathbf{y}, \boldsymbol\phi_*^T \Sigma_p \boldsymbol\phi_* - \boldsymbol\phi_*^T \Sigma_p \boldsymbol\Phi(\mathcal{K} + \sigma^2 \mathcal{I})^{-1} \boldsymbol\Phi^T \Sigma_p \boldsymbol\phi_*)
+	y_* | \mathbf{x}_*, \mathbf{X}, \mathbf{y} \sim \mathcal{N}(\boldsymbol\phi_*^T \Sigma_p \boldsymbol\Phi(\mathcal{K} + \sigma^2 \mathcal{I})^{-1} \mathbf{y}, \boldsymbol\phi_*^T \Sigma_p \boldsymbol\phi_* - \boldsymbol\phi_*^T \Sigma_p \boldsymbol\Phi(\mathcal{K} + \sigma^2 \mathcal{I})^{-1} \boldsymbol\Phi^T \Sigma_p \boldsymbol\phi_*).
 \end{split}
 \end{equation}
 
 Here $\mathcal{K} = \boldsymbol\Phi^T \Sigma_p \boldsymbol\Phi$ and we have used some shorthand. They are $\boldsymbol\phi_* = \boldsymbol\phi_*(\mathbf{x}_*)$ and $\boldsymbol\Phi = \boldsymbol\Phi(\mathbf{X})$ \cite{gaussian_process_for_machine_learning}.
 
-We see that some identical terms appear several times in Eqn. \ref{eqn:basis_function_model_predictive_distribution} as $\boldsymbol\Phi^T \Sigma_p \boldsymbol\Phi$, $\boldsymbol\phi_*^T \Sigma_p \boldsymbol\Phi$ and $\boldsymbol\phi_*^T \Sigma_p \boldsymbol\phi_*$. They must have been in the form $\boldsymbol\phi(\mathbf{x})^T \Sigma_p \boldsymbol\phi(\mathbf{x_*})$ where $\mathbf{x}$ and $\mathbf{x_*}$ are training and test sets. This expression has a functional form called \textit{covariance function or kernel function} as below,
+We see that some identical terms appear several times in Eqn. \ref{eqn:basis_function_model_predictive_distribution} as $\boldsymbol\Phi^T \Sigma_p \boldsymbol\Phi$, $\boldsymbol\phi_*^T \Sigma_p \boldsymbol\Phi$ and $\boldsymbol\phi_*^T \Sigma_p \boldsymbol\phi_*$. They must have been in the form $\boldsymbol\phi(\mathbf{x})^T \Sigma_p \boldsymbol\phi(\mathbf{x_*})$ where $\mathbf{x}$ and $\mathbf{x_*}$ are training and test sets. This expression has a functional form called \textit{covariance function or kernel function} as below
 
 \begin{equation}
 \label{eqn:basis_function_model_kernel}
 \begin{split}
-	k(\mathbf{x}, \mathbf{x_*}) = \boldsymbol\phi(\mathbf{x})^T \Sigma_p \boldsymbol\phi(\mathbf{x_*})
+	k(\mathbf{x}, \mathbf{x_*}) = \boldsymbol\phi(\mathbf{x})^T \Sigma_p \boldsymbol\phi(\mathbf{x_*}).
 \end{split}
 \end{equation}
 
@@ -644,14 +645,14 @@ In our example of rainfall prediction, we consider $x_i \in \mathcal{R}$ to be s
 
 Here, we show set of observations $\mathcal{X}$ on $X$- axis i.e. $\mathbf{x}_i$ values. As we can fit infinite number of points on $X$- axis, we can represent infinite amount of observations on it. If $\mathcal{X}$ is a set of three observations, we show three points on $X$-axis.
 
-To represent the regression problem here, we have,
+To represent the regression problem here, we have
 
 \begin{equation}
-y_i = f(\mathbf{x}_i) + \epsilon_i
+y_i = f(\mathbf{x}_i) + \epsilon_i,
 \label{reg_sym_noise}
 \end{equation}
 
-$\epsilon_i \sim (0, \sigma^2))$ is the standard Gaussian noise.
+where $\epsilon_i \sim (0, \sigma^2))$ is the standard Gaussian noise.
 
 Without considering any parameter set, we try to learn the function $f$. We treat $f$ as a dependent random variable on $\mathbf{x}_i$. A continuous function can represent an infinite number of points on it. Therefore, $f$ can fit an infinite number of $\mathbf{x}_i$, where $i = 0, 1, ... \infty$. Thus, Gaussian process gives us an infinite dimensional multivariate Gaussian distribution or a distribution over functions.
 
@@ -719,29 +720,29 @@ Without considering any parameter set, we try to learn the function $f$. We trea
 
 Say, $\mathcal{F} = \{f_1, f_2, ..., f_n, f_{n+1}, ... \infty\}$ is a set of functions that can operate over $\mathbf{x}_i$. Any function $f$ over an $x$ can take any form like $f(x) = (x + 2)$ or $f(x) = x^2$ or $f(x) = \exp(\sin(x)^5)$, as long as $f(x) \in \mathcal{R}$. From this infinite set $\mathcal{F}$, we need to find the proper $f$ that truly represents $y$ i.e. truly fits the data.
 
-To differentiate a function from a regular random variable we denote a function $f$ as $f(.)$ from now on. We start with a prior distribution over $\mathcal{F}$, given by,
+To differentiate a function from a regular random variable we denote a function $f$ as $f(.)$ from now on. We start with a prior distribution over $\mathcal{F}$, given by
 
 \begin{equation}
-f(.) \sim (m(.), k(.,.))
+f(.) \sim (m(.), k(.,.)).
 \end{equation}
 
 Figure \ref{fig:gaussian_process} presents a visual representation of Gaussian process. The prior is shown in \ref{fig:gp_first} with zero mean. Before getting evidence, the prior distribution has uniform confidence interval around the mean for the entire input space. After getting one evidence point the space around that point shrank as shown in \ref{fig:gp_second}. We exclude all the functions that do not pass through our evidence point. The mean function has to pass through that point, therefore it is shifted and the confidence interval also narrowed down accordingly. \ref{fig:gp_third} shows the same effect for more evidence points. \ref{fig:gp_fourth} finally shows the shape of the posterior function when we have enough evidence.
 
-As we are operating on a distribution over functions, the mean $m(.)$ and covariance $k(.,.)$ are also functions. The domain of $f(.)$ is a vector $\mathbf{x}_i \in \mathcal{R}^d$ where $d \to \infty$. $m(.)$ is the mean function which gives the mean of any input $\mathbf{x}_k \in \mathcal{X}$ as $m(\mathbf{x}_k) = \mu_{\mathbf{x}_k}$ and it generates a mean vector over $\mathcal{X}$ as,
+As we are operating on a distribution over functions, the mean $m(.)$ and covariance $k(.,.)$ are also functions. The domain of $f(.)$ is a vector $\mathbf{x}_i \in \mathcal{R}^d$ where $d \to \infty$. $m(.)$ is the mean function which gives the mean of any input $\mathbf{x}_k \in \mathcal{X}$ as $m(\mathbf{x}_k) = \mu_{\mathbf{x}_k}$ and it generates a mean vector over $\mathcal{X}$ as
 
 $$
-m(\mathcal{X}) = \{m(\mathbf{x}_k) \mid k = 0, 1, 2, ...\} = \{\mu_{\mathbf{x}_k} \mid k = 0, 1, 2, ...\} 
+m(\mathcal{X}) = \{m(\mathbf{x}_k) \mid k = 0, 1, 2, ...\} = \{\mu_{\mathbf{x}_k} \mid k = 0, 1, 2, ...\}.
 $$
 
-$k(.,.)$ takes two random vectors, $\mathbf{x}_k$ and $\mathbf{x}_l$ from $\mathcal{X}$ and gives the covariance between them as,
+$k(.,.)$ takes two random vectors, $\mathbf{x}_k$ and $\mathbf{x}_l$ from $\mathcal{X}$ and gives the covariance between them as
 
 $$
-k(\mathbf{x}_k, \mathbf{x}_l) = Covariance(\mathbf{x}_k, \mathbf{x}_l)
+k(\mathbf{x}_k, \mathbf{x}_l) = Covariance(\mathbf{x}_k, \mathbf{x}_l).
 $$
 
 $k(.,.)$ is also called the Kernel function as discussed before.
 
-To represent the multivariate distribution over functions operating over any finite subset $\mathcal{X}_m \in \mathcal{X}$ we can write in matrix form as,
+To represent the multivariate distribution over functions operating over any finite subset $\mathcal{X}_m \in \mathcal{X}$ we can write in matrix form as
 
 $$
 \begin{pmatrix}
@@ -763,40 +764,40 @@ k(\mathbf{x}_1, \mathbf{x}_1) k(\mathbf{x}_1, \mathbf{x}_2) \hdots k(\mathbf{x}_
 k(\mathbf{x}_2, \mathbf{x}_1) k(\mathbf{x}_2, \mathbf{x}_2) \hdots k(\mathbf{x}_2, \mathbf{x}_m) \\
 \vdots \\
 k(\mathbf{x}_m, \mathbf{x}_1) k(\mathbf{x}_m, \mathbf{x}_2) \hdots k(\mathbf{x}_m, \mathbf{x}_m) 
-\end{pmatrix}\right)
+\end{pmatrix}\right).
 $$
 
-Here, the left hand side represents the output vector, the right hand side represents the multivariate Gaussian distribution over functions with a mean vector and a covariance matrix. Which can be written as,
+Here, the left hand side represents the output vector, the right hand side represents the multivariate Gaussian distribution over functions with a mean vector and a covariance matrix. Which can be written as
 
 \begin{equation}
-f(\mathcal{X}_m) \sim \mathcal{N} (m(\mathcal{X}_m), K(\mathcal{X}_m))
+f(\mathcal{X}_m) \sim \mathcal{N} (m(\mathcal{X}_m), K(\mathcal{X}_m)).
 \label{gauss_proc_multi_var_sym}
 \end{equation}
 
 We see how easy Gaussian process is to customize, any time we can extract a finite subset out of the infinite distribution.
 
-To simplify the calculation, we start with a zero mean prior as,
+To simplify the calculation, we start with a zero mean prior as
 
 \begin{equation}
 f(.) \sim \mathcal{N} (0, k(.,.))
-\label{gauss_proc_func_0_mean_sym}
+\label{gauss_proc_func_0_mean_sym}.
 \end{equation}
 
-Combining Eqn. \ref{gauss_proc_multi_var_sym} and Eqn. \ref{gauss_proc_func_0_mean_sym} we get,
+Combining Eqn. \ref{gauss_proc_multi_var_sym} and Eqn. \ref{gauss_proc_func_0_mean_sym} we get
 
 \begin{equation}
 f(\mathcal{X}_m) \sim \mathcal{N} (0, K(\mathcal{X}_m))
-\label{eq:gp_training}
+\label{eq:gp_training}.
 \end{equation}
 
-We take $\mathcal{X}_m$ as training set, so we have observed $\mathbf{y}_m$. Say we have another finite subset $\mathcal{X}_m^*$, which is the test set. We need to predict outputs $\mathbf{y}_m^*$ for $\mathcal{X}_m^*$. Both the subsets came from the same infinite Gaussian distribution. So for $\mathcal{X}_m^*$ we write,
+We take $\mathcal{X}_m$ as training set, so we have observed $\mathbf{y}_m$. Say we have another finite subset $\mathcal{X}_m^*$, which is the test set. We need to predict outputs $\mathbf{y}_m^*$ for $\mathcal{X}_m^*$. Both the subsets came from the same infinite Gaussian distribution. So for $\mathcal{X}_m^*$ we write
 
 \begin{equation}
-f(\mathcal{X}_m^*) \sim \mathcal{N} (0, K(\mathcal{X}_m^*))
+f(\mathcal{X}_m^*) \sim \mathcal{N} (0, K(\mathcal{X}_m^*)).
 \label{eq:gp_test}
 \end{equation}
 
-We combine Eqn. \ref{eq:gp_training} and Eqn. \ref{eq:gp_test} together as,
+We combine Eqn. \ref{eq:gp_training} and Eqn. \ref{eq:gp_test} together as
 
 \begin{equation}
 \begin{pmatrix}
@@ -808,10 +809,10 @@ f(\mathcal{X}_m^*)
 \begin{pmatrix}
 K(\mathcal{X}_m, \mathcal{X}_m) & K(\mathcal{X}_m, \mathcal{X}_m^*) \\
 K(\mathcal{X}_m^*, \mathcal{X}_m) & K(\mathcal{X}_m^*, \mathcal{X}_m^*)
-\end{pmatrix}\right)
+\end{pmatrix}\right).
 \end{equation}
 
-We also have noise vectors $\mathbf{\varepsilon} \in \mathcal{R}^m$ and $\mathbf{\varepsilon^*} \in \mathcal{R}^m$. We get the distribution over $\mathbf{y}$ by adding noise to the distribution over $f(.)$. Addition of multiple Gaussians remains Gaussian, so we can write,
+We also have noise vectors $\mathbf{\varepsilon} \in \mathcal{R}^m$ and $\mathbf{\varepsilon^*} \in \mathcal{R}^m$. We get the distribution over $\mathbf{y}$ by adding noise to the distribution over $f(.)$. Addition of multiple Gaussians remains Gaussian, so we can write
 
 \begin{eqnarray}
 \begin{pmatrix}
@@ -833,28 +834,28 @@ f(\mathcal{X}_m^*)
 \begin{pmatrix}
 K(\mathcal{X}_m, \mathcal{X}_m) + \sigma^2 \mathbf{I} & K(\mathcal{X}_m, \mathcal{X}_m^*) \\
 K(\mathcal{X}_m^*, \mathcal{X}_m) & K(\mathcal{X}_m^*, \mathcal{X}_m^*) + \sigma^2 \mathbf{I}
-\end{pmatrix}\right)
+\end{pmatrix}\right).
 \end{eqnarray}
 
-Using Bayesian posterior calculation it can be shown that,
+Using Bayesian posterior calculation it can be shown that
 
 \begin{equation}
-\mathbf{y_m}^* | \mathbf{y_m}, \mathcal{X}_m, \mathcal{X}_m^* \sim (\mu^*, \Sigma^*)
+\mathbf{y_m}^* | \mathbf{y_m}, \mathcal{X}_m, \mathcal{X}_m^* \sim (\mu^*, \Sigma^*).
 \end{equation}
 
 This is the function represented by Figure 4.
 
-where,
+where
 
 \begin{equation}
 \mu^* = K(\mathcal{X}_m^*, \mathcal{X}_m)(K(\mathcal{X}_m, \mathcal{X}_m) + \sigma^2 \mathbf{I})^{-1}\mathbf{y_m}
-\label{gauss_poster_mean}
+\label{gauss_poster_mean},
 \end{equation}
 
-and,
+and
 
 \begin{equation}
-\Sigma^* = K(\mathcal{X}_m^*, \mathcal{X}_m^*) + \sigma^2 \mathbf{I} - K(\mathcal{X}_m^*, \mathcal{X}_m)(K(\mathcal{X}_m, \mathcal{X}_m) + \sigma^2 \mathbf{I})^{-1} K(\mathcal{X}_m, \mathcal{X}_m^*)
+\Sigma^* = K(\mathcal{X}_m^*, \mathcal{X}_m^*) + \sigma^2 \mathbf{I} - K(\mathcal{X}_m^*, \mathcal{X}_m)(K(\mathcal{X}_m, \mathcal{X}_m) + \sigma^2 \mathbf{I})^{-1} K(\mathcal{X}_m, \mathcal{X}_m^*).
 \label{gauss_poster_var}
 \end{equation}
 
@@ -898,10 +899,10 @@ We needed to process the images before starting the actual experiments. Therefor
 We used MIRFLICKR 25000 \cite{mirflickr} image set for the experiment. We consider only colour feature for this study. We represent each image as a 512 dimensional vector \cite{imse}. We used \textit{openCV} library to extract "rgb histogram" of each of the images and created an array of the histogram bins. Then, we normalised this array from $0$ to $1$. This array is the feature vector of the image concerned.
 \subsubsection{The Kernel}
 
-We use "Cityblock" or "Manhattan" distance to calculate pairwise distance between two images, to feature vectors precisely. Manhattan distance of two vectors is nothing but the sum of absolute values of the element wise distances of the vectors given. If $\mathbf{x}$ and $\mathbf{y}$ are two vectors of equal length then $L$, their Manhattan distance, would be $d_{Manhattan}(\mathbf{x}, \mathbf{y}) = \sum \limits_l^L |x_l - y_l|$, where $x_l$ and $y_l$ are $l$th values of the two vectors, respectively. The distance is normalized by the number of dimensions i.e. 512. Therefore the number of dimensions are used as the length scale hyperparameter for the kernel. For any two images $x_i$ and $x_j$, the kernel function is,
+We use "Cityblock" or "Manhattan" distance to calculate pairwise distance between two images, to feature vectors precisely. Manhattan distance of two vectors is nothing but the sum of absolute values of the element wise distances of the vectors given. If $\mathbf{x}$ and $\mathbf{y}$ are two vectors of equal length then $L$, their Manhattan distance, would be $d_{Manhattan}(\mathbf{x}, \mathbf{y}) = \sum \limits_l^L |x_l - y_l|$, where $x_l$ and $y_l$ are $l$th values of the two vectors, respectively. The distance is normalized by the number of dimensions i.e. 512. Therefore the number of dimensions are used as the length scale hyperparameter for the kernel. For any two images $x_i$ and $x_j$, the kernel function is
 
 \begin{equation}
-K(\mathbf{x}_i, \mathbf{x}_j) = \sum_{l = 1}^{512}\frac{(|x_i^l - x_j^l|)} {512}
+K(\mathbf{x}_i, \mathbf{x}_j) = \sum_{l = 1}^{512}\frac{(|x_i^l - x_j^l|)} {512}.
 \end{equation}
 
 Here $x_i^l$ and $x_j^l$ represent the $l$th dimensional value in the corresponding feature vectors of images $x_i$ and $x_j$ respectively.
@@ -927,22 +928,22 @@ The user is presented with a set of random images. He finds one or more suitable
 
 Say, till $t$ iterations, we showed $X_t = \{x_1, x_2, ..., x_t\}$ images and received relevance feedback $Y_t = \{y_1, y_2, ..., y_t\}$.
 
-According to Eqn. \ref{gauss_poster_mean}, for the rest of the images, the posterior mean function would be,
+According to Eqn. \ref{gauss_poster_mean}, for the rest of the images, the posterior mean function would be
 
 \begin{equation}
-\mu(x) = K(x, X_t)[K(X_t, X_t) + \sigma_{noise}^2I]^{-1}Y_t
+\mu(x) = K(x, X_t)[K(X_t, X_t) + \sigma_{noise}^2I]^{-1}Y_t,
 \end{equation}
 
-and, according to Eqn. \ref{gauss_poster_var}, the posterior co-variance function would be,
+and according to Eqn. \ref{gauss_poster_var}, the posterior co-variance function would be
 
 \begin{equation}
-\sigma^2(x) = [K(x, x) + \sigma_{noise}^2I] - K(x, X_t)[K(X_t, X_t) + \sigma_{noise}^2I]^{-1}K(x, X_t)^T
+\sigma^2(x) = [K(x, x) + \sigma_{noise}^2I] - K(x, X_t)[K(X_t, X_t) + \sigma_{noise}^2I]^{-1}K(x, X_t)^T.
 \end{equation}
 
-At $t+1$ iteration, image $x_{t+1}$ would be selected, satisfying,
+At $t+1$ iteration, image $x_{t+1}$ would be selected, satisfying
 
 \begin{equation}
-x_{t+1} = argmax_x(\mu(x) + \beta\sqrt{\sigma^2(x)})
+x_{t+1} = argmax_x(\mu(x) + \beta\sqrt{\sigma^2(x)}).
 \end{equation}
 
 We saw in our discussion of Gaussian process that after observing a significant amount of datapoints, the posterior variance becomes very small. Therefore, the UCB value merely reflects the posterior mean, leading to an almost zero exploration. To keep the exploration alive, $\beta$ is introduced, which is a fraction that grows with discrete time or iterations. At any iteration $t$, $\beta = \sqrt{\log t}$.
@@ -1140,7 +1141,7 @@ We have taken corrective measures to fix problems \ref{issue_random_initial_imag
 
 \subsection{FutureView}
 
-In this experiment we introduce a new interface which helps eliminating the problem of users not being able to go back and change feedback if required. We split the screen into two sections, the left one having a width of 70\% and the right one 30\%. The left section has exactly the same structure of the display panel from the previous experiment but the right section is what we refer to as the FutureView. It also displays images but images here do not have any sliding-feedback controls and images appear a bit faded out. This view shows what images are going to appear in the next iteration if the user keeps the current feedback which is given to the images in the left section.
+In this experiment we introduce a new interface which helps eliminating the problem of users not being able to go back and change feedback if required. We split the screen into two sections, the left one having a width of 70\% and the right one 30\%. The left section has exactly the same structure of the display panel from the previous experiment but the right section is what we refer to as the FutureView \cite{future_view}. It also displays images but images here do not have any sliding-feedback controls and images appear a bit faded out. This view shows what images are going to appear in the next iteration if the user keeps the current feedback which is given to the images in the left section.
 
 \begin{figure}[h!]
   \centering
